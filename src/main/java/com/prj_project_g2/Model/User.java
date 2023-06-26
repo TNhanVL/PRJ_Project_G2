@@ -1,5 +1,5 @@
 
-package Model;
+package com.prj_project_g2.Model;
 
 import java.util.Date;
 
