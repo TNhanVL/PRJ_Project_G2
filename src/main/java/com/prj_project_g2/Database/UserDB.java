@@ -4,7 +4,6 @@
  */
 package com.prj_project_g2.Database;
 
-import static com.prj_project_g2.Database.DB.conn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
