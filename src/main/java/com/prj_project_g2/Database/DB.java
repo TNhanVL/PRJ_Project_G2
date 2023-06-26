@@ -5,9 +5,7 @@
 package com.prj_project_g2.Database;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +21,8 @@ public class DB {
     static Connection conn;
     static PreparedStatement statement;
 
-    private static void connect() throws SQLException, ClassNotFoundException {
+    static Connection connect() throws SQLException, ClassNotFoundException {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDataSource");
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setServerName(Config.SERVER);
         ds.setUser(Config.USER);
@@ -32,17 +31,17 @@ public class DB {
         ds.setDatabaseName(Config.DATABASE_NAME);
         ds.setEncrypt(false);
 
-        conn = ds.getConnection();
+        return ds.getConnection();
     }
 
-    private static void disconnect() throws SQLException {
+    static void disconnect(Connection conn) throws SQLException {
         conn.close();
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
 
         try {
-            connect();
+            conn = connect();
 
             statement = conn.prepareStatement("select username from [user]");
             ResultSet resultSet = statement.executeQuery();
@@ -51,7 +50,7 @@ public class DB {
                 System.out.println(resultSet.getString("username"));
             }
 
-            disconnect();
+            disconnect(conn);
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
