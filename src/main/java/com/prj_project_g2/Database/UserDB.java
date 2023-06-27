@@ -4,6 +4,7 @@
  */
 package com.prj_project_g2.Database;
 
+import com.prj_project_g2.Services.MD5;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -66,7 +67,7 @@ public class UserDB {
                 status = 1;
             } else {
                 String pw = resultSet.getString("password");
-                if (pw.equals(password)) {
+                if (pw.equals(MD5.getMd5(password))) {
                     //correct
                     status = 0;
                 } else {
