@@ -47,7 +47,7 @@ public class UserDB {
     }
 
     /**
-     *
+     * check password of a user
      * @param username
      * @param password
      * @return 0 - ok; 1 - not exist; 2 - incorrect pw
