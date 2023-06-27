@@ -45,6 +45,45 @@ public class UserDB {
         return ok;
     }
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @return 0 - ok; 1 - not exist; 2 - incorrect pw
+     */
+    public static int checkUser(String username, String password) {
+        int status = -1;
+        try {
+            //connect to database
+            conn = DB.connect();
+
+            statement = conn.prepareStatement("select password from [user] where username = ?");
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            //not exist
+            if (!resultSet.next()) {
+                status = 1;
+            } else {
+                String pw = resultSet.getString("password");
+                if (pw.equals(password)) {
+                    //correct
+                    status = 0;
+                } else {
+                    //not correct password
+                    status = 2;
+                }
+            }
+
+            //disconnect to database
+            DB.disconnect(conn);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //return result
+        return status;
+    }
+
     public static void main(String[] args) throws ClassNotFoundException {
 
         try {
