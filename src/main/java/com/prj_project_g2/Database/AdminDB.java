@@ -19,7 +19,6 @@ import java.util.logging.Logger;
  * @author Thanh Duong
  */
 public class AdminDB {
-    
 
     static Connection conn;
     static PreparedStatement statement;
@@ -48,8 +47,16 @@ public class AdminDB {
         //return result
         return ok;
     }
-    
-    public static int checkAdmin(String username, String password) {
+
+    /**
+     * check password of admin
+     *
+     * @param username
+     * @param password
+     * @param hashed true if password hashed
+     * @return 0 - ok; 1 - not exist; 2 - incorrect pw
+     */
+    public static int checkAdmin(String username, String password, boolean hashed) {
         int status = -1;
         try {
             //connect to database
@@ -64,7 +71,10 @@ public class AdminDB {
                 status = 1;
             } else {
                 String pw = resultSet.getString("password");
-                if (pw.equals(MD5.getMd5(password))) {
+                if (!hashed) {
+                    password = MD5.getMd5(password);
+                }
+                if (pw.equals(password)) {
                     //correct
                     status = 0;
                 } else {
