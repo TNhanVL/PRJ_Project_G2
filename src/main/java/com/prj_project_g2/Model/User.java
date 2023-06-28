@@ -16,12 +16,12 @@ public class User {
     private String firstname;
     private String lastname;
     private Date birthday;
-    private String country;
+    private int countryID;
 
     public User() {
     }
 
-    public User(int ID, String avatar, String username, String password, String email, String firstName, String lastName, Date birthday, String country) {
+    public User(int ID, String avatar, String username, String password, String email, String firstName, String lastName, Date birthday, int countryID) {
         this.ID = ID;
         this.avatar = avatar;
         this.username = username;
@@ -30,7 +30,7 @@ public class User {
         this.firstname = firstName;
         this.lastname = lastName;
         this.birthday = birthday;
-        this.country = country;
+        this.countryID = countryID;
     }
 
     public int getID() {
@@ -97,13 +97,16 @@ public class User {
         this.birthday = birthday;
     }
 
-    public String getCountry() {
-        return country;
+    public int getCountryID() {
+        return countryID;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountryID(int countryID) {
+        this.countryID = countryID;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "User{" + "ID=" + ID + ", avatar=" + avatar + ", username=" + username + ", password=" + password + ", email=" + email + ", firstname=" + firstname + ", lastname=" + lastname + ", birthday=" + birthday + ", countryID=" + countryID + '}';
+    }
 }

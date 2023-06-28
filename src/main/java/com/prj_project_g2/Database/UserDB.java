@@ -4,6 +4,7 @@
  */
 package com.prj_project_g2.Database;
 
+import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.MD5;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,6 +49,7 @@ public class UserDB {
 
     /**
      * check password of a user
+     *
      * @param username
      * @param password
      * @return 0 - ok; 1 - not exist; 2 - incorrect pw
@@ -85,21 +87,71 @@ public class UserDB {
         return status;
     }
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static User getUser(int ID) {
+        User user = null;
 
         try {
+            //connect to database
             conn = DB.connect();
 
-            statement = conn.prepareStatement("select username from [user]");
+            System.out.println("1");
+            
+            statement = conn.prepareStatement("select * from [user] where ID = ?");
+            statement.setString(1, "1");
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("username"));
+            if (resultSet.next()) {
+                user = new User(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("avatar"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getDate("birthday"),
+                        resultSet.getInt("countryID")
+                );
             }
 
             DB.disconnect(conn);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        return user;
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        User user = null;
+
+        try {
+            //connect to database
+            conn = DB.connect();
+            
+            statement = conn.prepareStatement("select * from [user] where ID = ?");
+            statement.setString(1, "1");
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("avatar"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getDate("birthday"),
+                        resultSet.getInt("countryID")
+                );
+            }
+
+            DB.disconnect(conn);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println(user);
     }
 }
