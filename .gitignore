@@ -1,3 +1,5 @@
+src/main/java/com/prj_project_g2/Database/Config.java
+
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -15,5 +17,3 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
-
-src/main/java/com/prj_project_g2/Database/Config.java
