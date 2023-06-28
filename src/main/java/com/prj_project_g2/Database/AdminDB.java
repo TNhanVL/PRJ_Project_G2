@@ -4,8 +4,6 @@
  */
 package com.prj_project_g2.Database;
 
-import static com.prj_project_g2.Database.UserDB.conn;
-import static com.prj_project_g2.Database.UserDB.statement;
 import com.prj_project_g2.Services.MD5;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,16 +45,6 @@ public class AdminDB {
         //return result
         return ok;
     }
-<<<<<<< HEAD
-    
-    /**
-     * Check username and password of admin account
-     * @param username
-     * @param password
-     * @return 
-     */
-    public static int checkAdmin(String username, String password) {
-=======
 
     /**
      * check password of admin
@@ -67,7 +55,6 @@ public class AdminDB {
      * @return 0 - ok; 1 - not exist; 2 - incorrect pw
      */
     public static int checkAdmin(String username, String password, boolean hashed) {
->>>>>>> b601b33aca1a5a1973a123e97c578d925ce7e8ca
         int status = -1;
         try {
             //connect to database
@@ -108,14 +95,11 @@ public class AdminDB {
         try {
             conn = DB.connect();
 
-<<<<<<< HEAD
-            System.out.println(checkAdmin("admin", "Admin@123"));
-            System.out.println(checkAdmin("ffff", "Admin@123"));
-            System.out.println(checkAdmin("admin", "Admin@1234444"));
+//            System.out.println(checkAdmin("admin", "Admin@123"));
+//            System.out.println(checkAdmin("ffff", "Admin@123"));
+//            System.out.println(checkAdmin("admin", "Admin@1234444"));
 
-=======
             System.out.println(checkAdmin("admin", "Admin@123", false));
->>>>>>> b601b33aca1a5a1973a123e97c578d925ce7e8ca
 
             DB.disconnect(conn);
         } catch (SQLException ex) {
