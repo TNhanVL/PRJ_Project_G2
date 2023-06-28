@@ -37,6 +37,11 @@ public class PurchasedCourse {
     public void setCourseID(int courseID) {
         this.courseID = courseID;
     }
+
+    @Override
+    public String toString() {
+        return "PurchasedCourse{" + "userID=" + userID + ", courseID=" + courseID + '}';
+    }
     
     
 }

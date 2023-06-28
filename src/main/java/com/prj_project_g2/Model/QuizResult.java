@@ -58,6 +58,11 @@ public class QuizResult {
     public void setDateSubmit(Date dateSubmit) {
         this.dateSubmit = dateSubmit;
     }
+
+    @Override
+    public String toString() {
+        return "QuizResult{" + "ID=" + ID + ", lessonID=" + lessonID + ", userID=" + userID + ", dateSubmit=" + dateSubmit + '}';
+    }
     
     
 

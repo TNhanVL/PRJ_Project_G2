@@ -45,6 +45,11 @@ public class QuestionResult {
     public void setCorrect(boolean correct) {
         this.correct = correct;
     }
+
+    @Override
+    public String toString() {
+        return "QuestionResult{" + "quizResultID=" + quizResultID + ", questionID=" + questionID + ", correct=" + correct + '}';
+    }
     
     
 }

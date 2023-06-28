@@ -11,13 +11,15 @@ package com.prj_project_g2.Model;
 public class Post {
     private int ID;
     private String content;
+    private int lessonID;
 
     public Post() {
     }
 
-    public Post(int ID, String content) {
+    public Post(int ID, String content, int lessonID) {
         this.ID = ID;
         this.content = content;
+        this.lessonID = lessonID;
     }
 
     public int getID() {
@@ -35,6 +37,21 @@ public class Post {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public int getLessonID() {
+        return lessonID;
+    }
+
+    public void setLessonID(int lessonID) {
+        this.lessonID = lessonID;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" + "ID=" + ID + ", content=" + content + ", lessonID=" + lessonID + '}';
+    }
     
+    
+   
     
 }

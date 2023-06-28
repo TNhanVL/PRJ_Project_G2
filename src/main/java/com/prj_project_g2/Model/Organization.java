@@ -55,6 +55,11 @@ public class Organization {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Organization{" + "ID=" + ID + ", name=" + name + ", logo=" + logo + ", description=" + description + '}';
+    }
     
     
     

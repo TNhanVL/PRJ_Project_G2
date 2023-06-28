@@ -75,6 +75,11 @@ public class Course {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" + "ID=" + ID + ", title=" + title + ", description=" + description + ", organizationID=" + organizationID + ", lecturerID=" + lecturerID + ", price=" + price + '}';
+    }
     
     
 }

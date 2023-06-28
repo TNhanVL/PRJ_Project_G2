@@ -45,6 +45,11 @@ public class Lecturer {
     public void setOrganizationID(int organizationID) {
         this.organizationID = organizationID;
     }
+
+    @Override
+    public String toString() {
+        return "Lecturer{" + "ID=" + ID + ", userID=" + userID + ", organizationID=" + organizationID + '}';
+    }
     
     
 }

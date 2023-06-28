@@ -24,11 +24,11 @@ public class DB {
     static Connection connect() throws SQLException, ClassNotFoundException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDataSource");
         SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setServerName(Config.SERVER);
-        ds.setUser(Config.USER);
-        ds.setPassword(Config.PASSWORD);
-        ds.setPortNumber(Config.PORT);
-        ds.setDatabaseName(Config.DATABASE_NAME);
+        ds.setServerName("LAPTOP-S71BQS34\\DUONGNT");
+        ds.setUser("sa");
+        ds.setPassword("1");
+        ds.setPortNumber(1433);
+        ds.setDatabaseName("DB_PRJ_Project_G2");
         ds.setEncrypt(false);
 
         return ds.getConnection();

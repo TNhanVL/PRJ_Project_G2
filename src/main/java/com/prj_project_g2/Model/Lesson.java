@@ -55,6 +55,11 @@ public class Lesson {
     public void setType(int type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Lesson{" + "ID=" + ID + ", moocID=" + moocID + ", title=" + title + ", type=" + type + '}';
+    }
     
     
     

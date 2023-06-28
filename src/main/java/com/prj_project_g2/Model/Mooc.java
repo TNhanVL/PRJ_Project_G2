@@ -65,6 +65,11 @@ public class Mooc {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Mooc{" + "ID=" + ID + ", courseID=" + courseID + ", index=" + index + ", title=" + title + ", description=" + description + '}';
+    }
     
     
 }

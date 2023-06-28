@@ -45,6 +45,11 @@ public class Certificate {
     public void setCertificateURL(String certificateURL) {
         this.certificateURL = certificateURL;
     }
+
+    @Override
+    public String toString() {
+        return "Certificate{" + "userID=" + userID + ", courseID=" + courseID + ", certificateURL=" + certificateURL + '}';
+    }
     
     
 }

@@ -49,6 +49,12 @@ public class AdminDB {
         return ok;
     }
     
+    /**
+     * Check username and password of admin account
+     * @param username
+     * @param password
+     * @return 
+     */
     public static int checkAdmin(String username, String password) {
         int status = -1;
         try {
@@ -88,6 +94,9 @@ public class AdminDB {
             conn = DB.connect();
 
             System.out.println(checkAdmin("admin", "Admin@123"));
+            System.out.println(checkAdmin("ffff", "Admin@123"));
+            System.out.println(checkAdmin("admin", "Admin@1234444"));
+
 
             DB.disconnect(conn);
         } catch (SQLException ex) {
