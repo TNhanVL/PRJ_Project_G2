@@ -97,7 +97,7 @@ public class AdminDB {
         try {
             conn = DB.connect();
 
-            System.out.println(checkAdmin("admin", "Admin@123"));
+            System.out.println(checkAdmin("admin", "Admin@123", false));
 
             DB.disconnect(conn);
         } catch (SQLException ex) {
