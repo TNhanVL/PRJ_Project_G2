@@ -13,6 +13,10 @@
     }
 %>
 
+<jsp:include page="head.jsp">
+    <jsp:param name="title" value="Dashboard"/>
+</jsp:include>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,3 +28,7 @@
         <button onclick="location.href = './logout';">Logout</button>
     </body>
 </html>
+
+<%@ include file="foot.jsp" %>
+
+<%@ include file="popupMessage.jsp" %>
