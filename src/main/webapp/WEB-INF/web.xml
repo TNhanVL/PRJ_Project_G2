@@ -4,17 +4,26 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 
     <display-name>Spring MVC Application</display-name>
-
     <servlet>
-        <servlet-name>dispatcher</servlet-name>
+        <servlet-name>user</servlet-name>
         <servlet-class>
             org.springframework.web.servlet.DispatcherServlet
         </servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
+        <servlet-name>user</servlet-name>
         <url-pattern>/user/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>admin</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin</servlet-name>
+        <url-pattern>/admin/*</url-pattern>
     </servlet-mapping>
 </web-app>
