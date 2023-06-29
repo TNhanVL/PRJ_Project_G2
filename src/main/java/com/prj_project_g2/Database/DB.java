@@ -5,7 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import static com.prj_project_g2.Database.LectureDB.statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
