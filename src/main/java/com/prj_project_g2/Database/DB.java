@@ -5,6 +5,7 @@
 package com.prj_project_g2.Database;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import static com.prj_project_g2.Database.LectureDB.statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,11 +25,11 @@ public class DB {
     static Connection connect() throws SQLException, ClassNotFoundException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDataSource");
         SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setServerName("LAPTOP-S71BQS34\\DUONGNT");
-        ds.setUser("sa");
-        ds.setPassword("1");
-        ds.setPortNumber(1433);
-        ds.setDatabaseName("DB_PRJ_Project_G2");
+        ds.setServerName(Config.SERVER);
+        ds.setUser(Config.USER);
+        ds.setPassword(Config.PASSWORD);
+        ds.setPortNumber(Config.PORT);
+        ds.setDatabaseName(Config.DATABASE_NAME);
         ds.setEncrypt(false);
 
         return ds.getConnection();
@@ -36,6 +37,24 @@ public class DB {
 
     static void disconnect(Connection conn) throws SQLException {
         conn.close();
+    }
+
+    public static int lastModifyID(Connection conn) {
+        int lastModifyID = 0;
+        try {
+            statement = conn.prepareStatement("SELECT @@IDENTITY AS newID");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                lastModifyID = resultSet.getInt("newID");
+            } else {
+                return -1;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        return lastModifyID;
     }
 
     public static void main(String[] args) throws ClassNotFoundException {

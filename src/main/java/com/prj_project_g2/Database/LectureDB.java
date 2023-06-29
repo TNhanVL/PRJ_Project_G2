@@ -69,8 +69,7 @@ public class LectureDB {
         return lecturer;
     }
 
-    public static boolean insertLecturer(Lecturer lec) {
-
+    public static int insertLecturer(Lecturer lec) {
         try {
             //connect to database
             conn = DB.connect();
@@ -79,16 +78,17 @@ public class LectureDB {
             statement.setInt(1, lec.getUserID());
             statement.setInt(2, lec.getOrganizationID());
             statement.executeUpdate();
-
+            //Indentify the last ID inserted
+            int newID = DB.lastModifyID(conn);
             //disconnect to database
             DB.disconnect(conn);
-            return true;
+            return newID;
 
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
 
         }
-        return false;
+        return -1;
     }
 
     public static boolean updateLecturer(Lecturer lec) {
@@ -147,5 +147,8 @@ public class LectureDB {
 //        System.out.println(l2.toString());
 //        System.out.println("**************************");
         //     System.out.println(deleteLecturer(4));
+//        System.out.println(nearestInsertID());
+//            nearestInsertID();
+//            System.out.println(insertLecturer(new Lecturer(4, 4, 4)));
     }
 }
