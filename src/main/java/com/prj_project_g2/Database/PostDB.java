@@ -5,8 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Post;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,16 +14,13 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class PostDB {
-
-    static Connection conn;
-    static PreparedStatement statement;
+public class PostDB extends DB {
 
     public static boolean existPost(int ID) {
         boolean ok = false;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select ID from post where ID = ?");
             statement.setInt(1, ID);
@@ -38,7 +33,7 @@ public class PostDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,7 +46,7 @@ public class PostDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select * from post where ID = ?");
             statement.setInt(1, ID);
@@ -64,7 +59,7 @@ public class PostDB {
                         resultSet.getInt("lessonID"));
             }
 
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -75,14 +70,14 @@ public class PostDB {
     public static boolean insertPost(Post post) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("insert into post(content,lessonID) values (?,?)");
             statement.setString(1, post.getContent());
             statement.setInt(2, post.getLessonID());
             statement.executeUpdate();
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -95,7 +90,7 @@ public class PostDB {
     public static boolean updatePost(Post post) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("update post set content=?, lessonID=? where ID=?");
             statement.setString(1, post.getContent());
@@ -104,7 +99,7 @@ public class PostDB {
             statement.executeUpdate();
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -118,11 +113,11 @@ public class PostDB {
             if (!existPost(ID)) {
                 return false;
             }
-            conn = DB.connect();
+            connect();
             statement = conn.prepareStatement("delete from post where ID=?");
             statement.setInt(1, ID);
             statement.execute();
-            DB.disconnect(conn);
+            disconnect();
             if (!existPost(ID)) {
                 return true;
             } else {

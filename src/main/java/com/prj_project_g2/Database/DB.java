@@ -21,7 +21,7 @@ public class DB {
     static Connection conn;
     static PreparedStatement statement;
 
-    static Connection connect() throws SQLException, ClassNotFoundException {
+    static void connect() throws SQLException, ClassNotFoundException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDataSource");
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setServerName(Config.SERVER);
@@ -31,10 +31,10 @@ public class DB {
         ds.setDatabaseName(Config.DATABASE_NAME);
         ds.setEncrypt(false);
 
-        return ds.getConnection();
+        conn = ds.getConnection();
     }
 
-    static void disconnect(Connection conn) throws SQLException {
+    static void disconnect() throws SQLException {
         conn.close();
     }
 
@@ -59,7 +59,7 @@ public class DB {
     public static void main(String[] args) throws ClassNotFoundException {
 
         try {
-            conn = connect();
+            connect();
 
             statement = conn.prepareStatement("select username from [user]");
             ResultSet resultSet = statement.executeQuery();
@@ -68,7 +68,7 @@ public class DB {
                 System.out.println(resultSet.getString("username"));
             }
 
-            disconnect(conn);
+            disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }

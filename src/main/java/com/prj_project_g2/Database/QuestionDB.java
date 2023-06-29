@@ -5,8 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Question;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,16 +14,13 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class QuestionDB {
-
-    static Connection conn;
-    static PreparedStatement statement;
+public class QuestionDB extends DB {
 
     public static boolean existQuestion(int ID) {
         boolean ok = false;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select ID from question where ID = ?");
             statement.setInt(1, ID);
@@ -38,7 +33,7 @@ public class QuestionDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,7 +46,7 @@ public class QuestionDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select * from question where ID = ?");
             statement.setInt(1, ID);
@@ -66,7 +61,7 @@ public class QuestionDB {
                 );
             }
 
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,7 +72,7 @@ public class QuestionDB {
     public static boolean insertQuestion(Question question) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("insert into question(content,type,point) values (?,?,?)");
             statement.setString(1, question.getContent());
@@ -85,7 +80,7 @@ public class QuestionDB {
             statement.setInt(3, question.getPoint());
             statement.executeUpdate();
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -98,7 +93,7 @@ public class QuestionDB {
     public static boolean updateQuestion(Question question) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("update question set content=?, type=?, point=? where ID=?");
             statement.setString(1, question.getContent());
@@ -107,7 +102,7 @@ public class QuestionDB {
             statement.setInt(4, question.getID());
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -121,11 +116,11 @@ public class QuestionDB {
             if (!existQuestion(ID)) {
                 return false;
             }
-            conn = DB.connect();
+            connect();
             statement = conn.prepareStatement("delete from question where ID=?");
             statement.setInt(1, ID);
             statement.execute();
-            DB.disconnect(conn);
+            disconnect();
             if (!existQuestion(ID)) {
                 return true;
             } else {

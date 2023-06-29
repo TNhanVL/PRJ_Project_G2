@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class QuestionResultDB {
+public class QuestionResultDB extends DB {
     
     static Connection conn;
     static PreparedStatement statement;
@@ -25,7 +25,7 @@ public class QuestionResultDB {
 //        boolean ok = false;
 //        try {
 //            //connect to database
-//            conn = DB.connect();
+//            connect();
 //
 //            statement = conn.prepareStatement("select ID from questionResult where ID = ?");
 //            statement.setInt(1, ID);
@@ -38,7 +38,7 @@ public class QuestionResultDB {
 //            }
 //
 //            //disconnect to database
-//            DB.disconnect(conn);
+//            disconnect();
 //        } catch (SQLException | ClassNotFoundException ex) {
 //            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
 //        }
@@ -51,7 +51,7 @@ public class QuestionResultDB {
 //
 //        try {
 //            //connect to database
-//            conn = DB.connect();
+//            connect();
 //
 //            statement = conn.prepareStatement("select * from questionResult where ID = ?");
 //            statement.setInt(1, ID);
@@ -66,7 +66,7 @@ public class QuestionResultDB {
 //                );
 //            }
 //
-//            DB.disconnect(conn);
+//            disconnect();
 //        } catch (SQLException | ClassNotFoundException ex) {
 //            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
 //        }
@@ -77,7 +77,7 @@ public class QuestionResultDB {
 //    public static boolean insertQuestionResult(QuestionResult questionResult) {
 //        try {
 //            //connect to database
-//            conn = DB.connect();
+//            connect();
 //
 //            statement = conn.prepareStatement("insert into questionResult(content,correct,questionID) values (?,?,?)");
 //            statement.setString(1, questionResult.getContent());
@@ -85,7 +85,7 @@ public class QuestionResultDB {
 //            statement.setInt(3, questionResult.getQuestionID());
 //            statement.executeUpdate();
 //            //disconnect to database
-//            DB.disconnect(conn);
+//            disconnect();
 //            return true;
 //
 //        } catch (SQLException | ClassNotFoundException ex) {
@@ -98,7 +98,7 @@ public class QuestionResultDB {
 //    public static boolean updateQuestionResult(QuestionResult questionResult) {
 //        try {
 //            //connect to database
-//            conn = DB.connect();
+//            connect();
 //
 //            statement = conn.prepareStatement("update questionResult set content=?, correct=?, questionID=? where ID=?");
 //            statement.setString(1, questionResult.getContent());
@@ -107,7 +107,7 @@ public class QuestionResultDB {
 //            statement.setInt(4, questionResult.getID());
 //
 //            //disconnect to database
-//            DB.disconnect(conn);
+//            disconnect();
 //            return true;
 //
 //        } catch (SQLException | ClassNotFoundException ex) {
@@ -121,11 +121,11 @@ public class QuestionResultDB {
 //            if (!existQuestionResult(ID)) {
 //                return false;
 //            }
-//            conn = DB.connect();
+//            connect();
 //            statement = conn.prepareStatement("delete from questionResult where ID=?");
 //            statement.setInt(1, ID);
 //            statement.execute();
-//            DB.disconnect(conn);
+//            disconnect();
 //            if (!existQuestionResult(ID)) {
 //                return true;
 //            } else {

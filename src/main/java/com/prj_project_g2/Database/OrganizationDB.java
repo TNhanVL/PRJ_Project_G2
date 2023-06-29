@@ -5,8 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Organization;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,16 +14,13 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class OrganizationDB {
-
-    static Connection conn;
-    static PreparedStatement statement;
+public class OrganizationDB extends DB {
 
     public static boolean existOrganization(int ID) {
         boolean ok = false;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select ID from organization where ID = ?");
             statement.setInt(1, ID);
@@ -38,7 +33,7 @@ public class OrganizationDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,7 +46,7 @@ public class OrganizationDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select * from organization where ID = ?");
             statement.setInt(1, ID);
@@ -65,7 +60,7 @@ public class OrganizationDB {
                         resultSet.getString("description"));
             }
 
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -76,7 +71,7 @@ public class OrganizationDB {
     public static boolean insertOrganization(Organization organization) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("insert into organization(name,logo,description) values (?,?,?)");
             statement.setString(1, organization.getName());
@@ -85,7 +80,7 @@ public class OrganizationDB {
             statement.executeUpdate();
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -98,7 +93,7 @@ public class OrganizationDB {
     public static boolean updateOrganization(Organization organization) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("update organization set name=?, logo=?,description=? where ID =?");
             statement.setString(1, organization.getName());
@@ -108,7 +103,7 @@ public class OrganizationDB {
             statement.executeUpdate();
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -122,11 +117,11 @@ public class OrganizationDB {
             if (!existOrganization(ID)) {
                 return false;
             }
-            conn = DB.connect();
+            connect();
             statement = conn.prepareStatement("delete from organization where ID=?");
             statement.setInt(1, ID);
             statement.execute();
-            DB.disconnect(conn);
+            disconnect();
             if (!existOrganization(ID)) {
                 return true;
             } else {

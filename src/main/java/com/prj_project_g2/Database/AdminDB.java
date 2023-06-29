@@ -5,8 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Services.MD5;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,16 +14,13 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class AdminDB {
-
-    static Connection conn;
-    static PreparedStatement statement;
+public class AdminDB extends DB {
 
     public static boolean existAdmin(String username) {
         boolean ok = false;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select username from [admin] where username = ?");
             statement.setString(1, username);
@@ -38,7 +33,7 @@ public class AdminDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,7 +53,7 @@ public class AdminDB {
         int status = -1;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select password from [admin] where username = ?");
             statement.setString(1, username);
@@ -82,7 +77,7 @@ public class AdminDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -93,7 +88,7 @@ public class AdminDB {
     public static void main(String[] args) throws ClassNotFoundException {
 
         try {
-            conn = DB.connect();
+            connect();
 
 //            System.out.println(checkAdmin("admin", "Admin@123"));
 //            System.out.println(checkAdmin("ffff", "Admin@123"));
@@ -101,7 +96,7 @@ public class AdminDB {
 
             System.out.println(checkAdmin("admin", "Admin@123", false));
 
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }

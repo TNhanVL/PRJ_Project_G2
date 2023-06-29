@@ -5,8 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Lecturer;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,16 +14,13 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class LectureDB {
-
-    static Connection conn;
-    static PreparedStatement statement;
+public class LectureDB extends DB {
 
     public static boolean existLecture(int ID) {
         boolean ok = false;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select ID from lecturer where ID = ?");
             statement.setInt(1, ID);
@@ -38,7 +33,7 @@ public class LectureDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,7 +46,7 @@ public class LectureDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select * from lecturer where ID = ?");
             statement.setInt(1, ID);
@@ -61,7 +56,7 @@ public class LectureDB {
                 lecturer = new Lecturer(ID, resultSet.getInt("userID"), resultSet.getInt("organizationID"));
             }
 
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,7 +67,7 @@ public class LectureDB {
     public static int insertLecturer(Lecturer lec) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("insert into lecturer(userID,organizationID) values(?,?)");
             statement.setInt(1, lec.getUserID());
@@ -81,7 +76,7 @@ public class LectureDB {
             //Indentify the last ID inserted
             int newID = DB.lastModifyID(conn);
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return newID;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -95,7 +90,7 @@ public class LectureDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("update lecturer set userID=?, organizationID=? where ID = ?");
             statement.setInt(1, lec.getUserID());
@@ -104,7 +99,7 @@ public class LectureDB {
             statement.executeUpdate();
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -119,11 +114,11 @@ public class LectureDB {
             if (!existLecture(ID)) {
                 return false;
             }
-            conn = DB.connect();
+            connect();
             statement = conn.prepareStatement("delete from lecturer where ID=?");
             statement.setInt(1, ID);
             statement.execute();
-            DB.disconnect(conn);
+            disconnect();
             if (!existLecture(ID)) {
                 return true;
             } else {

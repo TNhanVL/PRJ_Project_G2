@@ -5,8 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.QuizResult;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -17,16 +15,13 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class QuizResultDB {
-
-    static Connection conn;
-    static PreparedStatement statement;
+public class QuizResultDB extends DB {
 
     public static boolean existQuizResult(int ID) {
         boolean ok = false;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select ID from quizResult where ID = ?");
             statement.setInt(1, ID);
@@ -39,7 +34,7 @@ public class QuizResultDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,7 +47,7 @@ public class QuizResultDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select * from quizResult where ID = ?");
             statement.setInt(1, ID);
@@ -67,7 +62,7 @@ public class QuizResultDB {
                 );
             }
 
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,7 +76,7 @@ public class QuizResultDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("insert into quizResult(ID,lessonID,userID,dateSubmit) values(?,?,?,?)");
             statement.setInt(1, quizResult.getID());
@@ -90,7 +85,7 @@ public class QuizResultDB {
             statement.setString(4, dateFormat.format(quizResult.getLessonID()));
             statement.executeUpdate();
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -106,7 +101,7 @@ public class QuizResultDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("update quizResult set lessonID=?,userID=?, dateSubmit=? where ID=?");
             statement.setInt(4, quizResult.getID());
@@ -116,7 +111,7 @@ public class QuizResultDB {
             statement.executeUpdate();
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -130,11 +125,11 @@ public class QuizResultDB {
             if (!existQuizResult(ID)) {
                 return false;
             }
-            conn = DB.connect();
+            connect();
             statement = conn.prepareStatement("delete from quizResult where ID=?");
             statement.setInt(1, ID);
             statement.execute();
-            DB.disconnect(conn);
+            disconnect();
             return !existQuizResult(ID);
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);

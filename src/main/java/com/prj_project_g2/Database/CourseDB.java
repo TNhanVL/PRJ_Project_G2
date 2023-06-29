@@ -5,8 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Course;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,16 +14,13 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class CourseDB {
-
-    static Connection conn;
-    static PreparedStatement statement;
+public class CourseDB extends DB {
 
     public static boolean existCourse(int ID) {
         boolean ok = false;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select ID from course where ID = ?");
             statement.setInt(1, ID);
@@ -38,7 +33,7 @@ public class CourseDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,7 +46,7 @@ public class CourseDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select * from course where ID = ?");
             statement.setInt(1, ID);
@@ -67,7 +62,7 @@ public class CourseDB {
                         resultSet.getInt("price"));
             }
 
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -78,7 +73,7 @@ public class CourseDB {
     public static boolean insertCourse(Course course) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("insert into course(title,description,organizationID,lecturerID,price) values (?,?,?,?,?)");
             statement.setString(1, course.getTitle());
@@ -90,7 +85,7 @@ public class CourseDB {
             statement.executeUpdate();
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -103,7 +98,7 @@ public class CourseDB {
     public static boolean updateCourse(Course course) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("update course set title=?, description=?,organizationID=?,lecturerID=?,price=? where ID =?");
             statement.setString(1, course.getTitle());
@@ -116,7 +111,7 @@ public class CourseDB {
             statement.executeUpdate();
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -130,11 +125,11 @@ public class CourseDB {
             if (!existCourse(ID)) {
                 return false;
             }
-            conn = DB.connect();
+            connect();
             statement = conn.prepareStatement("delete from course where ID=?");
             statement.setInt(1, ID);
             statement.execute();
-            DB.disconnect(conn);
+            disconnect();
             if (!existCourse(ID)) {
                 return true;
             } else {

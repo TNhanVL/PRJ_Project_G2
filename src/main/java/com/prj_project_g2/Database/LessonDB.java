@@ -5,8 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Lesson;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,16 +14,13 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class LessonDB {
-
-    static Connection conn;
-    static PreparedStatement statement;
+public class LessonDB extends DB {
 
     public static boolean existLesson(int ID) {
         boolean ok = false;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select ID from lesson where ID = ?");
             statement.setInt(1, ID);
@@ -38,7 +33,7 @@ public class LessonDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,7 +46,7 @@ public class LessonDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select * from lesson where ID = ?");
             statement.setInt(1, ID);
@@ -65,7 +60,7 @@ public class LessonDB {
                         resultSet.getInt("type"));
             }
 
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -76,7 +71,7 @@ public class LessonDB {
     public static boolean insertLesson(Lesson lesson) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("insert into lesson(moocID,title,type) values(?,?, ?)");
             statement.setInt(1, lesson.getMoocID());
@@ -84,7 +79,7 @@ public class LessonDB {
             statement.setInt(3, lesson.getType());
             statement.executeUpdate();
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -97,7 +92,7 @@ public class LessonDB {
     public static boolean updateLesson(Lesson lesson) {
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("update lesson set moocID=?, title=?, type=? where ID=?");
             statement.setInt(1, lesson.getMoocID());
@@ -107,7 +102,7 @@ public class LessonDB {
             statement.executeUpdate();
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -121,11 +116,11 @@ public class LessonDB {
             if (!existLesson(ID)) {
                 return false;
             }
-            conn = DB.connect();
+            connect();
             statement = conn.prepareStatement("delete from lesson where ID=?");
             statement.setInt(1, ID);
             statement.execute();
-            DB.disconnect(conn);
+            disconnect();
             if (!existLesson(ID)) {
                 return true;
             } else {

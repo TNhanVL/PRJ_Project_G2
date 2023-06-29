@@ -6,8 +6,6 @@ package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.MD5;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -17,16 +15,13 @@ import java.util.logging.Logger;
  *
  * @author TTNhan
  */
-public class UserDB {
-
-    static Connection conn;
-    static PreparedStatement statement;
+public class UserDB extends DB {
 
     public static boolean existUser(String username) {
         boolean ok = false;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select username from [user] where username = ?");
             statement.setString(1, username);
@@ -39,7 +34,7 @@ public class UserDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,7 +54,7 @@ public class UserDB {
         int status = -1;
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select password from [user] where username = ?");
             statement.setString(1, username);
@@ -83,7 +78,7 @@ public class UserDB {
             }
 
             //disconnect to database
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,7 +91,7 @@ public class UserDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             System.out.println("1");
 
@@ -119,7 +114,7 @@ public class UserDB {
                 );
             }
 
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -132,7 +127,7 @@ public class UserDB {
 
         try {
             //connect to database
-            conn = DB.connect();
+            connect();
 
             statement = conn.prepareStatement("select * from [user] where ID = ?");
             statement.setString(1, "1");
@@ -153,7 +148,7 @@ public class UserDB {
                 );
             }
 
-            DB.disconnect(conn);
+            disconnect();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
