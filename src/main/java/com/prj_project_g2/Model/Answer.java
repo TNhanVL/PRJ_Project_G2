@@ -12,14 +12,16 @@ public class Answer {
     private int ID;
     private String content;
     private boolean correct;
+    private int questionID;
 
     public Answer() {
     }
 
-    public Answer(int ID, String content, boolean correct) {
+    public Answer(int ID, String content, boolean correct, int questionID) {
         this.ID = ID;
         this.content = content;
         this.correct = correct;
+        this.questionID = questionID;
     }
 
     public int getID() {
@@ -46,10 +48,20 @@ public class Answer {
         this.correct = correct;
     }
 
+    public int getQuestionID() {
+        return questionID;
+    }
+
+    public void setQuestionID(int questionID) {
+        this.questionID = questionID;
+    }
+
     @Override
     public String toString() {
-        return "Answer{" + "ID=" + ID + ", content=" + content + ", correct=" + correct + '}';
+        return "Answer{" + "ID=" + ID + ", content=" + content + ", correct=" + correct + ", questionID=" + questionID + '}';
     }
     
+    
+
     
 }

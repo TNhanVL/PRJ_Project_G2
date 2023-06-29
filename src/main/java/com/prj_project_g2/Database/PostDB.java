@@ -4,7 +4,6 @@
  */
 package com.prj_project_g2.Database;
 
-import static com.prj_project_g2.Database.DB.disconnect;
 import com.prj_project_g2.Model.Post;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -123,7 +122,7 @@ public class PostDB {
             statement = conn.prepareStatement("delete from post where ID=?");
             statement.setInt(1, ID);
             statement.execute();
-            disconnect(conn);
+            DB.disconnect(conn);
             if (!existPost(ID)) {
                 return true;
             } else {
@@ -140,7 +139,7 @@ public class PostDB {
 //        Post p = getPost(3);
 //        p.setContent("Hmm...");
 //        updatePost(p);
-        deletePost(3);
+//        deletePost(3);
         
     }
 }

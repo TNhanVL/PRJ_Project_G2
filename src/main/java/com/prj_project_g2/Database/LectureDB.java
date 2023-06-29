@@ -4,7 +4,6 @@
  */
 package com.prj_project_g2.Database;
 
-import static com.prj_project_g2.Database.DB.disconnect;
 import com.prj_project_g2.Model.Lecturer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -124,7 +123,7 @@ public class LectureDB {
             statement = conn.prepareStatement("delete from lecturer where ID=?");
             statement.setInt(1, ID);
             statement.execute();
-            disconnect(conn);
+            DB.disconnect(conn);
             if (!existLecture(ID)) {
                 return true;
             } else {

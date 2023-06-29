@@ -4,7 +4,7 @@
  */
 package com.prj_project_g2.Database;
 
-import com.prj_project_g2.Model.Mooc;
+import com.prj_project_g2.Model.Question;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,18 +16,18 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class MoocDB {
+public class QuestionDB {
 
     static Connection conn;
     static PreparedStatement statement;
 
-    public static boolean existMooc(int ID) {
+    public static boolean existQuestion(int ID) {
         boolean ok = false;
         try {
             //connect to database
             conn = DB.connect();
 
-            statement = conn.prepareStatement("select ID from mooc where ID = ?");
+            statement = conn.prepareStatement("select ID from question where ID = ?");
             statement.setInt(1, ID);
             ResultSet resultSet = statement.executeQuery();
 
@@ -46,24 +46,24 @@ public class MoocDB {
         return ok;
     }
 
-    public static Mooc getMooc(int ID) {
-        Mooc mooc = null;
+    public static Question getQuestion(int ID) {
+        Question question = null;
 
         try {
             //connect to database
             conn = DB.connect();
 
-            statement = conn.prepareStatement("select * from mooc where ID = ?");
+            statement = conn.prepareStatement("select * from question where ID = ?");
             statement.setInt(1, ID);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                mooc = new Mooc(
+                question = new Question(
                         resultSet.getInt("ID"),
-                        resultSet.getInt("courseID"),
-                        resultSet.getInt("index"),
-                        resultSet.getString("title"),
-                        resultSet.getString("description"));
+                        resultSet.getString("content"),
+                        resultSet.getInt("type"),
+                        resultSet.getInt("point")
+                );
             }
 
             DB.disconnect(conn);
@@ -71,21 +71,19 @@ public class MoocDB {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return mooc;
+        return question;
     }
 
-    public static boolean insertMooc(Mooc mooc) {
+    public static boolean insertQuestion(Question question) {
         try {
             //connect to database
             conn = DB.connect();
 
-            statement = conn.prepareStatement("insert into mooc(courseID,[index],title,description) values(?,?,?,?)");
-            statement.setInt(1, mooc.getCourseID());
-            statement.setInt(2, mooc.getIndex());
-            statement.setString(3, mooc.getTitle());
-            statement.setString(4, mooc.getDescription());
+            statement = conn.prepareStatement("insert into question(content,type,point) values (?,?,?)");
+            statement.setString(1, question.getContent());
+            statement.setInt(2, question.getType());
+            statement.setInt(3, question.getPoint());
             statement.executeUpdate();
-
             //disconnect to database
             DB.disconnect(conn);
             return true;
@@ -97,18 +95,16 @@ public class MoocDB {
         return false;
     }
 
-    public static boolean updateMooc(Mooc mooc) {
+    public static boolean updateQuestion(Question question) {
         try {
             //connect to database
             conn = DB.connect();
 
-            statement = conn.prepareStatement("update mooc set courseID=?, [index]=?, title=?, description=? where ID=?");
-            statement.setInt(1, mooc.getCourseID());
-            statement.setInt(2, mooc.getIndex());
-            statement.setString(3, mooc.getTitle());
-            statement.setString(4, mooc.getDescription());
-            statement.setInt(5, mooc.getID());
-            statement.executeUpdate();
+            statement = conn.prepareStatement("update question set content=?, type=?, point=? where ID=?");
+            statement.setString(1, question.getContent());
+            statement.setInt(2, question.getType());
+            statement.setInt(3, question.getPoint());
+            statement.setInt(4, question.getID());
 
             //disconnect to database
             DB.disconnect(conn);
@@ -120,17 +116,17 @@ public class MoocDB {
         return false;
     }
 
-    public static boolean deleteMooc(int ID) {
+    public static boolean deleteQuestion(int ID) {
         try {
-            if (!existMooc(ID)) {
+            if (!existQuestion(ID)) {
                 return false;
             }
             conn = DB.connect();
-            statement = conn.prepareStatement("delete from mooc where ID=?");
+            statement = conn.prepareStatement("delete from question where ID=?");
             statement.setInt(1, ID);
             statement.execute();
             DB.disconnect(conn);
-            if (!existMooc(ID)) {
+            if (!existQuestion(ID)) {
                 return true;
             } else {
                 return false;
@@ -142,11 +138,11 @@ public class MoocDB {
     }
 
     public static void main(String[] args) {
-//        Mooc m = getMooc(2);
-//        m.setTitle("Who...");
-//        insertMooc(m);
-//        m.setDescription("yah");
-//        updateMooc(m);
-//          deleteMooc(3);
+//        Question q = getQuestion(2);
+//        System.out.println(q);
+////        insertQuestion(q);
+//        q.setPoint(5);
+//        updateQuestion(q);
+//        deleteQuestion(3);
     }
 }

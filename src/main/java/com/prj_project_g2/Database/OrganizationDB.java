@@ -4,7 +4,6 @@
  */
 package com.prj_project_g2.Database;
 
-import static com.prj_project_g2.Database.DB.disconnect;
 import com.prj_project_g2.Model.Organization;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -127,7 +126,7 @@ public class OrganizationDB {
             statement = conn.prepareStatement("delete from organization where ID=?");
             statement.setInt(1, ID);
             statement.execute();
-            disconnect(conn);
+            DB.disconnect(conn);
             if (!existOrganization(ID)) {
                 return true;
             } else {
