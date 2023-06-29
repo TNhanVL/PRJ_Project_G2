@@ -1,4 +1,3 @@
-
 package com.prj_project_g2.Model;
 
 import java.util.Date;
@@ -8,6 +7,7 @@ import java.util.Date;
  * @author Thanh Duong
  */
 public class User {
+
     private int ID;
     private String avatar;
     private String username;
@@ -17,20 +17,22 @@ public class User {
     private String lastname;
     private Date birthday;
     private int countryID;
+    private int status;
 
     public User() {
     }
 
-    public User(int ID, String avatar, String username, String password, String email, String firstName, String lastName, Date birthday, int countryID) {
+    public User(int ID, String avatar, String username, String password, String email, String firstname, String lastname, Date birthday, int countryID, int status) {
         this.ID = ID;
         this.avatar = avatar;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.firstname = firstName;
-        this.lastname = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.birthday = birthday;
         this.countryID = countryID;
+        this.status = status;
     }
 
     public int getID() {
@@ -105,8 +107,17 @@ public class User {
         this.countryID = countryID;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "ID=" + ID + ", avatar=" + avatar + ", username=" + username + ", password=" + password + ", email=" + email + ", firstname=" + firstname + ", lastname=" + lastname + ", birthday=" + birthday + ", countryID=" + countryID + '}';
+        return "User{" + "ID=" + ID + ", avatar=" + avatar + ", username=" + username + ", password=" + password + ", email=" + email + ", firstname=" + firstname + ", lastname=" + lastname + ", birthday=" + birthday + ", countryID=" + countryID + ", status=" + status + '}';
     }
+
 }

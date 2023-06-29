@@ -99,7 +99,7 @@ public class UserDB {
             conn = DB.connect();
 
             System.out.println("1");
-            
+
             statement = conn.prepareStatement("select * from [user] where ID = ?");
             statement.setString(1, "1");
             ResultSet resultSet = statement.executeQuery();
@@ -114,7 +114,8 @@ public class UserDB {
                         resultSet.getString("firstName"),
                         resultSet.getString("lastName"),
                         resultSet.getDate("birthday"),
-                        resultSet.getInt("countryID")
+                        resultSet.getInt("countryID"),
+                        resultSet.getInt("status")
                 );
             }
 
@@ -132,7 +133,7 @@ public class UserDB {
         try {
             //connect to database
             conn = DB.connect();
-            
+
             statement = conn.prepareStatement("select * from [user] where ID = ?");
             statement.setString(1, "1");
             ResultSet resultSet = statement.executeQuery();
@@ -147,7 +148,8 @@ public class UserDB {
                         resultSet.getString("firstName"),
                         resultSet.getString("lastName"),
                         resultSet.getDate("birthday"),
-                        resultSet.getInt("countryID")
+                        resultSet.getInt("countryID"),
+                        resultSet.getInt("status")
                 );
             }
 
