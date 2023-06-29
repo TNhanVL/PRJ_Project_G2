@@ -4,9 +4,15 @@
  */
 package com.prj_project_g2.Database;
 
+import static com.prj_project_g2.Database.DB.conn;
+import static com.prj_project_g2.Database.DB.connect;
+import static com.prj_project_g2.Database.DB.disconnect;
+import static com.prj_project_g2.Database.DB.statement;
+import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.MD5;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,6 +89,37 @@ public class AdminDB extends DB {
         }
         //return result
         return status;
+    }
+    
+     public static ArrayList<User> getUsers() {
+        ArrayList<User> resullt = new ArrayList<>();
+        try {
+            //connect to database
+            connect();
+            statement = conn.prepareStatement("select * from [user]");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("avatar"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getDate("birthday"),
+                        resultSet.getInt("countryID"),
+                        resultSet.getInt("status")
+                );
+                resullt.add(user);
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resullt;
     }
 
     public static void main(String[] args) throws ClassNotFoundException {

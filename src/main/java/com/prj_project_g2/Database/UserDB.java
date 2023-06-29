@@ -4,10 +4,16 @@
  */
 package com.prj_project_g2.Database;
 
+import static com.prj_project_g2.Database.DB.conn;
+import static com.prj_project_g2.Database.DB.connect;
+import static com.prj_project_g2.Database.DB.disconnect;
+import static com.prj_project_g2.Database.DB.statement;
 import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.MD5;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -122,37 +128,133 @@ public class UserDB extends DB {
         return user;
     }
 
-    public static void main(String[] args) throws ClassNotFoundException {
-        User user = null;
+   
+
+    public static int insertUser(User user) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
-            //connect to database
             connect();
 
-            statement = conn.prepareStatement("select * from [user] where ID = ?");
-            statement.setString(1, "1");
-            ResultSet resultSet = statement.executeQuery();
+            statement = conn.prepareStatement("insert into [user](avatar,username,password,email,firstName,lastName,birthday,countryID,status) values(?,?,?,?,?,?,?,?,?)");
+            statement.setString(1, user.getAvatar());
+            statement.setString(2, user.getUsername());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getFirstName());
+            statement.setString(6, user.getLastName());
+            statement.setString(7, dateFormat.format(user.getBirthday()));
+            statement.setInt(8, user.getCountryID());
+            statement.setInt(9, user.getStatus());
+            statement.executeUpdate();
 
-            if (resultSet.next()) {
-                user = new User(
-                        resultSet.getInt("ID"),
-                        resultSet.getString("avatar"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        resultSet.getString("email"),
-                        resultSet.getString("firstName"),
-                        resultSet.getString("lastName"),
-                        resultSet.getDate("birthday"),
-                        resultSet.getInt("countryID"),
-                        resultSet.getInt("status")
-                );
-            }
+            int newID = lastModifyID(conn);
 
             disconnect();
+            return newID;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return -1;
+    }
+
+    public static boolean updateUser(User user) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            connect();
+
+            statement = conn.prepareStatement("UPDATE [user] SET avatar = ?, username = ?, password = ?, email = ?, firstName = ?, lastName = ?, birthday = ?, countryID = ?, status = ? WHERE ID = ?");
+            statement.setString(1, user.getAvatar());
+            statement.setString(2, user.getUsername());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getFirstName());
+            statement.setString(6, user.getLastName());
+            statement.setString(7, dateFormat.format(user.getBirthday()));
+            statement.setInt(8, user.getCountryID());
+            statement.setInt(9, user.getStatus());
+            statement.setInt(10, user.getID());
+            statement.executeUpdate();
+
+            disconnect();
+            return true;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return false;
+    }
+
+    public static boolean deleteUser(int ID) {
+
+        User user = getUser(ID);
+
+        try {
+
+            if (user == null) {
+                return false;
+            }
+            connect();
+            statement = conn.prepareStatement("delete from [user] where ID=?");
+            statement.setInt(1, ID);
+            statement.execute();
+            disconnect();
+            user = getUser(ID);
+            if (user == null) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
+    }
 
-        System.out.println(user);
+    public static void main(String[] args) throws ClassNotFoundException {
+//        User user = null;
+//
+//        try {
+//            //connect to database
+//            connect();
+//
+//            statement = conn.prepareStatement("select * from [user] where ID = ?");
+//            statement.setString(1, "3");
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                user = new User(
+//                        resultSet.getInt("ID"),
+//                        resultSet.getString("avatar"),
+//                        resultSet.getString("username"),
+//                        resultSet.getString("password"),
+//                        resultSet.getString("email"),
+//                        resultSet.getString("firstName"),
+//                        resultSet.getString("lastName"),
+//                        resultSet.getDate("birthday"),
+//                        resultSet.getInt("countryID"),
+//                        resultSet.getInt("status")
+//                );
+//            }
+//
+//            disconnect();
+//        } catch (SQLException | ClassNotFoundException ex) {
+//            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+////        System.out.println(user);
+//        user.setAvatar("https://ex.png");
+//        user.setUsername("duongthanh");
+//
+////        System.out.println(insertUser(user));
+////        updateUser(user);
+////          deleteUser(5);
+//        ArrayList<User> users = getUser();
+//
+//        for (User u : users) {
+//            System.out.println(u);
+//        }
     }
 }
