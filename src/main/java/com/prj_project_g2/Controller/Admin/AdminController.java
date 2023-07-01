@@ -3,6 +3,7 @@ package com.prj_project_g2.Controller.Admin;
 import com.prj_project_g2.Database.AdminDB;
 import com.prj_project_g2.Database.UserDB;
 import com.prj_project_g2.Model.User;
+import com.prj_project_g2.Services.CookieServices;
 import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
 import java.text.SimpleDateFormat;
@@ -87,6 +88,13 @@ public class AdminController {
 
     @RequestMapping(value = "/editUser", method = RequestMethod.POST)
     public String editUserPost(ModelMap model, HttpServletRequest request, @RequestParam String id, @ModelAttribute("user") User user) {
+        
+        //check logged in
+        if(!CookieServices.checkAdminLoggedIn(request.getCookies())){
+            request.getSession().setAttribute("error", "You need to log in to continue!");
+            return "redirect:./login";
+        }
+        
         try {
             boolean ok = UserDB.updateUser(user);
             if (ok) {
@@ -103,6 +111,13 @@ public class AdminController {
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
     public String deleteUser(ModelMap model, @RequestParam String id, HttpServletRequest request) {
+        
+        //check logged in
+        if(!CookieServices.checkAdminLoggedIn(request.getCookies())){
+            request.getSession().setAttribute("error", "You need to log in to continue!");
+            return "redirect:./login";
+        }
+        
         try {
             if (UserDB.deleteUser(Integer.parseInt(id))) {
                 request.getSession().setAttribute("success", "Delete user succeed!");

@@ -22,7 +22,7 @@ h2 {
 }
 
 table {
-    width: calc(100% - 40px);
+    width: 100%;
     background-color: #007bff;
     border: solid 2px black;
     border-radius: 7px;
