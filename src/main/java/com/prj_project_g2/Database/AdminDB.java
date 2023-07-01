@@ -4,11 +4,19 @@
  */
 package com.prj_project_g2.Database;
 
+import static com.prj_project_g2.Database.DB.conn;
+import static com.prj_project_g2.Database.DB.connect;
+import static com.prj_project_g2.Database.DB.disconnect;
+import static com.prj_project_g2.Database.DB.statement;
+import com.prj_project_g2.Model.User;
+import com.prj_project_g2.Services.CookieServices;
 import com.prj_project_g2.Services.MD5;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.Cookie;
 
 /**
  *
@@ -85,6 +93,47 @@ public class AdminDB extends DB {
         return status;
     }
 
+    public static ArrayList<User> getAllUsers(Cookie[] cookies) {
+        ArrayList<User> list = new ArrayList<>();
+
+        //check admin permission
+        if (!CookieServices.checkAdminLoggedIn(cookies)) {
+            return list;
+        }
+
+        try {
+            //connect to database
+            connect();
+
+            System.out.println("1");
+
+            statement = conn.prepareStatement("select * from [user] where ID = ?");
+            statement.setString(1, "1");
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("avatar"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getDate("birthday"),
+                        resultSet.getInt("countryID"),
+                        resultSet.getInt("status")
+                );
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
+    }
+
     public static void main(String[] args) throws ClassNotFoundException {
 
         try {
@@ -93,7 +142,6 @@ public class AdminDB extends DB {
 //            System.out.println(checkAdmin("admin", "Admin@123"));
 //            System.out.println(checkAdmin("ffff", "Admin@123"));
 //            System.out.println(checkAdmin("admin", "Admin@1234444"));
-
             System.out.println(checkAdmin("admin", "Admin@123", false));
 
             disconnect();

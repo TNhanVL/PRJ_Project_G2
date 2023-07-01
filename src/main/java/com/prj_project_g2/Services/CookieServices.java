@@ -12,11 +12,11 @@ import javax.servlet.http.Cookie;
  *
  * @author TTNhan
  */
-public class CheckLoggedIn {
+public class CookieServices {
 
-    public static boolean check(Cookie[] cookies) {
+    public static boolean checkAdminLoggedIn(Cookie[] cookies) {
         boolean ok = false;
-        
+
         try {
             String jwtToken = null;
 
@@ -38,5 +38,27 @@ public class CheckLoggedIn {
         }
 
         return ok;
+    }
+
+    public static String getUserName(Cookie[] cookies) {
+        String ans = "";
+
+        try {
+            String jwtToken = null;
+
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("jwtToken")) {
+                    jwtToken = cookie.getValue();
+                    break;
+                }
+            }
+
+            Claims claims = JwtUtil.parseJwt(jwtToken);
+            ans = (String) claims.get("username");
+
+        } catch (Exception e) {
+        }
+
+        return ans;
     }
 }

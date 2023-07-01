@@ -5,48 +5,20 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<div id="toast"></div>
+
 <script>
-    document.getElementById("cancelButton").onclick = function () {
-        var a = document.getElementsByClassName("alert");
-        if (a.length)
-            a[0].remove();
-        document.getElementsByName("username")[0].value = "";
-        document.getElementsByName("password")[0].value = "";
-    };
-
-
-    $(function () {
-        $('#loginForm').validate({
-            rules: {
-                username: {
-                    required: true
-                },
-                password: {
-                    required: true,
-                    minlength: 5
-                }
-            },
-            messages: {
-                username: {
-                    required: "Please enter a username"
-                },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
-                }
-            },
-            errorElement: 'span',
-            errorPlacement: function (error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-    });
-
+    <%
+        String message = (String) request.getSession().getAttribute("success");
+        if(message != null && message != ""){
+            out.println("showSuccesToast('" + message + "');");
+            request.getSession().removeAttribute("success");
+        }
+        message = (String) request.getSession().getAttribute("error");
+        if(message != null && message != ""){
+            out.println("showErrorToast('" + message + "');");
+            request.getSession().removeAttribute("error");
+        }
+    %>
 </script>

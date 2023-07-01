@@ -5,10 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="com.prj_project_g2.Services.CheckLoggedIn" %>
+<%@page import="com.prj_project_g2.Services.CookieServices" %>
 
 <%
-    if (!CheckLoggedIn.check(request.getCookies())) {
+    if (!CookieServices.checkAdminLoggedIn(request.getCookies())) {
         response.sendRedirect("./login");
     }
 %>
@@ -17,17 +17,10 @@
     <jsp:param name="title" value="Dashboard"/>
 </jsp:include>
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-        <button onclick="location.href = './logout';">Logout</button>
-    </body>
-</html>
+<div class="hello">
+    <h1>Hi <b><%out.print(CookieServices.getUserName(request.getCookies()));%>!</b></h1>
+    <button onclick="location.href = './logout';">Logout</button>
+</div>
 
 <%@ include file="foot.jsp" %>
 

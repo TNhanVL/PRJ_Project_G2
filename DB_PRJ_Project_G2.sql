@@ -168,4 +168,4 @@ INSERT INTO [user](avatar, username, [password], email, [firstName], [lastName],
 ('https://example.com/avatar1.jpg', 'diemhuong1210', '12345678', 'dh1210@example.com', 'Huong', 'Nguyen', '2003-10-10', 16, 1)
 GO
 
-SELECT * FROM [user];
+SELECT * FROM [user] LIMIT 2;

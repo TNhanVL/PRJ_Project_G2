@@ -1,55 +1,16 @@
-h1 {
-    margin-top: 10px;
-    text-align: center;
-}
-
-.studentListTitle {
+.hello{
     display: flex;
     align-items: center;
 }
 
-.studentListTitle h1 {
-    margin-left: auto;
-    margin-right: auto;
+.hello h1{
+    display: inline-block;    
 }
 
-.studentListTitle button {
-    width: auto;
-    height: 100%;
-}
-
-.content{
-}
-
-#studentsTable {
-    width: 100%;
-    background-color: #007bff;
-    border: solid 2px black;
-    border-radius: 7px;
-    overflow: hidden;
-}
-
-#studentsTable tr td{
-    background-color: white;
-}
-
-.tableHeader {
-    background-color: #007bff;
-    color: #ffffff;
-}
-
-.tableHeader th, tr td{
-    padding: 10px;
-}
-
-#updateStudentForm>div{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-#updateStudentForm>div>div{
-    width: calc(50% - 10px);
+.hello button{
+    display: inline-block;
+    height: fit-content;
+    margin-left: 10px;
 }
 
 #toast {

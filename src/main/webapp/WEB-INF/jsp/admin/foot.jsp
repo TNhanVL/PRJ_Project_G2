@@ -5,22 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div id="toast"></div>
-
-<script>
-    <%
-        String message = (String) request.getSession().getAttribute("success");
-        if(message != null && message != ""){
-            out.println("showSuccesToast('" + message + "');");
-            request.getSession().removeAttribute("success");
-        }
-        message = (String) request.getSession().getAttribute("error");
-        if(message != null && message != ""){
-            out.println("showErrorToast('" + message + "');");
-            request.getSession().removeAttribute("error");
-        }
-    %>
-</script>
 
 <!-- jquery-validation -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
