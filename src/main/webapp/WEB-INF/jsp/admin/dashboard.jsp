@@ -33,6 +33,7 @@
         <th>Email</th>
         <th>FirstName</th>
         <th>LastName</th>
+        <th>Role</th>
         <th>Status</th>
         <th>Modify</th>
     </tr>
@@ -47,7 +48,24 @@
         <td><%out.print(users.get(i).getEmail());%></td>
         <td><%out.print(users.get(i).getFirstName());%></td>
         <td><%out.print(users.get(i).getLastName());%></td>
-        <td><%out.print(users.get(i).getStatus());%></td>
+        <td><%switch (users.get(i).getRole()) {
+                case 0:
+                    out.print("Student");
+                    break;
+                case 1:
+                    out.print("Lecturer");
+                    break;
+            }
+            %></td>
+        <td><%switch (users.get(i).getStatus()) {
+                case 0:
+                    out.print("Locked");
+                    break;
+                case 1:
+                    out.print("Legal");
+                    break;
+            }
+            %></td>
         <td>
             <a
                 href="./editUser?id=<%out.print(users.get(i).getID());%>">
