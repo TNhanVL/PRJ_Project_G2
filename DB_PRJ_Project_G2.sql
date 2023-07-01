@@ -163,7 +163,7 @@ INSERT INTO [admin](username, [password]) VALUES
 ('admin','0e7517141fb53f21ee439b355b5a1d0a'),
 ('quantri','0e7517141fb53f21ee439b355b5a1d0a')
 GO
-INSERT INTO [user](avatar, username, [password], email, [firstName], [lastName], [role], birthday,countryID, [status]) VALUES
+INSERT INTO [user](avatar, username, [password], email, firstName, lastName, [role], birthday,countryID, [status]) VALUES
 ('https://example.com/avatar.jpg', 'user1', 'abcdef', 'user1@example.com', 'John', 'Doe', 0, '1990-01-01', 16, 1),
 ('https://example.com/avatar.jpg', 'dylan12', '12345678', 'dylan@example.com', 'Dylan', 'Nguyen', 0, '2003-10-12', 16, 1),
 ('https://example.com/avatar1.jpg', 'diemhuong1210', '12345678', 'dh1210@example.com', 'Huong', 'Nguyen', 1, '2003-10-10', 16, 1)

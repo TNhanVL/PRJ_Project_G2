@@ -21,12 +21,15 @@
     <jsp:param name="title" value="Dashboard"/>
 </jsp:include>
 
+<body class="not-login-page">
+
 <div class="hello">
     <h1>Hi <b><%out.print(CookieServices.getUserName(request.getCookies()));%>!</b></h1>
     <button onclick="location.href = './logout';">Logout</button>
 </div>
 
 <table>
+    <h2>List of Users</h2>
     <tr class="tableHeader">
         <th>ID</th>
         <th>Username</th>
@@ -80,6 +83,7 @@
     <%}%>
 </table>
 
+</body>
 <%@ include file="foot.jsp" %>
 
 <%@ include file="popupMessage.jsp" %>

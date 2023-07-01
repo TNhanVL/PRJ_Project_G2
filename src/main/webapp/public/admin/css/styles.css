@@ -1,3 +1,7 @@
+.not-login-page {
+    padding: 10px;
+}
+
 .hello {
     display: flex;
     align-items: center;
@@ -11,6 +15,10 @@
     display: inline-block;
     height: fit-content;
     margin-left: 10px;
+}
+
+h2 {
+    color: #007bff;
 }
 
 table {
@@ -39,6 +47,15 @@ table a {
     text-decoration: none;
 }
 
+#updateUserForm>div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#updateUserForm>div>div {
+    width: calc(50% - 10px);
+}
 
 #toast {
     position: fixed;

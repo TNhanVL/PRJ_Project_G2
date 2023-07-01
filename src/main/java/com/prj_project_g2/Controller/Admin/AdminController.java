@@ -2,13 +2,19 @@ package com.prj_project_g2.Controller.Admin;
 
 import com.prj_project_g2.Database.AdminDB;
 import com.prj_project_g2.Database.UserDB;
+import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -65,9 +71,34 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/editUser", method = RequestMethod.GET)
-    @ResponseBody
     public String editUser(ModelMap model, @RequestParam String id) {
-        return id;
+        return "admin/editUser";
+    }
+
+    @InitBinder
+    private void dateBinder(WebDataBinder binder) {
+        //The date format to parse or output your dates
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //Create a new CustomDateEditor
+        CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
+        //Register it as custom editor for the Date type
+        binder.registerCustomEditor(Date.class, editor);
+    }
+
+    @RequestMapping(value = "/editUser", method = RequestMethod.POST)
+    public String editUserPost(ModelMap model, HttpServletRequest request, @RequestParam String id, @ModelAttribute("user") User user) {
+        try {
+            boolean ok = UserDB.updateUser(user);
+            if (ok) {
+                request.getSession().setAttribute("success", "Update User information succeed!");
+            } else {
+                request.getSession().setAttribute("error", "Update User information failed!");
+            }
+        } catch (NumberFormatException e) {
+            request.getSession().setAttribute("error", "There are some error when update User information!");
+            return "redirect:./dashboard";
+        }
+        return "admin/editUser";
     }
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
@@ -76,10 +107,10 @@ public class AdminController {
             if (UserDB.deleteUser(Integer.parseInt(id))) {
                 request.getSession().setAttribute("success", "Delete user succeed!");
             } else {
-                request.getSession().setAttribute("success", "Delete user failed!");
+                request.getSession().setAttribute("error", "Delete user failed!");
             }
         } catch (NumberFormatException e) {
-            request.getSession().setAttribute("success", "There are some errors when delete user!");
+            request.getSession().setAttribute("error", "There are some errors when delete user!");
         }
 
         return "redirect:./dashboard";

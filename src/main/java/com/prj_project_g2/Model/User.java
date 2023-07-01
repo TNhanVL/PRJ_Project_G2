@@ -1,6 +1,8 @@
 package com.prj_project_g2.Model;
 
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  *
@@ -16,6 +18,7 @@ public class User {
     private String firstname;
     private String lastname;
     private int role;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     private int countryID;
     private int status;

@@ -198,7 +198,7 @@ public class UserDB extends DB {
         try {
             connect();
 
-            statement = conn.prepareStatement("UPDATE [user] SET avatar = ?, username = ?, password = ?, email = ?, firstName = ?, lastName = ?, birthday = ?, countryID = ?, status = ? WHERE ID = ?");
+            statement = conn.prepareStatement("UPDATE [user] SET avatar = ?, username = ?, [password] = ?, email = ?, firstName = ?, lastName = ?, birthday = ?, countryID = ?, [status] = ? WHERE ID = ?");
             statement.setString(1, user.getAvatar());
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());
@@ -209,9 +209,10 @@ public class UserDB extends DB {
             statement.setInt(8, user.getCountryID());
             statement.setInt(9, user.getStatus());
             statement.setInt(10, user.getID());
-            statement.executeUpdate();
+            statement.execute();
 
             disconnect();
+            
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
