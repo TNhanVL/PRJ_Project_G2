@@ -1,6 +1,7 @@
 package com.prj_project_g2.Controller.Admin;
 
 import com.prj_project_g2.Database.AdminDB;
+import com.prj_project_g2.Database.UserDB;
 import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
 import javax.servlet.http.Cookie;
@@ -43,7 +44,7 @@ public class AdminController {
         response.addCookie(cookie);
         return "redirect:./dashboard";
     }
-    
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 //        model.addAttribute("title", "Index!");
@@ -57,9 +58,30 @@ public class AdminController {
         request.getSession().setAttribute("success", "Logout succeed!");
         return "redirect:./login";
     }
-    
+
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String dashboard(ModelMap model) {
         return "admin/dashboard";
+    }
+
+    @RequestMapping(value = "/editUser", method = RequestMethod.GET)
+    @ResponseBody
+    public String editUser(ModelMap model, @RequestParam String id) {
+        return id;
+    }
+
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+    public String deleteUser(ModelMap model, @RequestParam String id, HttpServletRequest request) {
+        try {
+            if (UserDB.deleteUser(Integer.parseInt(id))) {
+                request.getSession().setAttribute("success", "Delete user succeed!");
+            } else {
+                request.getSession().setAttribute("success", "Delete user failed!");
+            }
+        } catch (NumberFormatException e) {
+            request.getSession().setAttribute("success", "There are some errors when delete user!");
+        }
+
+        return "redirect:./dashboard";
     }
 }

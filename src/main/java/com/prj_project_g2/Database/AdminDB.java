@@ -93,41 +93,6 @@ public class AdminDB extends DB {
         return status;
     }
 
-    public static ArrayList<User> getAllUsers() {
-        ArrayList<User> list = new ArrayList<>();
-
-        try {
-            //connect to database
-            connect();
-
-            statement = conn.prepareStatement("select * from [user]");
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                User user = new User(
-                        resultSet.getInt("ID"),
-                        resultSet.getString("avatar"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        resultSet.getString("email"),
-                        resultSet.getString("firstName"),
-                        resultSet.getString("lastName"),
-                        resultSet.getInt("role"),
-                        resultSet.getDate("birthday"),
-                        resultSet.getInt("countryID"),
-                        resultSet.getInt("status")
-                );
-                list.add(user);
-            }
-
-            disconnect();
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return list;
-    }
-
     public static void main(String[] args) throws ClassNotFoundException {
 //        System.out.println(getAllUsers().size());
     }

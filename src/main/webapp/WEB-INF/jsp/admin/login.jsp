@@ -23,7 +23,7 @@
     <div class="card">
         <div class="card-body login-card-body">
             <div class="login-logo">
-                <b>Students Management</b>
+                <b>Users Management</b>
             </div>
             <%if (request.getSession().getAttribute("error") != null) {%>
             <div class="alert alert-danger">

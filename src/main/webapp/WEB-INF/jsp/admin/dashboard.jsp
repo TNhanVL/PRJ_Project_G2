@@ -4,6 +4,7 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Database.UserDB"%>
 <%@page import="com.prj_project_g2.Database.AdminDB"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
@@ -36,7 +37,7 @@
         <th>Modify</th>
     </tr>
     <%
-        ArrayList<User> users = AdminDB.getAllUsers();
+        ArrayList<User> users = UserDB.getAllUsers();
         for (int i = 0; i < users.size(); i++) {
 
     %>

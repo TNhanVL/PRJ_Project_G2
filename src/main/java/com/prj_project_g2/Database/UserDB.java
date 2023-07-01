@@ -99,10 +99,8 @@ public class UserDB extends DB {
             //connect to database
             connect();
 
-            System.out.println("1");
-
             statement = conn.prepareStatement("select * from [user] where ID = ?");
-            statement.setString(1, "1");
+            statement.setInt(1, ID);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -127,6 +125,41 @@ public class UserDB extends DB {
         }
 
         return user;
+    }
+
+    public static ArrayList<User> getAllUsers() {
+        ArrayList<User> list = new ArrayList<>();
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select * from [user]");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("avatar"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getInt("role"),
+                        resultSet.getDate("birthday"),
+                        resultSet.getInt("countryID"),
+                        resultSet.getInt("status")
+                );
+                list.add(user);
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
     }
 
     public static int insertUser(User user) {
@@ -188,10 +221,8 @@ public class UserDB extends DB {
     }
 
     public static boolean deleteUser(int ID) {
-
-        User user = getUser(ID);
-
         try {
+            User user = getUser(ID);
 
             if (user == null) {
                 return false;
@@ -201,12 +232,7 @@ public class UserDB extends DB {
             statement.setInt(1, ID);
             statement.execute();
             disconnect();
-            user = getUser(ID);
-            if (user == null) {
-                return true;
-            } else {
-                return false;
-            }
+            return true;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
