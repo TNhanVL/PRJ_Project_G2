@@ -93,13 +93,8 @@ public class AdminDB extends DB {
         return status;
     }
 
-    public static ArrayList<User> getAllUsers(Cookie[] cookies) {
+    public static ArrayList<User> getAllUsers() {
         ArrayList<User> list = new ArrayList<>();
-
-        //check admin permission
-        if (!CookieServices.checkAdminLoggedIn(cookies)) {
-            return list;
-        }
 
         try {
             //connect to database
@@ -107,8 +102,7 @@ public class AdminDB extends DB {
 
             System.out.println("1");
 
-            statement = conn.prepareStatement("select * from [user] where ID = ?");
-            statement.setString(1, "1");
+            statement = conn.prepareStatement("select * from [user]");
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -124,6 +118,7 @@ public class AdminDB extends DB {
                         resultSet.getInt("countryID"),
                         resultSet.getInt("status")
                 );
+                list.add(user);
             }
 
             disconnect();
