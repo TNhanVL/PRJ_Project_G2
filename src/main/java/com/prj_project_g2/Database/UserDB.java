@@ -114,6 +114,7 @@ public class UserDB extends DB {
                         resultSet.getString("email"),
                         resultSet.getString("firstName"),
                         resultSet.getString("lastName"),
+                        resultSet.getInt("role"),
                         resultSet.getDate("birthday"),
                         resultSet.getInt("countryID"),
                         resultSet.getInt("status")
@@ -128,24 +129,23 @@ public class UserDB extends DB {
         return user;
     }
 
-   
-
     public static int insertUser(User user) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
             connect();
 
-            statement = conn.prepareStatement("insert into [user](avatar,username,password,email,firstName,lastName,birthday,countryID,status) values(?,?,?,?,?,?,?,?,?)");
+            statement = conn.prepareStatement("insert into [user](avatar,username,[password],email,firstName,lastName,[role],birthday,countryID,status) values(?,?,?,?,?,?,?,?,?)");
             statement.setString(1, user.getAvatar());
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getEmail());
             statement.setString(5, user.getFirstName());
             statement.setString(6, user.getLastName());
-            statement.setString(7, dateFormat.format(user.getBirthday()));
-            statement.setInt(8, user.getCountryID());
-            statement.setInt(9, user.getStatus());
+            statement.setInt(7, user.getRole());
+            statement.setString(8, dateFormat.format(user.getBirthday()));
+            statement.setInt(9, user.getCountryID());
+            statement.setInt(10, user.getStatus());
             statement.executeUpdate();
 
             int newID = lastModifyID(conn);

@@ -15,6 +15,7 @@ public class User {
     private String email;
     private String firstname;
     private String lastname;
+    private int role;
     private Date birthday;
     private int countryID;
     private int status;
@@ -22,7 +23,7 @@ public class User {
     public User() {
     }
 
-    public User(int ID, String avatar, String username, String password, String email, String firstname, String lastname, Date birthday, int countryID, int status) {
+    public User(int ID, String avatar, String username, String password, String email, String firstname, String lastname, int role, Date birthday, int countryID, int status) {
         this.ID = ID;
         this.avatar = avatar;
         this.username = username;
@@ -30,6 +31,7 @@ public class User {
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.role = role;
         this.birthday = birthday;
         this.countryID = countryID;
         this.status = status;
@@ -89,6 +91,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastname = lastName;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public Date getBirthday() {

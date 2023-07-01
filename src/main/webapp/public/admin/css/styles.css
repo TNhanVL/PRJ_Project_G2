@@ -1,17 +1,44 @@
-.hello{
+.hello {
     display: flex;
     align-items: center;
 }
 
-.hello h1{
-    display: inline-block;    
+.hello h1 {
+    display: inline-block;
 }
 
-.hello button{
+.hello button {
     display: inline-block;
     height: fit-content;
     margin-left: 10px;
 }
+
+table {
+    width: calc(100% - 40px);
+    background-color: #007bff;
+    border: solid 2px black;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+table tr td {
+    background-color: white;
+}
+
+.tableHeader {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.tableHeader th,
+tr td {
+    padding: 10px;
+}
+
+table a {
+    text-decoration: none;
+}
+
 
 #toast {
     position: fixed;
@@ -47,25 +74,36 @@
 .toastMessage.success {
     background-color: #fff;
     color: black;
+
     .toastIcon {
         color: rgb(72, 236, 72);
-    };
+    }
+
+    ;
     border-left: 4px solid rgb(41, 205, 15);
 }
+
 .toastMessage.error {
     background-color: #fff;
     color: black;
+
     .toastIcon {
         color: rgb(227, 60, 60);
-    };
+    }
+
+    ;
     border-left: 4px solid rgb(218, 20, 20);
 }
+
 .toastMessage.warning {
     background-color: #fff;
     color: black;
+
     .toastIcon {
         color: rgb(228, 228, 13);
-    };
+    }
+
+    ;
     border-left: 4px solid rgb(228, 228, 13);
 }
 

@@ -100,12 +100,10 @@ public class AdminDB extends DB {
             //connect to database
             connect();
 
-            System.out.println("1");
-
             statement = conn.prepareStatement("select * from [user]");
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 User user = new User(
                         resultSet.getInt("ID"),
                         resultSet.getString("avatar"),
@@ -114,6 +112,7 @@ public class AdminDB extends DB {
                         resultSet.getString("email"),
                         resultSet.getString("firstName"),
                         resultSet.getString("lastName"),
+                        resultSet.getInt("role"),
                         resultSet.getDate("birthday"),
                         resultSet.getInt("countryID"),
                         resultSet.getInt("status")
@@ -130,18 +129,6 @@ public class AdminDB extends DB {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
-
-        try {
-            connect();
-
-//            System.out.println(checkAdmin("admin", "Admin@123"));
-//            System.out.println(checkAdmin("ffff", "Admin@123"));
-//            System.out.println(checkAdmin("admin", "Admin@1234444"));
-            System.out.println(checkAdmin("admin", "Admin@123", false));
-
-            disconnect();
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        System.out.println(getAllUsers().size());
     }
 }
