@@ -198,21 +198,22 @@ public class UserDB extends DB {
         try {
             connect();
 
-            statement = conn.prepareStatement("UPDATE [user] SET avatar = ?, username = ?, [password] = ?, email = ?, firstName = ?, lastName = ?, birthday = ?, countryID = ?, [status] = ? WHERE ID = ?");
+            statement = conn.prepareStatement("UPDATE [user] SET avatar = ?, username = ?, [password] = ?, email = ?, firstName = ?, lastName = ?, role = ?, birthday = ?, countryID = ?, [status] = ? WHERE ID = ?");
             statement.setString(1, user.getAvatar());
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getEmail());
             statement.setString(5, user.getFirstName());
             statement.setString(6, user.getLastName());
-            statement.setString(7, dateFormat.format(user.getBirthday()));
-            statement.setInt(8, user.getCountryID());
-            statement.setInt(9, user.getStatus());
-            statement.setInt(10, user.getID());
+            statement.setInt(7, user.getRole());
+            statement.setString(8, dateFormat.format(user.getBirthday()));
+            statement.setInt(9, user.getCountryID());
+            statement.setInt(10, user.getStatus());
+            statement.setInt(11, user.getID());
             statement.execute();
 
             disconnect();
-            
+
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);

@@ -5,6 +5,7 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Lecturer;
+import com.prj_project_g2.Model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,44 +17,20 @@ import java.util.logging.Logger;
  */
 public class LectureDB extends DB {
 
-    public static boolean existLecture(int ID) {
-        boolean ok = false;
-        try {
-            //connect to database
-            connect();
-
-            statement = conn.prepareStatement("select ID from lecturer where ID = ?");
-            statement.setInt(1, ID);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                if (resultSet.getInt("ID") == ID) {
-                    ok = true;
-                }
-            }
-
-            //disconnect to database
-            disconnect();
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //return result
-        return ok;
-    }
-
-    public static Lecturer getLecturer(int ID) {
+    public static Lecturer getLecturer(int userID) {
         Lecturer lecturer = null;
 
         try {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("select * from lecturer where ID = ?");
-            statement.setInt(1, ID);
+            statement = conn.prepareStatement("select * from lecturer where userID = ?");
+            statement.setInt(1, userID);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                lecturer = new Lecturer(ID, resultSet.getInt("userID"), resultSet.getInt("organizationID"));
+                User user = UserDB.getUser(userID);
+                lecturer = new Lecturer(user, resultSet.getInt("organizationID"));
             }
 
             disconnect();
@@ -64,38 +41,35 @@ public class LectureDB extends DB {
         return lecturer;
     }
 
-    public static int insertLecturer(Lecturer lec) {
+    public static boolean insertLecturer(Lecturer lecturer) {
         try {
             //connect to database
             connect();
 
             statement = conn.prepareStatement("insert into lecturer(userID,organizationID) values(?,?)");
-            statement.setInt(1, lec.getUserID());
-            statement.setInt(2, lec.getOrganizationID());
-            statement.executeUpdate();
+            statement.setInt(1, lecturer.getID());
+            statement.setInt(2, lecturer.getOrganizationID());
+            statement.execute();
             //Indentify the last ID inserted
-            int newID = DB.lastModifyID(conn);
             //disconnect to database
             disconnect();
-            return newID;
 
+            return true;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-
         }
-        return -1;
+        return false;
     }
 
-    public static boolean updateLecturer(Lecturer lec) {
+    public static boolean updateLecturer(Lecturer lecturer) {
 
         try {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("update lecturer set userID=?, organizationID=? where ID = ?");
-            statement.setInt(1, lec.getUserID());
-            statement.setInt(2, lec.getOrganizationID());
-            statement.setInt(3, lec.getID());
+            statement = conn.prepareStatement("update lecturer set organizationID=? where userID = ?");
+            statement.setInt(1, lecturer.getOrganizationID());
+            statement.setInt(2, lecturer.getID());
             statement.executeUpdate();
 
             //disconnect to database
@@ -109,21 +83,17 @@ public class LectureDB extends DB {
         return false;
     }
 
-    public static boolean deleteLecturer(int ID) {
+    public static boolean deleteLecturer(int userID) {
         try {
-            if (!existLecture(ID)) {
+            if (getLecturer(userID) == null) {
                 return false;
             }
             connect();
-            statement = conn.prepareStatement("delete from lecturer where ID=?");
-            statement.setInt(1, ID);
+            statement = conn.prepareStatement("delete from lecturer where userID=?");
+            statement.setInt(1, userID);
             statement.execute();
             disconnect();
-            if (!existLecture(ID)) {
-                return true;
-            } else {
-                return false;
-            }
+            return getLecturer(userID) != null;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -131,19 +101,8 @@ public class LectureDB extends DB {
     }
 
     public static void main(String[] args) {
-//        
-//        Lecturer le = new Lecturer(3, 1, 1);
-//        insertLecturer(le);
-//        
-//        Lecturer l2 = getLecturer(4);
-//        l2.setOrganizationID(1);
-
-//        System.out.println("**************************");
-//        System.out.println(l2.toString());
-//        System.out.println("**************************");
-        //     System.out.println(deleteLecturer(4));
-//        System.out.println(nearestInsertID());
-//            nearestInsertID();
-//            System.out.println(insertLecturer(new Lecturer(4, 4, 4)));
+        User user = UserDB.getUser(1);
+        Lecturer lect = new Lecturer(user, 1);
+        insertLecturer(lect);
     }
 }

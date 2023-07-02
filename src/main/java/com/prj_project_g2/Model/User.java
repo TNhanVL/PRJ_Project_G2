@@ -40,6 +40,20 @@ public class User {
         this.status = status;
     }
 
+    public User(User user) {
+        this.ID = user.ID;
+        this.avatar = user.avatar;
+        this.username = user.username;
+        this.password = user.password;
+        this.email = user.email;
+        this.firstname = user.firstname;
+        this.lastname = user.lastname;
+        this.role = user.role;
+        this.birthday = user.birthday;
+        this.countryID = user.countryID;
+        this.status = user.status;
+    }
+
     public int getID() {
         return ID;
     }

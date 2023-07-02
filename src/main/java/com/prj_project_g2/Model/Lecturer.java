@@ -8,34 +8,16 @@ package com.prj_project_g2.Model;
  *
  * @author Thanh Duong
  */
-public class Lecturer {
-    private int ID;
-    private int userID;
+public class Lecturer extends User {
+
     private int organizationID;
 
     public Lecturer() {
     }
 
-    public Lecturer(int ID, int userID, int organizationID) {
-        this.ID = ID;
-        this.userID = userID;
+    public Lecturer(User user, int organizationID) {
+        super(user);
         this.organizationID = organizationID;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public int getOrganizationID() {
@@ -45,11 +27,4 @@ public class Lecturer {
     public void setOrganizationID(int organizationID) {
         this.organizationID = organizationID;
     }
-
-    @Override
-    public String toString() {
-        return "Lecturer{" + "ID=" + ID + ", userID=" + userID + ", organizationID=" + organizationID + '}';
-    }
-    
-    
 }
