@@ -170,5 +170,8 @@ INSERT INTO [user](avatar, username, [password], email, firstName, lastName, [ro
 ('https://example.com/avatar.jpg', 'dylan12', '12345678', 'dylan@example.com', 'Dylan', 'Nguyen', 0, '2003-10-12', 16, 1),
 ('https://example.com/avatar1.jpg', 'diemhuong1210', '12345678', 'dh1210@example.com', 'Huong', 'Nguyen', 1, '2003-10-10', 16, 1)
 GO
+INSERT INTO organization([name], logo, [description]) VALUES
+('FPT University', 'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png', N'Trường đại học top 1 Việt Nam');
+GO
 
 SELECT * FROM [user];
