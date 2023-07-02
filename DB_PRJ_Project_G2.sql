@@ -14,7 +14,7 @@ CREATE TABLE country (
 GO
 
 CREATE TABLE organization (
-	[ID] INT IDENTITY(1,1) PRIMARY KEY, -- giá trị bắt đầu là 1, giá trị tăng thêm là 1
+	ID INT IDENTITY(1,1) PRIMARY KEY, -- giá trị bắt đầu là 1, giá trị tăng thêm là 1
 	[name] VARCHAR(50),
 	logo TEXT,
 	[description] NVARCHAR(50)
@@ -22,7 +22,7 @@ CREATE TABLE organization (
 GO
 
 CREATE TABLE [user] (
-	[ID] INT IDENTITY(1,1) PRIMARY KEY,
+	ID INT IDENTITY(1,1) PRIMARY KEY,
 	avatar TEXT,
 	username VARCHAR(50),
 	[password] VARCHAR(50),
@@ -44,7 +44,7 @@ CREATE TABLE lecturer (
 );
 
 CREATE TABLE course (
-	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	title NVARCHAR(50) NOT NULL,
 	[image] TEXT,
 	[description] NVARCHAR(50),
@@ -75,7 +75,7 @@ CREATE TABLE purchasedCourse (
 GO
 
 CREATE TABLE mooc (
-	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	courseID INT NOT NULL,
 	[index] INT NOT NULL,
 	title NVARCHAR(50),
@@ -85,7 +85,7 @@ CREATE TABLE mooc (
 GO
 
 CREATE TABLE lesson (
-	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	moocID INT NOT NULL,
 	title NVARCHAR(50),
 	type INT NOT NULL,
@@ -174,5 +174,7 @@ GO
 INSERT INTO organization([name], logo, [description]) VALUES
 ('FPT University', 'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png', N'Trường đại học top 1 Việt Nam');
 GO
-
+INSERT INTO course(title,[image],[description],organizationID,lecturerID,price) VALUES
+('Java basic', 'https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://d15cw65ipctsrr.cloudfront.net/17/6b66f0a7ea11e7a885e33e8374f520/software_development_lifecycle_logo_pexels_CC0.jpg?auto=format&dpr=1&w=100&h=100&fit=clamp', 'ezsy', 1, 1, 50000);
+GO
 SELECT * FROM [user];

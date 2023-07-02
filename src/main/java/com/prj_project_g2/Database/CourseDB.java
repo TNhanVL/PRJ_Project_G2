@@ -56,6 +56,7 @@ public class CourseDB extends DB {
                 course = new Course(
                         resultSet.getInt("ID"),
                         resultSet.getString("title"),
+                        resultSet.getString("image"),
                         resultSet.getString("description"),
                         resultSet.getInt("organizationID"),
                         resultSet.getInt("lecturerID"),
@@ -75,14 +76,15 @@ public class CourseDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("insert into course(title,description,organizationID,lecturerID,price) values (?,?,?,?,?)");
+            statement = conn.prepareStatement("insert into course(title,[image],[description],organizationID,lecturerID,price) values (?,?,?,?,?,?)");
             statement.setString(1, course.getTitle());
-            statement.setString(2, course.getDescription());
-            statement.setInt(3, course.getOrganizationID());
-            statement.setInt(4, course.getLecturerID());
-            statement.setInt(5, course.getPrice());
+            statement.setString(2, course.getImage());
+            statement.setString(3, course.getDescription());
+            statement.setInt(4, course.getOrganizationID());
+            statement.setInt(5, course.getLecturerID());
+            statement.setInt(6, course.getPrice());
 
-            statement.executeUpdate();
+            statement.execute();
 
             //disconnect to database
             disconnect();
@@ -100,13 +102,14 @@ public class CourseDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("update course set title=?, description=?,organizationID=?,lecturerID=?,price=? where ID =?");
+            statement = conn.prepareStatement("update course set title=?, [image]=?, [description]=?,organizationID=?,lecturerID=?,price=? where ID =?");
             statement.setString(1, course.getTitle());
-            statement.setString(2, course.getDescription());
-            statement.setInt(3, course.getOrganizationID());
-            statement.setInt(4, course.getLecturerID());
-            statement.setInt(5, course.getPrice());
-            statement.setInt(6, course.getID());
+            statement.setString(2, course.getImage());
+            statement.setString(3, course.getDescription());
+            statement.setInt(4, course.getOrganizationID());
+            statement.setInt(5, course.getLecturerID());
+            statement.setInt(6, course.getPrice());
+            statement.setInt(7, course.getID());
 
             statement.executeUpdate();
 
@@ -144,7 +147,7 @@ public class CourseDB extends DB {
     public static void main(String[] args) {
 //        System.out.println(existCourse(1));
 //
-        Course c = new Course(11, "Java basic", "ezsy", 1, 1, 50000);
+        Course c = new Course(11, "Java basic", "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://d15cw65ipctsrr.cloudfront.net/17/6b66f0a7ea11e7a885e33e8374f520/software_development_lifecycle_logo_pexels_CC0.jpg?auto=format&dpr=1&w=100&h=100&fit=clamp", "ezsy", 1, 1, 50000);
         insertCourse(c);
 //        System.out.println(existCourse(11));
 //

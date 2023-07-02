@@ -9,8 +9,10 @@ package com.prj_project_g2.Model;
  * @author Thanh Duong
  */
 public class Course {
+
     private int ID;
     private String title;
+    private String image;
     private String description;
     private int organizationID;
     private int lecturerID;
@@ -19,9 +21,10 @@ public class Course {
     public Course() {
     }
 
-    public Course(int ID, String title, String description, int organizationID, int lecturerID, int price) {
+    public Course(int ID, String title, String image, String description, int organizationID, int lecturerID, int price) {
         this.ID = ID;
         this.title = title;
+        this.image = image;
         this.description = description;
         this.organizationID = organizationID;
         this.lecturerID = lecturerID;
@@ -42,6 +45,14 @@ public class Course {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getDescription() {
@@ -78,8 +89,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" + "ID=" + ID + ", title=" + title + ", description=" + description + ", organizationID=" + organizationID + ", lecturerID=" + lecturerID + ", price=" + price + '}';
+        return "Course{" + "ID=" + ID + ", title=" + title + ", image=" + image + ", description=" + description + ", organizationID=" + organizationID + ", lecturerID=" + lecturerID + ", price=" + price + '}';
     }
-    
-    
+
 }
