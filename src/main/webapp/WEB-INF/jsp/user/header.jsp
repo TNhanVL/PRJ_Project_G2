@@ -4,7 +4,20 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Database.UserDB"%>
+<%@page import="com.prj_project_g2.Model.User"%>
+<%@page import="com.prj_project_g2.Services.CookieServices"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    boolean loggedIn = false;
+    User user = null;
+    if (CookieServices.checkUserLoggedIn(request.getCookies())) {
+        loggedIn = true;
+        user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+    }
+%>
+
 <div id="header">
     <div class="left-side">
         <a href="">
@@ -25,10 +38,20 @@
         </a>
         <div class="user">
             <a href="">
-                <img src="https://scontent.fsgn13-4.fna.fbcdn.net/v/t39.30808-6/286987196_1384937328585396_7748493032904500294_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=FvJhe2ECN9UAX9fSGzN&_nc_ht=scontent.fsgn13-4.fna&oh=00_AfAUVcWrvZXla4zRAC0mPPnVmD79upxbEXzX8ByO6UlffA&oe=64A6A181" alt="avatar">
-                <span class="userInfor">
-                    UserName
-                </span>
+                <img src="<%
+                    if (loggedIn) {
+                        out.print(user.getAvatar());
+                    } else {
+                        out.print("https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png");
+                    }
+                     %>" alt="avatar">
+                <span class="userInfor"><%
+                    if (loggedIn) {
+                        out.print(user.getUsername());
+                    } else {
+                        out.print("Guest!");
+                    }
+                    %></span>
             </a>
         </div>
 
