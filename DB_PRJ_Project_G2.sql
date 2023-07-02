@@ -1,4 +1,4 @@
-drop table [admin], answer, questionResult, question, quizResult, post, lesson, mooc, purchasedCourse, [certificate], [user], country, course, lecturer, organization
+drop table [admin], questionResult, answer, question, quizResult, post, lesson, mooc, purchasedCourse, [certificate], course, lecturer, [user], country, organization
 
 -- Create the tables
 CREATE TABLE [admin] (
@@ -15,7 +15,7 @@ GO
 
 CREATE TABLE organization (
 	[ID] INT IDENTITY(1,1) PRIMARY KEY, -- giá trị bắt đầu là 1, giá trị tăng thêm là 1
-	name VARCHAR(50),
+	[name] VARCHAR(50),
 	logo TEXT,
 	[description] NVARCHAR(50)
 );
@@ -37,9 +37,10 @@ CREATE TABLE [user] (
 GO
 
 CREATE TABLE lecturer (
-	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	userID VARCHAR(50) NOT NULL,
-	organizationID VARCHAR(50) NOT NULL
+	userID INT NOT NULL PRIMARY KEY,
+	organizationID INT NOT NULL,
+	FOREIGN KEY (userID) REFERENCES [user](ID),
+	FOREIGN KEY (organizationID) REFERENCES organization(ID)
 );
 
 CREATE TABLE course (
@@ -50,7 +51,7 @@ CREATE TABLE course (
 	lecturerID INT NOT NULL,
 	price INT NOT NULL,
 	FOREIGN KEY (organizationID) REFERENCES organization(ID),
-	FOREIGN KEY (lecturerID) REFERENCES lecturer(ID)
+	FOREIGN KEY (lecturerID) REFERENCES [user](ID)
 );
 GO
 
@@ -102,13 +103,13 @@ GO
 CREATE TABLE question (
 	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	content TEXT NOT NULL,
-    type INT NOT NULL,
+    [type] INT NOT NULL,
 	point INT
 );
 GO
 
 CREATE TABLE answer (
-	[ID] INT IDENTITY(1,1),
+	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	content TEXT,
 	correct BIT NOT NULL, --True: 1, False: 0
 	questionID INT NOT NULL,
@@ -129,9 +130,10 @@ GO
 CREATE TABLE questionResult (
 	quizResultID INT,
 	questionID INT,
-	correct BIT NOT NULL
+	selectedAnswer INT,
 	FOREIGN KEY (quizResultID) REFERENCES quizResult(ID),
-	FOREIGN KEY (questionID) REFERENCES question(ID)
+	FOREIGN KEY (questionID) REFERENCES question(ID),
+	FOREIGN KEY (selectedAnswer) REFERENCES answer(ID)
 );
 GO
 
@@ -170,5 +172,3 @@ INSERT INTO [user](avatar, username, [password], email, firstName, lastName, [ro
 GO
 
 SELECT * FROM [user];
-
-select [name] from country where countryID = 1;
