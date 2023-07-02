@@ -5,7 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Country;
-import com.prj_project_g2.Model.Course;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Thanh Duong
+ * @author TTNhan
  */
 public class CountryDB extends DB {
 
