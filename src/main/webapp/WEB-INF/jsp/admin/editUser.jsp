@@ -157,4 +157,4 @@
 </body>
 <%@ include file="foot.jsp" %>
 
-<%@ include file="popupMessage.jsp" %>
+<%@ include file="popUpMessage.jsp" %>

@@ -5,6 +5,7 @@
 package com.prj_project_g2.Services;
 
 import com.prj_project_g2.Database.AdminDB;
+import com.prj_project_g2.Database.UserDB;
 import io.jsonwebtoken.Claims;
 import javax.servlet.http.Cookie;
 
@@ -31,6 +32,32 @@ public class CookieServices {
             String username = (String) claims.get("username");
             String password = (String) claims.get("password");
             if (AdminDB.checkAdmin(username, password, true) == 0) {
+                ok = true;
+            }
+
+        } catch (Exception e) {
+        }
+
+        return ok;
+    }
+
+    public static boolean checkUserLoggedIn(Cookie[] cookies) {
+        boolean ok = false;
+
+        try {
+            String jwtToken = null;
+
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("jwtToken")) {
+                    jwtToken = cookie.getValue();
+                    break;
+                }
+            }
+
+            Claims claims = JwtUtil.parseJwt(jwtToken);
+            String username = (String) claims.get("username");
+            String password = (String) claims.get("password");
+            if (UserDB.checkUser(username, password, true) == 0) {
                 ok = true;
             }
 
