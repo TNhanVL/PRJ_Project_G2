@@ -170,3 +170,5 @@ INSERT INTO [user](avatar, username, [password], email, firstName, lastName, [ro
 GO
 
 SELECT * FROM [user];
+
+select [name] from country where countryID = 1;
