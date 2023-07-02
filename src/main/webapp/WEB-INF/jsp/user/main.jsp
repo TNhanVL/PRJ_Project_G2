@@ -4,6 +4,9 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Database.CourseDB"%>
+<%@page import="com.prj_project_g2.Model.Course"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,16 +60,19 @@
                     </div>
 
                     <ul class="courseList">
+                        <%  ArrayList<Course> courses = CourseDB.getAllCourses();
+                            for (int i = 0; i < Math.min(3, courses.size()); i++) {
+                        %>
                         <li class="listItem">
                             <a href="#">
-                                <img src="../public/assets/imgs/pyEx.png" alt="" class="courseImg">
-                                <h4 class="courseName">Python for beginner</h4>
+                                <img src="<%out.print(courses.get(i).getImage());%>" alt="" class="courseImg">
+                                <h4 class="courseName"><%out.print(courses.get(i).getTitle());%></h4>
                                 <div class="courseDescription">
                                     <span class="type">
-                                        <span>Programing</span>
-                                        <span>20h</span>
+                                        <span><%out.print(courses.get(i).getDescription());%></span>
+                                        <!--<span>20h</span>-->
                                     </span>
-                                    <span class="price">200$</span>
+                                    <span class="price"><%out.print(courses.get(i).getPrice());%>$</span>
                                 </div>
                             </a>
                             <div class="rate">
@@ -77,46 +83,7 @@
                                 <i class="fa-regular fa-star"></i>
                             </div>
                         </li>
-                        <li class="listItem">
-                            <a href="#">
-                                <img src="../public/assets/imgs/pyEx.png" alt="" class="courseImg">
-                                <h4 class="courseName">Python for beginner</h4>
-                                <div class="courseDescription">
-                                    <span class="type">
-                                        <span>Programing</span>
-                                        <span>20h</span>
-                                    </span>
-                                    <span class="price">200$</span>
-                                </div>
-                            </a>
-                            <div class="rate">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                        </li>
-                        <li class="listItem">
-                            <a href="#">
-                                <img src="../public/assets/imgs/pyEx.png" alt="" class="courseImg">
-                                <h4 class="courseName">Python for beginner</h4>
-                                <div class="courseDescription">
-                                    <span class="type">
-                                        <span>Programing</span>
-                                        <span>20h</span>
-                                    </span>
-                                    <span class="price">200$</span>
-                                </div>
-                            </a>
-                            <div class="rate">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                        </li>
+                        <%}%>
                     </ul>
 
                     <div class="nextBtn">
@@ -263,7 +230,7 @@
         <%@include file="footer.jsp" %>
 
         <%@include file="foot.jsp" %>
-        
+
         <%@include file="popUpMessage.jsp" %>
 
     </body>

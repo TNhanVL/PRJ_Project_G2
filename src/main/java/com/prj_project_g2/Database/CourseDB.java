@@ -7,6 +7,7 @@ package com.prj_project_g2.Database;
 import com.prj_project_g2.Model.Course;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,6 +70,36 @@ public class CourseDB extends DB {
         }
 
         return course;
+    }
+
+    public static ArrayList<Course> getAllCourses() {
+        ArrayList<Course> courses = new ArrayList<>();
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select * from course");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Course course = new Course(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("title"),
+                        resultSet.getString("image"),
+                        resultSet.getString("description"),
+                        resultSet.getInt("organizationID"),
+                        resultSet.getInt("lecturerID"),
+                        resultSet.getInt("price"));
+                courses.add(course);
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return courses;
     }
 
     public static boolean insertCourse(Course course) {
@@ -162,7 +193,6 @@ public class CourseDB extends DB {
 //        deleteCourse(13);
 //        deleteCourse(12);
 //        deleteCourse(11);
-
 //        System.out.println(existCourse(1));
     }
 

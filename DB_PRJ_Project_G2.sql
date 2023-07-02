@@ -167,7 +167,7 @@ INSERT INTO [admin](username, [password]) VALUES
 ('quantri','0e7517141fb53f21ee439b355b5a1d0a')
 GO
 INSERT INTO [user](avatar, username, [password], email, firstName, lastName, [role], birthday,countryID, [status]) VALUES
-('https://scontent.fsgn13-4.fna.fbcdn.net/v/t39.30808-6/286987196_1384937328585396_7748493032904500294_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=FvJhe2ECN9UAX9fSGzN&_nc_ht=scontent.fsgn13-4.fna&oh=00_AfAUVcWrvZXla4zRAC0mPPnVmD79upxbEXzX8ByO6UlffA&oe=64A6A181', 'user1', '0cc175b9c0f1b6a831c399e269772661', 'user1@example.com', 'John', 'Doe', 0, '1990-01-01', 16, 1),
+('https://scontent.fsgn13-4.fna.fbcdn.net/v/t39.30808-6/286987196_1384937328585396_7748493032904500294_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=FvJhe2ECN9UAX9fSGzN&_nc_ht=scontent.fsgn13-4.fna&oh=00_AfAUVcWrvZXla4zRAC0mPPnVmD79upxbEXzX8ByO6UlffA&oe=64A6A181', 'ttnhan', '0cc175b9c0f1b6a831c399e269772661', 'user1@example.com', 'John', 'Doe', 0, '1990-01-01', 16, 1),
 ('https://example.com/avatar.jpg', 'dylan12', '12345678', 'dylan@example.com', 'Dylan', 'Nguyen', 0, '2003-10-12', 16, 1),
 ('https://example.com/avatar1.jpg', 'diemhuong1210', '12345678', 'dh1210@example.com', 'Huong', 'Nguyen', 1, '2003-10-10', 16, 1)
 GO
@@ -175,6 +175,8 @@ INSERT INTO organization([name], logo, [description]) VALUES
 ('FPT University', 'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png', N'Trường đại học top 1 Việt Nam');
 GO
 INSERT INTO course(title,[image],[description],organizationID,lecturerID,price) VALUES
-('Java basic', 'https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://d15cw65ipctsrr.cloudfront.net/17/6b66f0a7ea11e7a885e33e8374f520/software_development_lifecycle_logo_pexels_CC0.jpg?auto=format&dpr=1&w=100&h=100&fit=clamp', 'ezsy', 1, 1, 50000);
+('Java basic', 'https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/1200px-Java_programming_language_logo.svg.png', 'ezsy', 1, 1, 200),
+('Java advance', 'https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-course-photos.s3.amazonaws.com/cb/3c4030d65011e682d8b14e2f0915fa/shutterstock_226881610.jpg?auto=format%2Ccompress&dpr=1', 'medium difficult', 1, 1, 500),
+('C++', 'https://play-lh.googleusercontent.com/_0YN8gHsg7iJvcfdgMGSIp75U6iWBv6GvDIpXKiySHi4yp8qZSAnLaJ090QCJuWivw', 'hard', 1, 1, 600);
 GO
 SELECT * FROM [user];
