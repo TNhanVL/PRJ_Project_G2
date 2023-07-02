@@ -53,6 +53,10 @@ table a {
     justify-content: space-between;
 }
 
+#updateUserForm>div:last-child{
+    display: block;
+}
+
 #updateUserForm>div>div {
     width: calc(50% - 10px);
 }
