@@ -4,8 +4,8 @@
     Author     : TTNhan
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="com.prj_project_g2.Services.CookieServices" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
     if (CookieServices.checkAdminLoggedIn(request.getCookies())) {
