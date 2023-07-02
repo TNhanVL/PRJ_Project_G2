@@ -53,7 +53,7 @@ public class UserDB extends DB {
      *
      * @param username
      * @param password
-     * * @param hashed true if password hashed
+     * @param hashed true if password hashed
      * @return 0 - ok; 1 - not exist; 2 - incorrect pw
      */
     public static int checkUser(String username, String password, boolean hashed) {
@@ -74,7 +74,7 @@ public class UserDB extends DB {
                 if (!hashed) {
                     password = MD5.getMd5(password);
                 }
-                if (pw.equals(MD5.getMd5(password))) {
+                if (pw.equals(password)) {
                     //correct
                     status = 0;
                 } else {
