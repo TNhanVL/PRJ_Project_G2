@@ -50,7 +50,9 @@ CREATE TABLE course (
 	[description] NVARCHAR(50),
 	organizationID INT NOT NULL,
 	lecturerID INT NOT NULL,
-	price INT NOT NULL,
+	unSalePrice DECIMAL(10, 2) NOT NULL,
+	price DECIMAL(10, 2) NOT NULL,
+	rate DECIMAL(2, 1) NOT NULL,
 	FOREIGN KEY (organizationID) REFERENCES organization(ID),
 	FOREIGN KEY (lecturerID) REFERENCES [user](ID)
 );
