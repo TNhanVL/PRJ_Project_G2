@@ -192,8 +192,6 @@ INSERT INTO course(title,[image],[description],organizationID,lecturerID,unSaleP
 ('C++', 'https://play-lh.googleusercontent.com/_0YN8gHsg7iJvcfdgMGSIp75U6iWBv6GvDIpXKiySHi4yp8qZSAnLaJ090QCJuWivw', 'hard', 1, 1, 800, 600, 4.7);
 GO
 INSERT INTO orderCourse(userID, courseID) VALUES
-(1, 1)
+(1, 1), (1, 3)
 GO
 SELECT * FROM [user];
-
-select * from orderCourse;

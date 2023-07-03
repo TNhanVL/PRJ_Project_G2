@@ -107,4 +107,9 @@ public class Course {
         this.rate = rate;
     }
 
+    @Override
+    public String toString() {
+        return "Course{" + "ID=" + ID + ", title=" + title + ", image=" + image + ", description=" + description + ", organizationID=" + organizationID + ", lecturerID=" + lecturerID + ", unSalePrice=" + unSalePrice + ", price=" + price + ", rate=" + rate + '}';
+    }
+
 }

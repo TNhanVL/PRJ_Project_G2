@@ -228,6 +228,137 @@ public class CourseDB extends DB {
         return false;
     }
 
+    public static boolean deleteOrderCourse(int userID, int courseID) {
+        try {
+            if (!checkOrderCourse(userID, courseID)) {
+                return false;
+            }
+            connect();
+            statement = conn.prepareStatement("delete from orderCourse where userID = ? and courseID = ?");
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
+            statement.execute();
+            disconnect();
+            return !checkOrderCourse(userID, courseID);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public static ArrayList<Course> getAllOrderCourses(int userID) {
+        ArrayList<Course> courses = new ArrayList<>();
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select courseID from orderCourse where userID = ?");
+            statement.setInt(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int courseID = resultSet.getInt("courseID");
+                Course course = getCourse(courseID);
+                courses.add(course);
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return courses;
+    }
+
+    public static boolean checkPurchasedCourse(int userID, int courseID) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select 1 from purchasedCourse where userID = ? and courseID = ?");
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+
+            //disconnect to database
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //return result
+        return false;
+    }
+
+    public static boolean insertPurchasedCourse(int userID, int courseID) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("insert into purchasedCourse(userID, courseID) values (?,?)");
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
+
+            statement.execute();
+
+            //disconnect to database
+            disconnect();
+            return true;
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return false;
+    }
+
+    public static boolean deletePurchasedCourse(int userID, int courseID) {
+        try {
+            if (!checkPurchasedCourse(userID, courseID)) {
+                return false;
+            }
+            connect();
+            statement = conn.prepareStatement("delete from purchasedCourse where userID = ? and courseID = ?");
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
+            statement.execute();
+            disconnect();
+            return !checkPurchasedCourse(userID, courseID);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public static ArrayList<Course> getAllPurchasedCourses(int userID) {
+        ArrayList<Course> courses = new ArrayList<>();
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select courseID from purchasedCourse where userID = ?");
+            statement.setInt(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int courseID = resultSet.getInt("courseID");
+                Course course = getCourse(courseID);
+                courses.add(course);
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return courses;
+    }
+    
     public static void main(String[] args) {
 //        System.out.println(existCourse(1));
 //
@@ -237,7 +368,7 @@ public class CourseDB extends DB {
 //        System.out.println(checkOrderCourse(1, 1));
 //
 //        System.out.println(getCourse(11));
-        System.out.println(insertOrderCourse(1, 1));
+        System.out.println(getAllOrderCourses(1));
 //
 //        c.setDescription("Normal");
 //
