@@ -16,19 +16,23 @@ public class Course {
     private String description;
     private int organizationID;
     private int lecturerID;
-    private int price;
+    private double unSalePrice;
+    private double price;
+    private double rate;
 
     public Course() {
     }
 
-    public Course(int ID, String title, String image, String description, int organizationID, int lecturerID, int price) {
+    public Course(int ID, String title, String image, String description, int organizationID, int lecturerID, double unSalePrice, double price, double rate) {
         this.ID = ID;
         this.title = title;
         this.image = image;
         this.description = description;
         this.organizationID = organizationID;
         this.lecturerID = lecturerID;
+        this.unSalePrice = unSalePrice;
         this.price = price;
+        this.rate = rate;
     }
 
     public int getID() {
@@ -79,17 +83,28 @@ public class Course {
         this.lecturerID = lecturerID;
     }
 
-    public int getPrice() {
+    public double getUnSalePrice() {
+        return unSalePrice;
+    }
+
+    public void setUnSalePrice(double unSalePrice) {
+        this.unSalePrice = unSalePrice;
+    }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Course{" + "ID=" + ID + ", title=" + title + ", image=" + image + ", description=" + description + ", organizationID=" + organizationID + ", lecturerID=" + lecturerID + ", price=" + price + '}';
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 
 }

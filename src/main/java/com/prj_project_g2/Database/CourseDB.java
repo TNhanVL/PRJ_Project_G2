@@ -61,7 +61,9 @@ public class CourseDB extends DB {
                         resultSet.getString("description"),
                         resultSet.getInt("organizationID"),
                         resultSet.getInt("lecturerID"),
-                        resultSet.getInt("price"));
+                        resultSet.getDouble("unSalePrice"),
+                        resultSet.getDouble("price"),
+                        resultSet.getDouble("rate"));
             }
 
             disconnect();
@@ -90,7 +92,9 @@ public class CourseDB extends DB {
                         resultSet.getString("description"),
                         resultSet.getInt("organizationID"),
                         resultSet.getInt("lecturerID"),
-                        resultSet.getInt("price"));
+                        resultSet.getDouble("unSalePrice"),
+                        resultSet.getDouble("price"),
+                        resultSet.getDouble("rate"));
                 courses.add(course);
             }
 
@@ -107,13 +111,15 @@ public class CourseDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("insert into course(title,[image],[description],organizationID,lecturerID,price) values (?,?,?,?,?,?)");
+            statement = conn.prepareStatement("insert into course(title,[image],[description],organizationID,lecturerID,unSalePrice,price,rate) values (?,?,?,?,?,?,?,?)");
             statement.setString(1, course.getTitle());
             statement.setString(2, course.getImage());
             statement.setString(3, course.getDescription());
             statement.setInt(4, course.getOrganizationID());
             statement.setInt(5, course.getLecturerID());
-            statement.setInt(6, course.getPrice());
+            statement.setDouble(6, course.getUnSalePrice());
+            statement.setDouble(7, course.getPrice());
+            statement.setDouble(8, course.getRate());
 
             statement.execute();
 
@@ -133,14 +139,16 @@ public class CourseDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("update course set title=?, [image]=?, [description]=?,organizationID=?,lecturerID=?,price=? where ID =?");
+            statement = conn.prepareStatement("update course set title=?, [image]=?, [description]=?,organizationID=?,lecturerID=?,unSalePrice=?,price=?,rate=? where ID =?");
             statement.setString(1, course.getTitle());
             statement.setString(2, course.getImage());
             statement.setString(3, course.getDescription());
             statement.setInt(4, course.getOrganizationID());
             statement.setInt(5, course.getLecturerID());
-            statement.setInt(6, course.getPrice());
-            statement.setInt(7, course.getID());
+            statement.setDouble(6, course.getUnSalePrice());
+            statement.setDouble(7, course.getPrice());
+            statement.setDouble(8, course.getRate());
+            statement.setInt(9, course.getID());
 
             statement.executeUpdate();
 
@@ -178,7 +186,7 @@ public class CourseDB extends DB {
     public static void main(String[] args) {
 //        System.out.println(existCourse(1));
 //
-        Course c = new Course(11, "Java basic", "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://d15cw65ipctsrr.cloudfront.net/17/6b66f0a7ea11e7a885e33e8374f520/software_development_lifecycle_logo_pexels_CC0.jpg?auto=format&dpr=1&w=100&h=100&fit=clamp", "ezsy", 1, 1, 50000);
+        Course c = new Course(11, "Java basic", "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://d15cw65ipctsrr.cloudfront.net/17/6b66f0a7ea11e7a885e33e8374f520/software_development_lifecycle_logo_pexels_CC0.jpg?auto=format&dpr=1&w=100&h=100&fit=clamp", "ezsy", 1, 1, 1000, 500, 4.5);
         insertCourse(c);
 //        System.out.println(existCourse(11));
 //
