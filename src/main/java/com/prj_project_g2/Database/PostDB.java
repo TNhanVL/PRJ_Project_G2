@@ -67,6 +67,32 @@ public class PostDB extends DB {
         return post;
     }
 
+    public static Post getPostByLessonID(int lessonID) {
+        Post post = null;
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select * from post where lessonID = ?");
+            statement.setInt(1, lessonID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                post = new Post(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("content"),
+                        resultSet.getInt("lessonID"));
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return post;
+    }
+
     public static boolean insertPost(Post post) {
         try {
             //connect to database
@@ -128,13 +154,13 @@ public class PostDB extends DB {
         }
         return false;
     }
-    
+
     public static void main(String[] args) {
 //        System.out.println(getPost(1));
 //        Post p = getPost(3);
 //        p.setContent("Hmm...");
 //        updatePost(p);
 //        deletePost(3);
-        
+
     }
 }
