@@ -58,9 +58,14 @@ public class UserController {
         request.getSession().setAttribute("success", "Logout succeed!");
         return "redirect:./login";
     }
-    
+
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String mainPage(ModelMap model) {
         return "user/main";
+    }
+
+    @RequestMapping(value = "/lesson", method = RequestMethod.GET)
+    public String lesson(ModelMap model) {
+        return "user/lesson";
     }
 }

@@ -9,13 +9,12 @@ package com.prj_project_g2.Model;
  * @author Thanh Duong
  */
 public class PurchasedCourse {
+
     private int userID;
     private int courseID;
 
     public PurchasedCourse() {
     }
-    
-    
 
     public PurchasedCourse(int userID, int courseID) {
         this.userID = userID;
@@ -42,6 +41,5 @@ public class PurchasedCourse {
     public String toString() {
         return "PurchasedCourse{" + "userID=" + userID + ", courseID=" + courseID + '}';
     }
-    
-    
+
 }

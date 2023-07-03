@@ -1,6 +1,6 @@
 #body-paysite {
     margin-top: 60px;
-    min-height: calc(100vh - 325px);
+    min-height: calc(100vh - 305px);
     padding: 10px 50px;
 }
 
@@ -12,9 +12,10 @@
     font-weight: bold;
 }
 
-.number-of-course {}
+
 
 .keepShopping {
+    display: none;
     border: 1px solid #F2F6F8;
     text-align: center;
 
@@ -43,6 +44,8 @@
 }
 
 .popup-checkout {
+    width: 30%;
+    height: 350px;
     border: 3px solid #F2F6F8;
     padding: 20px;
     width: 300px;
@@ -50,11 +53,6 @@
     margin: 10px;
     border-radius: 16px;
     box-shadow: 2px 2px 2px 1px #ccc;
-    position: fixed;
-    z-index: 10;
-    top: 100px;
-    right: 32px;
-    display: none;
     background-color: #ffffff;
 }
 
@@ -110,20 +108,22 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .popup-checkout .promotionCode input[type=submit] {
-    padding: 2px 4px;
+    padding:0px 4px;
     border-radius: 6px;
     background-color: #0D8D15;
     color: #ffffff;
     font-weight: 500;
     border: none;
+    margin: 0;
 }
 
 .popup-checkout .checkout-btn {
-    padding:5px 10px;
-    background-color:#0D8D15;
+    padding: 5px 10px;
+    background-color: #0D8D15;
     width: 100px;
     border-radius: 12px;
     margin: 10px auto 0;
@@ -137,4 +137,83 @@
 
 .popup-checkout.open {
     display: flex;
+}
+
+.item {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #ccc;
+}
+
+.item input {
+    margin: 0 20px;
+    width: 5%;
+}
+
+.item .itemImg {
+    width: 10%;
+    height: 100px;
+    object-fit: contain;
+    margin-right: 20px;
+}
+
+.item .itemInformation {
+    font-size: 16px;
+    font-weight: 500;
+    min-width: 55%;
+    margin: 0;
+}
+
+.item .itemName {
+    margin: 0;
+}
+
+.item .itemRating {
+font-size: 12px;
+font-weight: 500;
+
+}
+
+.item .itemRating i {
+    color: gold;
+}
+
+
+.item .itemPrice {
+    width: 15%;
+    font-weight: 500;
+    margin: 0;
+}
+
+
+.item .itemEdit {
+    width: 10%;
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+}
+
+
+.courseInCart input[type="submit"] {
+    margin: 0 auto;
+    text-align: center;
+    background-color:#b6f9af;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    float: right;
+    margin-bottom: 20px;
+}
+.courseInCart {
+    display: flex;
+    justify-content: space-between;
+}
+
+.courseInCart .items {
+    width: 70%    ;
 }

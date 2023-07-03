@@ -15,6 +15,7 @@
         <jsp:include page="head.jsp">
             <jsp:param name="title" value="Yojihan"/>
         </jsp:include>
+        <link rel="stylesheet" href="../public/assets/css/main.css">
     </head>
 
     <body>

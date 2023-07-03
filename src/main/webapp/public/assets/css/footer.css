@@ -6,6 +6,8 @@
     padding: 20px 0 0px;
     overflow: hidden;
     background-color: #fff;
+    width: 100%;
+    border-top: 1px solid #cccccc5c;
 }
 
 .collaborate p {

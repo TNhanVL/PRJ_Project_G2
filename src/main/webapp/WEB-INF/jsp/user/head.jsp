@@ -15,7 +15,6 @@
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../public/assets/css/toast.css">
-<link rel="stylesheet" href="../public/assets/css/main.css">
 <link rel="stylesheet" href="../public/assets/css/header.css">
 <link rel="stylesheet" href="../public/assets/css/footer.css">
 <title>${title}</title>

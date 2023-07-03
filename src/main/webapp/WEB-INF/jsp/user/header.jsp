@@ -20,7 +20,7 @@
 
 <div id="header">
     <div class="left-side">
-        <a href="">
+        <a href="./main">
             <img src="../public/assets/imgs/logo.png" alt="logo" class="logo">
         </a>
         <input type="text" class="search-course" name="headerSearch" placeholder="Searching">
@@ -38,7 +38,13 @@
             <div class="quantity">3</div>
         </a>
         <div onclick="openMenu()" id="user" class="user">
-            <a href="#">
+            <a href="<%
+                    if (loggedIn) {
+                        out.print("#");
+                    } else {
+                        out.print("./login");
+                    }
+                     %>">
                 <img src="<%
                     if (loggedIn) {
                         out.print(user.getAvatar());
@@ -76,4 +82,6 @@
     </div>
 </div>
 
-<script src="../public/assets/js/option.js"></script>
+<%if (loggedIn) {%>
+<script src="../public/assets/js/option.js"></script>                    
+<%}%>
