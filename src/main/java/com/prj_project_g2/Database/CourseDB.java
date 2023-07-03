@@ -183,14 +183,61 @@ public class CourseDB extends DB {
         return false;
     }
 
+    public static boolean checkOrderCourse(int userID, int courseID) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select 1 from orderCourse where userID = ? and courseID = ?");
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+
+            //disconnect to database
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //return result
+        return false;
+    }
+
+    public static boolean insertOrderCourse(int userID, int courseID) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("insert into orderCourse(userID, courseID) values (?,?)");
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
+
+            statement.execute();
+
+            //disconnect to database
+            disconnect();
+            return true;
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
 //        System.out.println(existCourse(1));
 //
-        Course c = new Course(11, "Java basic", "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://d15cw65ipctsrr.cloudfront.net/17/6b66f0a7ea11e7a885e33e8374f520/software_development_lifecycle_logo_pexels_CC0.jpg?auto=format&dpr=1&w=100&h=100&fit=clamp", "ezsy", 1, 1, 1000, 500, 4.5);
-        insertCourse(c);
-//        System.out.println(existCourse(11));
+//        Course c = new Course(11, "Java basic", "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://d15cw65ipctsrr.cloudfront.net/17/6b66f0a7ea11e7a885e33e8374f520/software_development_lifecycle_logo_pexels_CC0.jpg?auto=format&dpr=1&w=100&h=100&fit=clamp", "ezsy", 1, 1, 1000, 500, 4.5);
+//        insertCourse(c);
+
+//        System.out.println(checkOrderCourse(1, 1));
 //
 //        System.out.println(getCourse(11));
+        System.out.println(insertOrderCourse(1, 1));
 //
 //        c.setDescription("Normal");
 //

@@ -72,7 +72,8 @@ CREATE TABLE purchasedCourse (
 	userID INT NOT NULL,
 	courseID INT NOT NULL,
 	FOREIGN KEY (userID) REFERENCES [user](ID),
-	FOREIGN KEY (courseID) REFERENCES course(ID)
+	FOREIGN KEY (courseID) REFERENCES course(ID),
+	UNIQUE (userID, courseID)
 );
 GO
 
@@ -80,7 +81,8 @@ CREATE TABLE orderCourse (
 	userID INT NOT NULL,
 	courseID INT NOT NULL,
 	FOREIGN KEY (userID) REFERENCES [user](ID),
-	FOREIGN KEY (courseID) REFERENCES course(ID)
+	FOREIGN KEY (courseID) REFERENCES course(ID),
+	UNIQUE (userID, courseID)
 );
 GO
 
@@ -189,6 +191,9 @@ INSERT INTO course(title,[image],[description],organizationID,lecturerID,unSaleP
 ('Java advance', 'https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-course-photos.s3.amazonaws.com/cb/3c4030d65011e682d8b14e2f0915fa/shutterstock_226881610.jpg?auto=format%2Ccompress&dpr=1', 'medium difficult', 1, 1, 0, 500, 4.5),
 ('C++', 'https://play-lh.googleusercontent.com/_0YN8gHsg7iJvcfdgMGSIp75U6iWBv6GvDIpXKiySHi4yp8qZSAnLaJ090QCJuWivw', 'hard', 1, 1, 800, 600, 4.7);
 GO
+INSERT INTO orderCourse(userID, courseID) VALUES
+(1, 1)
+GO
 SELECT * FROM [user];
 
-select * from course;
+select * from orderCourse;
