@@ -117,9 +117,11 @@ GO
 
 CREATE TABLE question (
 	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	lessonID INT NOT NULL,
 	content TEXT NOT NULL,
     [type] INT NOT NULL,
-	point INT
+	point INT,
+	FOREIGN KEY (lessonID) REFERENCES lesson(ID)
 );
 GO
 
@@ -205,4 +207,15 @@ GO
 INSERT INTO post(content, lessonID) VALUES
 ('baclieu.mp4', 1)
 GO
+INSERT INTO lesson(moocID, title, [index], [type], [time]) VALUES
+(1, 'Nihongo', 2, 2, 5)
+GO
+INSERT INTO question(lessonID, content, [type], point) VALUES
+(2, 'a.png', 0, 1),
+(2, 'i.png', 0, 1),
+(2, 'u.png', 0, 1),
+(2, 'e.png', 0, 1)
+GO
 SELECT * FROM [user];
+
+select * from question;

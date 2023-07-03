@@ -4,6 +4,9 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Database.QuestionDB"%>
+<%@page import="com.prj_project_g2.Model.Question"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.prj_project_g2.Database.PostDB"%>
 <%@page import="com.prj_project_g2.Model.Post"%>
 <%@page import="com.prj_project_g2.Database.MoocDB"%>
@@ -32,9 +35,8 @@
 
     } catch (Exception e) {
         response.sendRedirect("./main");
+        return;
     }
-
-    Post post = PostDB.getPostByLessonID(lesson.getID());
     Mooc mooc = MoocDB.getMooc(lesson.getMoocID());
     Course course = CourseDB.getCourse(mooc.getCourseID());
 %>
@@ -57,9 +59,124 @@
         <div class="main">
             <!-- Left Side -->
             <div class="leftSide">
-                <video src="../public/assets/videos/baclieu.mp4" controls>
-                    Trình duyệt của bạn không hỗ trợ video.
-                </video>
+
+                <div class="lesson-main">
+                    <%
+                        switch (lesson.getType()) {
+                            //type 0 -> video
+                            case 0: {
+                                Post post = PostDB.getPostByLessonID(lesson.getID());
+                    %>
+
+                    <video src="../public/media/lesson/<%out.print(lesson.getID() + "/" + post.getContent());%>" controls>
+                        Trình duyệt của bạn không hỗ trợ video.
+                    </video>
+
+                    <%
+                            break;
+                        }
+                        case 1: {%>
+
+                    <%
+                            break;
+                        }
+                        //type 2 -> quiz
+                        case 2: {
+                            ArrayList<Question> questions = QuestionDB.getAllQuestionByLessonID(lesson.getID());
+                            Question question = null;
+                            //check exist lessonID
+                            try {
+                                int questionID = -1;
+                                if (request.getParameter("questionID") == null || request.getParameter("questionID") == "") {
+                                    question = questions.get(0);
+                                } else {
+                                    question = QuestionDB.getQuestion(Integer.parseInt(request.getParameter("questionID")));
+                                }
+                                if (question == null) {
+                                    throw new Exception("Null question!");
+                                }
+                            } catch (Exception e) {
+                                response.sendRedirect("./main");
+                                return;
+                            }
+                    %>
+                    <div class="quiz-type1">
+                        <div class="leftSide">
+                            <p class="quizProgress">Question: <span>1/<%out.print(questions.size());%></span> </p>
+                            <div class="quizContent">
+                                <div class="question">
+                                    <%
+                                        switch (question.getType()) {
+                                            case 0: {
+                                    %>
+                                    <img src="../public/media/question/<%out.print(question.getID() + "/" + question.getContent());%>" alt="">
+                                    <%
+                                                break;
+                                            }
+                                            default: {
+                                                break;
+                                            }
+                                        }
+                                    %>
+
+                                </div>
+                                <div class="answer">
+                                    <p>a</p>
+                                    <p>u</p>
+                                    <p>ka</p>
+                                </div>
+                            </div>
+                            <div class="btns">
+                                <button>Continue</button>
+                                <!-- <button>Check</button> -->
+                            </div>
+                        </div>
+                        <div class="rightSide">
+                            <div class="time">
+                                <h5>Time remaining</h5>
+                                <i class="fa-regular fa-clock"></i>
+                                <span>15:00</span>
+                            </div>
+                            <div class="listQuestion">
+                                <h5>Question</h5>
+                                <ul>
+                                    <%
+                                        for (int i = 0; i < questions.size(); i++) {
+                                    %>
+                                    <a href="./lesson?lessonID=<%out.print(lesson.getID() + "&questionID=" + questions.get(i).getID());%>"><li class=""><%out.print(i + 1);%></li></a>
+                                            <%
+                                                }
+                                            %>
+                                    <li class="done">1</li>
+                                    <li class="">2</li>
+                                    <li class="">3</li>
+                                    <li class="">4</li>
+                                    <li class="">5</li>
+                                    <li class="">6</li>
+                                    <li class="">7</li>
+                                    <li class="">8</li>
+                                    <li class="">9</li>
+                                    <li class="">10</li>
+                                    <li class="">11</li>
+                                    <li class="">12</li>
+                                    <li class="">13</li>
+                                    <li class="">14</li>
+                                    <li class="">15</li>
+
+                                </ul>
+                            </div>
+
+                            <div class="finishBtn"><button>Finish</button></div>
+                        </div>
+                    </div>
+                    <%                                break;
+                            }
+                        }
+                    %>
+
+                </div>
+
+
                 <div class="tab">
                     <button class="tablinks" onclick="openTab(event, 'Overview')">Overview</button>
                     <button class="tablinks" onclick="openTab(event, 'QandA')">Q&A</button>

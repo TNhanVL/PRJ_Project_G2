@@ -7,6 +7,7 @@ package com.prj_project_g2.Database;
 import com.prj_project_g2.Model.Question;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,6 +56,7 @@ public class QuestionDB extends DB {
             if (resultSet.next()) {
                 question = new Question(
                         resultSet.getInt("ID"),
+                        resultSet.getInt("lessonID"),
                         resultSet.getString("content"),
                         resultSet.getInt("type"),
                         resultSet.getInt("point")
@@ -69,15 +71,46 @@ public class QuestionDB extends DB {
         return question;
     }
 
+    public static ArrayList<Question> getAllQuestionByLessonID(int lessonID) {
+        ArrayList<Question> questions = new ArrayList<>();
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select * from question where lessonID = ?");
+            statement.setInt(1, lessonID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Question question = new Question(
+                        resultSet.getInt("ID"),
+                        resultSet.getInt("lessonID"),
+                        resultSet.getString("content"),
+                        resultSet.getInt("type"),
+                        resultSet.getInt("point")
+                );
+                questions.add(question);
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return questions;
+    }
+
     public static boolean insertQuestion(Question question) {
         try {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("insert into question(content,type,point) values (?,?,?)");
-            statement.setString(1, question.getContent());
-            statement.setInt(2, question.getType());
-            statement.setInt(3, question.getPoint());
+            statement = conn.prepareStatement("insert into question(lessonID,content,type,point) values (?,?,?,?)");
+            statement.setInt(1, question.getLessonID());
+            statement.setString(2, question.getContent());
+            statement.setInt(3, question.getType());
+            statement.setInt(4, question.getPoint());
             statement.executeUpdate();
             //disconnect to database
             disconnect();
@@ -95,11 +128,12 @@ public class QuestionDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("update question set content=?, type=?, point=? where ID=?");
-            statement.setString(1, question.getContent());
-            statement.setInt(2, question.getType());
-            statement.setInt(3, question.getPoint());
-            statement.setInt(4, question.getID());
+            statement = conn.prepareStatement("update question set lessonID=?, content=?, type=?, point=? where ID=?");
+            statement.setInt(1, question.getLessonID());
+            statement.setString(2, question.getContent());
+            statement.setInt(3, question.getType());
+            statement.setInt(4, question.getPoint());
+            statement.setInt(5, question.getID());
 
             //disconnect to database
             disconnect();

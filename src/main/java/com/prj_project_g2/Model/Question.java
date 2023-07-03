@@ -9,7 +9,9 @@ package com.prj_project_g2.Model;
  * @author Thanh Duong
  */
 public class Question {
+
     private int ID;
+    private int lessonID;
     private String content;
     private int type;
     private int point;
@@ -17,8 +19,9 @@ public class Question {
     public Question() {
     }
 
-    public Question(int ID, String content, int type, int point) {
+    public Question(int ID, int lessonID, String content, int type, int point) {
         this.ID = ID;
+        this.lessonID = lessonID;
         this.content = content;
         this.type = type;
         this.point = point;
@@ -30,6 +33,14 @@ public class Question {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public int getLessonID() {
+        return lessonID;
+    }
+
+    public void setLessonID(int lessonID) {
+        this.lessonID = lessonID;
     }
 
     public String getContent() {
@@ -58,8 +69,7 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question{" + "ID=" + ID + ", content=" + content + ", type=" + type + ", point=" + point + '}';
+        return "Question{" + "ID=" + ID + ", lessonID=" + lessonID + ", content=" + content + ", type=" + type + ", point=" + point + '}';
     }
-    
-    
+
 }
