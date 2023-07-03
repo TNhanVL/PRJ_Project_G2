@@ -1,4 +1,4 @@
-drop table [admin], questionResult, answer, question, quizResult, post, lesson, mooc, purchasedCourse, [certificate], course, lecturer, [user], country, organization
+drop table [admin], questionResult, answer, question, quizResult, post, lesson, mooc, orderCourse, purchasedCourse, [certificate], course, lecturer, [user], country, organization
 
 -- Create the tables
 CREATE TABLE [admin] (
@@ -69,6 +69,14 @@ CREATE TABLE [certificate] (
 GO
 
 CREATE TABLE purchasedCourse (
+	userID INT NOT NULL,
+	courseID INT NOT NULL,
+	FOREIGN KEY (userID) REFERENCES [user](ID),
+	FOREIGN KEY (courseID) REFERENCES course(ID)
+);
+GO
+
+CREATE TABLE orderCourse (
 	userID INT NOT NULL,
 	courseID INT NOT NULL,
 	FOREIGN KEY (userID) REFERENCES [user](ID),
