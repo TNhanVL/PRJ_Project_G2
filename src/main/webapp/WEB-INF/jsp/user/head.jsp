@@ -17,4 +17,4 @@
 <link rel="stylesheet" href="../public/assets/css/toast.css">
 <link rel="stylesheet" href="../public/assets/css/header.css">
 <link rel="stylesheet" href="../public/assets/css/footer.css">
-<title>${title}</title>
+<title>${param.title}</title>

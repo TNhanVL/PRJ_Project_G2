@@ -10,11 +10,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    boolean loggedIn = false;
-    User user = null;
+    boolean loggedInHeader = false;
+    User userHeader = null;
     if (CookieServices.checkUserLoggedIn(request.getCookies())) {
-        loggedIn = true;
-        user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+        loggedInHeader = true;
+        userHeader = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
     }
 %>
 
@@ -39,23 +39,23 @@
         </a>
         <div onclick="openMenu()" id="user" class="user">
             <a href="<%
-                    if (loggedIn) {
+                    if (loggedInHeader) {
                         out.print("#");
                     } else {
                         out.print("./login");
                     }
                      %>">
                 <img src="<%
-                    if (loggedIn) {
-                        out.print(user.getAvatar());
+                    if (loggedInHeader) {
+                        out.print(userHeader.getAvatar());
                     } else {
                         out.print("https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png");
                     }
                      %>"
                      alt="avatar">
                 <span class="userInfor"><%
-                    if (loggedIn) {
-                        out.print(user.getUsername());
+                    if (loggedInHeader) {
+                        out.print(userHeader.getUsername());
                     } else {
                         out.print("Guest!");
                     }
@@ -67,7 +67,7 @@
                     <i class="fa-solid fa-gear"></i>
                     <span>Setting</span>
                 </a>
-                <a href="#">
+                <a href="./logout">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span>Logout</span>
                 </a>
@@ -82,6 +82,6 @@
     </div>
 </div>
 
-<%if (loggedIn) {%>
+<%if (loggedInHeader) {%>
 <script src="../public/assets/js/option.js"></script>                    
 <%}%>

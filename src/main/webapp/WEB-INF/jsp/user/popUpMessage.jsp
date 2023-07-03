@@ -13,7 +13,6 @@
 <script>
     <%
         String message = (String) request.getSession().getAttribute("success");
-        System.out.println("ttnhan: " + message);
         if (message != null && message != "") {
             out.println("showSuccessToast('" + message + "');");
             request.getSession().removeAttribute("success");

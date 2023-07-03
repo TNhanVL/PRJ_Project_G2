@@ -196,4 +196,13 @@ GO
 INSERT INTO orderCourse(userID, courseID) VALUES
 (1, 1), (1, 3)
 GO
+INSERT INTO mooc(courseID, [index], title, [description]) VALUES
+(1, 1, N'Part 1: Hiragana 。ひらがな', '')
+GO
+INSERT INTO lesson(moocID, title, [index], [type], [time]) VALUES
+(1, 'Nihongo', 1, 0, 1)
+GO
+INSERT INTO post(content, lessonID) VALUES
+('baclieu.mp4', 1)
+GO
 SELECT * FROM [user];

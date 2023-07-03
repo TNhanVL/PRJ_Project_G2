@@ -1,6 +1,5 @@
 package com.prj_project_g2.Controller.User;
 
-import com.prj_project_g2.Database.AdminDB;
 import com.prj_project_g2.Database.UserDB;
 import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
@@ -65,7 +64,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/lesson", method = RequestMethod.GET)
-    public String lesson(ModelMap model) {
-        return "user/lesson";
+    public String lesson(HttpServletRequest request, HttpServletResponse response, @RequestParam String lessonID) {
+        return "user/lesson1";
     }
 }
