@@ -35,16 +35,18 @@
     <div class="right-side">
         <a href="paysite.html" class="cart">
             <i class="fa-solid fa-cart-shopping"></i>
+            <div class="quantity">3</div>
         </a>
-        <div class="user">
-            <a href="">
+        <div onclick="openMenu()" id="user" class="user">
+            <a href="#">
                 <img src="<%
                     if (loggedIn) {
                         out.print(user.getAvatar());
                     } else {
                         out.print("https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png");
                     }
-                     %>" alt="avatar">
+                     %>"
+                     alt="avatar">
                 <span class="userInfor"><%
                     if (loggedIn) {
                         out.print(user.getUsername());
@@ -53,11 +55,25 @@
                     }
                     %></span>
             </a>
+
+            <div id="userMenu" class="userMenu close">
+                <a href="#">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Setting</span>
+                </a>
+                <a href="#">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
         </div>
 
         <a href="" class="notification">
-            <i class="fa-sharp fa-regular fa-bell"></i>
+            <i class="fa-sharp fa-solid fa-bell"></i>
+            <div class="quantity">3</div>
         </a>
 
     </div>
 </div>
+
+<script src="../public/assets/js/option.js"></script>
