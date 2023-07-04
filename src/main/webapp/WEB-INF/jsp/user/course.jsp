@@ -7,7 +7,6 @@
 <%@page import="com.prj_project_g2.Database.OrganizationDB"%>
 <%@page import="com.prj_project_g2.Model.Organization"%>
 <%@page import="com.prj_project_g2.Database.LecturerDB"%>
-<%@page import="com.prj_project_g2.Model.Lecturer"%>
 <%@page import="com.prj_project_g2.Database.CourseDB"%>
 <%@page import="com.prj_project_g2.Model.Course"%>
 <%-- 
@@ -32,7 +31,7 @@
         return;
     }
 
-    Lecturer lecturer = LecturerDB.getLecturer(course.getLecturerID());
+    User lecturer = UserDB.getUser(course.getLecturerID());
     
     Organization organization = OrganizationDB.getOrganization(course.getOrganizationID());
 %>
@@ -53,7 +52,7 @@
         <!--END HEADER -->
 
         <div id="main">
-            <div class="introduction">
+            <div class="courseIntroduction">
                 <div class="orgranization">
                     <img src="<%out.print(request.getContextPath());%>/public/media/organization/<%out.print(organization.getID() + "/" + organization.getLogo());%>" alt="">
                 </div>
@@ -61,12 +60,12 @@
                     <h1><%out.print(course.getTitle());%></h1>
                 </div>
                 <div class="instructorInfor">
-                    <img src=<%out.print(request.getContextPath() + "/public/media/user/" + userHeader.getID() + "/" + userHeader.getAvatar());%> alt="" class="instructorImg">
+                    <img src=<%out.print(request.getContextPath() + "/public/media/user/" + lecturer.getID() + "/" + lecturer.getAvatar());%> alt="" class="instructorImg">
                     <p class="instructorName">
                         Instructor: <a href="#"><%out.print(lecturer.getFirstName() + " " + lecturer.getLastName());%></a></p>
                 </div>
                 <div class="price">
-                    Price: <span><%out.print(course.getPrice());%></span>
+                    Price: <span><%out.print(course.getPrice());%>$</span>
 
                 </div>
                 <div class="addCartBnt"><a href="#">
