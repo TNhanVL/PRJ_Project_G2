@@ -71,6 +71,38 @@ public class UserController {
         return "user/cart";
     }
 
+    @RequestMapping(value = "/course/addOrder/{courseID}", method = RequestMethod.GET)
+    public String addOrderFromCourse(ModelMap model, HttpServletRequest request, @PathVariable int courseID) {
+
+        //check logged in
+        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
+            request.getSession().setAttribute("error", "You need to log in to continue!");
+            return "redirect:../../login";
+        }
+
+        User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+
+        CourseDB.insertOrderCourse(user.getID(), courseID);
+
+        return "redirect:../../course/" + courseID;
+    }
+
+    @RequestMapping(value = "/course/deleteOrder/{courseID}", method = RequestMethod.GET)
+    public String deleteOrderFromCourse(ModelMap model, HttpServletRequest request, @PathVariable int courseID) {
+
+        //check logged in
+        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
+            request.getSession().setAttribute("error", "You need to log in to continue!");
+            return "redirect:../../login";
+        }
+
+        User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+
+        CourseDB.deleteOrderCourse(user.getID(), courseID);
+
+        return "redirect:../../course/" + courseID;
+    }
+
     @RequestMapping(value = "/cart/deleteOrder/{courseID}", method = RequestMethod.GET)
     public String deleteOrderFromCart(ModelMap model, HttpServletRequest request, @PathVariable int courseID) {
 

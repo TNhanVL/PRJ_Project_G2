@@ -32,8 +32,13 @@
     }
 
     User lecturer = UserDB.getUser(course.getLecturerID());
-    
+
     Organization organization = OrganizationDB.getOrganization(course.getOrganizationID());
+
+    User user = null;
+    if (CookieServices.checkUserLoggedIn(request.getCookies())) {
+        user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+    }
 %>
 
 <!DOCTYPE html>
@@ -68,9 +73,23 @@
                     Price: <span><%out.print(course.getPrice());%>$</span>
 
                 </div>
-                <div class="addCartBnt"><a href="#">
-                        Add to cart
-                    </a></div>
+                <div class="addCartBnt">
+                    <%
+                        if (user != null) {
+                            if (CourseDB.checkPurchasedCourse(user.getID(), course.getID())) {
+                                out.print("<a href=\"hoc\">Learn now</a>");
+                            } else if (CourseDB.checkOrderCourse(user.getID(), course.getID())) {
+                                out.print("<a href=\"./deleteOrder/" + course.getID() + "\">Delete from cart</a>");
+                            } else {
+                                out.print("<a href=\"./addOrder/" + course.getID() + "\">Add to cart</a>");
+                            }
+                        } else {
+                            //if not logged in
+                            out.print("<a href=\"" + request.getContextPath() + "/user/login\">Add to cart</a>");
+                        }
+                    %>
+                    <!--<a href="#">Add to cart</a>-->
+                </div>
                 <p class="enrollers">
                     <span>969,263</span> already enrolled
                 </p>
