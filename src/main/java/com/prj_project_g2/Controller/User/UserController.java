@@ -1,6 +1,9 @@
 package com.prj_project_g2.Controller.User;
 
+import com.prj_project_g2.Database.CourseDB;
 import com.prj_project_g2.Database.UserDB;
+import com.prj_project_g2.Model.User;
+import com.prj_project_g2.Services.CookieServices;
 import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
 import javax.servlet.http.Cookie;
@@ -62,10 +65,26 @@ public class UserController {
     public String mainPage(ModelMap model) {
         return "user/main";
     }
-    
+
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public String cart(ModelMap model) {
         return "user/cart";
+    }
+
+    @RequestMapping(value = "/cart/deleteOrder/{courseID}", method = RequestMethod.GET)
+    public String deleteOrderFromCart(ModelMap model, HttpServletRequest request, @PathVariable int courseID) {
+
+        //check logged in
+        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
+            request.getSession().setAttribute("error", "You need to log in to continue!");
+            return "redirect:../../login";
+        }
+
+        User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+
+        CourseDB.deleteOrderCourse(user.getID(), courseID);
+
+        return "redirect:../../cart";
     }
 
     @RequestMapping(value = "/lesson", method = RequestMethod.GET)

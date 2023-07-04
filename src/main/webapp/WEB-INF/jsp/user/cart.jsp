@@ -73,7 +73,7 @@
                             </div>
                             <p class="itemPrice"><%out.print(course.getPrice());%>$</p>
 
-                            <div class="itemEdit"><i class="fa-solid fa-trash"></i></div>
+                            <div class="itemEdit"><a href="./cart/deleteOrder/<%out.print(course.getID());%>"><i class="fa-solid fa-trash"></i></a></div>
                         </div>
                         <!-- end item -->
 
