@@ -1,6 +1,5 @@
 function toast( { title = '', message = '', type = "success", duration = 3000 }) {
     const main = document.getElementById("toast");
-    console.log(main);
     if (main) {
         const toast = document.createElement('div');
         toast.onclick = function (e) {

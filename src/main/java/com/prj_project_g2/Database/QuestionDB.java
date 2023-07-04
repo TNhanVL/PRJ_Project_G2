@@ -57,6 +57,7 @@ public class QuestionDB extends DB {
                 question = new Question(
                         resultSet.getInt("ID"),
                         resultSet.getInt("lessonID"),
+                        resultSet.getInt("index"),
                         resultSet.getString("content"),
                         resultSet.getInt("type"),
                         resultSet.getInt("point")
@@ -86,6 +87,7 @@ public class QuestionDB extends DB {
                 Question question = new Question(
                         resultSet.getInt("ID"),
                         resultSet.getInt("lessonID"),
+                        resultSet.getInt("index"),
                         resultSet.getString("content"),
                         resultSet.getInt("type"),
                         resultSet.getInt("point")
@@ -106,11 +108,12 @@ public class QuestionDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("insert into question(lessonID,content,type,point) values (?,?,?,?)");
+            statement = conn.prepareStatement("insert into question(lessonID,[index],content,[type],point) values (?,?,?,?)");
             statement.setInt(1, question.getLessonID());
-            statement.setString(2, question.getContent());
-            statement.setInt(3, question.getType());
-            statement.setInt(4, question.getPoint());
+            statement.setInt(2, question.getIndex());
+            statement.setString(3, question.getContent());
+            statement.setInt(4, question.getType());
+            statement.setInt(5, question.getPoint());
             statement.executeUpdate();
             //disconnect to database
             disconnect();
@@ -128,12 +131,13 @@ public class QuestionDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("update question set lessonID=?, content=?, type=?, point=? where ID=?");
+            statement = conn.prepareStatement("update question set lessonID=?, [index]=?, content=?, [type]=?, point=? where ID=?");
             statement.setInt(1, question.getLessonID());
-            statement.setString(2, question.getContent());
-            statement.setInt(3, question.getType());
-            statement.setInt(4, question.getPoint());
-            statement.setInt(5, question.getID());
+            statement.setInt(2, question.getIndex());
+            statement.setString(3, question.getContent());
+            statement.setInt(4, question.getType());
+            statement.setInt(5, question.getPoint());
+            statement.setInt(6, question.getID());
 
             //disconnect to database
             disconnect();
@@ -167,11 +171,6 @@ public class QuestionDB extends DB {
     }
 
     public static void main(String[] args) {
-//        Question q = getQuestion(2);
-//        System.out.println(q);
-////        insertQuestion(q);
-//        q.setPoint(5);
-//        updateQuestion(q);
-//        deleteQuestion(3);
+        System.out.println(getAllQuestionByLessonID(2));
     }
 }

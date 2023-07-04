@@ -118,6 +118,7 @@ GO
 CREATE TABLE question (
 	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	lessonID INT NOT NULL,
+	[index] INT NOT NULL,
 	content TEXT NOT NULL,
     [type] INT NOT NULL,
 	point INT,
@@ -196,7 +197,10 @@ INSERT INTO course(title,[image],[description],organizationID,lecturerID,unSaleP
 ('C++', 'https://play-lh.googleusercontent.com/_0YN8gHsg7iJvcfdgMGSIp75U6iWBv6GvDIpXKiySHi4yp8qZSAnLaJ090QCJuWivw', 'hard', 1, 1, 800, 600, 4.7);
 GO
 INSERT INTO orderCourse(userID, courseID) VALUES
-(1, 1), (1, 3)
+(1, 2), (1, 3)
+GO
+INSERT INTO purchasedCourse(userID, courseID) VALUES
+(1, 1)
 GO
 INSERT INTO mooc(courseID, [index], title, [description]) VALUES
 (1, 1, N'Part 1: Hiragana 。ひらがな', '')
@@ -210,12 +214,10 @@ GO
 INSERT INTO lesson(moocID, title, [index], [type], [time]) VALUES
 (1, 'Nihongo', 2, 2, 5)
 GO
-INSERT INTO question(lessonID, content, [type], point) VALUES
-(2, 'a.png', 0, 1),
-(2, 'i.png', 0, 1),
-(2, 'u.png', 0, 1),
-(2, 'e.png', 0, 1)
+INSERT INTO question(lessonID, [index], content, [type], point) VALUES
+(2, 1, 'a.png', 0, 1),
+(2, 2, 'i.png', 0, 1),
+(2, 3, 'u.png', 0, 1),
+(2, 4, 'e.png', 0, 1)
 GO
 SELECT * FROM [user];
-
-select * from question;

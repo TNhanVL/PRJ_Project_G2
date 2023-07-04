@@ -65,6 +65,6 @@ public class UserController {
 
     @RequestMapping(value = "/lesson", method = RequestMethod.GET)
     public String lesson(HttpServletRequest request, HttpServletResponse response, @RequestParam String lessonID) {
-        return "user/lesson1";
+        return "user/lesson";
     }
 }

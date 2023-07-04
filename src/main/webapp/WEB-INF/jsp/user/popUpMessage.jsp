@@ -14,12 +14,12 @@
     <%
         String message = (String) request.getSession().getAttribute("success");
         if (message != null && message != "") {
-            out.println("showSuccessToast('" + message + "');");
+            out.println("showSuccessToast(\"" + message + "\");");
             request.getSession().removeAttribute("success");
         }
         message = (String) request.getSession().getAttribute("error");
         if (message != null && message != "") {
-            out.println("showErrorToast('" + message + "');");
+            out.println("showErrorToast(\"" + message + "\");");
             request.getSession().removeAttribute("error");
         }
     %>

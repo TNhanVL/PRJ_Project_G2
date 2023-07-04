@@ -12,6 +12,7 @@ public class Question {
 
     private int ID;
     private int lessonID;
+    private int index;
     private String content;
     private int type;
     private int point;
@@ -19,9 +20,10 @@ public class Question {
     public Question() {
     }
 
-    public Question(int ID, int lessonID, String content, int type, int point) {
+    public Question(int ID, int lessonID, int index, String content, int type, int point) {
         this.ID = ID;
         this.lessonID = lessonID;
+        this.index = index;
         this.content = content;
         this.type = type;
         this.point = point;
@@ -41,6 +43,14 @@ public class Question {
 
     public void setLessonID(int lessonID) {
         this.lessonID = lessonID;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getContent() {
