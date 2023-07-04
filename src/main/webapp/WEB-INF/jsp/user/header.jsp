@@ -47,7 +47,7 @@
                %>">
                 <img src="<%
                     if (loggedInHeader) {
-                        out.print(userHeader.getAvatar());
+                        out.print(request.getContextPath() + "/public/media/user/" + userHeader.getID() + "/" + userHeader.getAvatar());
                     } else {
                         out.print("https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png");
                     }

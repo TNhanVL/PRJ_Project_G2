@@ -4,6 +4,12 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Database.OrganizationDB"%>
+<%@page import="com.prj_project_g2.Model.Organization"%>
+<%@page import="com.prj_project_g2.Database.LecturerDB"%>
+<%@page import="com.prj_project_g2.Model.Lecturer"%>
+<%@page import="com.prj_project_g2.Database.CourseDB"%>
+<%@page import="com.prj_project_g2.Model.Course"%>
 <%-- 
     Document   : allCourse
     Created on : Jul 4, 2023, 9:20:17 PM
@@ -11,6 +17,26 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    //check course exist
+    Course course = null;
+    try {
+        course = CourseDB.getCourse((int) request.getAttribute("courseID"));
+        if (course == null) {
+            throw new Exception("Not exist course!");
+        }
+    } catch (Exception e) {
+        request.getSession().setAttribute("error", "The course not exist!");
+        response.sendRedirect(request.getContextPath() + "/user/main");
+        return;
+    }
+
+    Lecturer lecturer = LecturerDB.getLecturer(course.getLecturerID());
+    
+    Organization organization = OrganizationDB.getOrganization(course.getOrganizationID());
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,18 +55,18 @@
         <div id="main">
             <div class="introduction">
                 <div class="orgranization">
-                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/jonhHopkin.png" alt="">
+                    <img src="<%out.print(request.getContextPath());%>/public/media/organization/<%out.print(organization.getID() + "/" + organization.getLogo());%>" alt="">
                 </div>
                 <div class="courseName">
-                    <h1>HTML, CSS, and Javascript for Web Developers</h1>
+                    <h1><%out.print(course.getTitle());%></h1>
                 </div>
                 <div class="instructorInfor">
-                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/instructor.png" alt="" class="instructorImg">
+                    <img src=<%out.print(request.getContextPath() + "/public/media/user/" + userHeader.getID() + "/" + userHeader.getAvatar());%> alt="" class="instructorImg">
                     <p class="instructorName">
-                        Instructor: <a href="#">Yaakov Chaikin</a></p>
+                        Instructor: <a href="#"><%out.print(lecturer.getFirstName() + " " + lecturer.getLastName());%></a></p>
                 </div>
                 <div class="price">
-                    Price: <span>100$</span>
+                    Price: <span><%out.print(course.getPrice());%></span>
 
                 </div>
                 <div class="addCartBnt"><a href="#">
@@ -58,7 +84,7 @@
                 </div>
 
                 <div class="rateAndLike">
-                    <span>4.7</span>
+                    <span><%out.print(course.getRate());%></span>
                     <i class="fa-solid fa-star"></i>
                     <span>(4.716 reviewer)</span>
 

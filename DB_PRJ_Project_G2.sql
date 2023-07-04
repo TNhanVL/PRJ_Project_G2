@@ -42,6 +42,7 @@ CREATE TABLE lecturer (
 	FOREIGN KEY (userID) REFERENCES [user](ID),
 	FOREIGN KEY (organizationID) REFERENCES organization(ID)
 );
+GO
 
 CREATE TABLE course (
 	ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -184,12 +185,15 @@ INSERT INTO [admin](username, [password]) VALUES
 ('quantri','0e7517141fb53f21ee439b355b5a1d0a')
 GO
 INSERT INTO [user](avatar, username, [password], email, firstName, lastName, [role], birthday,countryID, [status]) VALUES
-('https://scontent.fsgn13-4.fna.fbcdn.net/v/t39.30808-6/286987196_1384937328585396_7748493032904500294_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=FvJhe2ECN9UAX9fSGzN&_nc_ht=scontent.fsgn13-4.fna&oh=00_AfAUVcWrvZXla4zRAC0mPPnVmD79upxbEXzX8ByO6UlffA&oe=64A6A181', 'ttnhan', '0cc175b9c0f1b6a831c399e269772661', 'user1@example.com', 'John', 'Doe', 0, '1990-01-01', 16, 1),
-('https://example.com/avatar.jpg', 'dylan12', '12345678', 'dylan@example.com', 'Dylan', 'Nguyen', 0, '2003-10-12', 16, 1),
-('https://example.com/avatar1.jpg', 'diemhuong1210', '12345678', 'dh1210@example.com', 'Huong', 'Nguyen', 1, '2003-10-10', 16, 1)
+('a.jpg', 'ttnhan', '0cc175b9c0f1b6a831c399e269772661', 'user1@example.com', 'Nhan', 'Tran Thanh', 0, '1990-01-01', 16, 1),
+('a.jpg', 'dylan12', '12345678', 'dylan@example.com', 'Dylan', 'Nguyen', 0, '2003-10-12', 16, 1),
+('a.jpg', 'diemhuong1210', '12345678', 'dh1210@example.com', 'Huong', 'Nguyen', 1, '2003-10-10', 16, 1)
 GO
 INSERT INTO organization([name], logo, [description]) VALUES
-('FPT University', 'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png', N'Trường đại học top 1 Việt Nam');
+('FPT University', 'FPT.png', N'Trường đại học top 1 Việt Nam');
+GO
+INSERT INTO lecturer(userID, organizationID) VALUES
+(1, 1)
 GO
 INSERT INTO course(title,[image],[description],organizationID,lecturerID,unSalePrice,price,rate) VALUES
 ('Java basic', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),

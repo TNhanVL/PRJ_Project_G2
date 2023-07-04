@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author Thanh Duong
  */
-public class LectureDB extends DB {
+public class LecturerDB extends DB {
 
     public static Lecturer getLecturer(int userID) {
         Lecturer lecturer = null;
