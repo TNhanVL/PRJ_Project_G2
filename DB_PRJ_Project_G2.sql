@@ -128,9 +128,9 @@ GO
 
 CREATE TABLE answer (
 	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	questionID INT NOT NULL,
 	content TEXT,
 	correct BIT NOT NULL, --True: 1, False: 0
-	questionID INT NOT NULL,
 	FOREIGN KEY (questionID) REFERENCES question(ID)
 );
 GO
@@ -219,5 +219,23 @@ INSERT INTO question(lessonID, [index], content, [type], point) VALUES
 (2, 2, 'i.png', 0, 1),
 (2, 3, 'u.png', 0, 1),
 (2, 4, 'e.png', 0, 1)
+GO
+INSERT INTO answer(questionID, content, correct) VALUES
+(1, 'a', 1),
+(1, 'u', 0),
+(1, 'e', 0),
+(1, 'i', 0),
+(2, 'a', 0),
+(2, 'u', 0),
+(2, 'e', 0),
+(2, 'i', 1),
+(3, 'a', 0),
+(3, 'u', 1),
+(3, 'e', 0),
+(3, 'i', 0),
+(4, 'a', 0),
+(4, 'u', 0),
+(4, 'e', 1),
+(4, 'i', 0)
 GO
 SELECT * FROM [user];

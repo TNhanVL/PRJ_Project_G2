@@ -17,6 +17,5 @@
 <link rel="stylesheet" href="../public/assets/css/toast.css">
 <link rel="stylesheet" href="../public/assets/css/header.css">
 <link rel="stylesheet" href="../public/assets/css/footer.css">
-//jQuery
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <title>${param.title}</title>

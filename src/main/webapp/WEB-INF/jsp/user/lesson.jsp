@@ -4,6 +4,9 @@
     Author     : TTNhan
 --%>
 
+<%@page import="java.util.Collections"%>
+<%@page import="com.prj_project_g2.Database.AnswerDB"%>
+<%@page import="com.prj_project_g2.Model.Answer"%>
 <%@page import="com.prj_project_g2.Database.QuestionDB"%>
 <%@page import="com.prj_project_g2.Model.Question"%>
 <%@page import="java.util.ArrayList"%>
@@ -102,76 +105,74 @@
                             ArrayList<Question> questions = QuestionDB.getAllQuestionByLessonID(lesson.getID());
                     %>
                     <div class="quiz-type1">
-                        <div class="leftSide">
-                            <p class="quizProgress">Question: <span>1/<%out.print(questions.size());%></span> </p>
+                        <form action="" method="post">
+                            <div class="leftSide">
+                                <p class="quizProgress">Question: <span>1/<%out.print(questions.size());%></span> </p>
 
-                            <%
-                                //show all question
-                                for (Question question : questions) {
-                            %>
-                            <div class="quizContent" id="question<%out.print(question.getIndex());%>">
-                                <div class="question">
-                                    <%
-                                        switch (question.getType()) {
-                                            case 0: {
-                                    %>
-                                    <img src="../public/media/question/<%out.print(question.getID() + "/" + question.getContent());%>" alt="">
-                                    <%
-                                                break;
+                                <%
+                                    //show all question
+                                    for (Question question : questions) {
+                                %>
+                                <div class="quizContent" id="question<%out.print(question.getIndex());%>">
+                                    <div class="question">
+                                        <%
+                                            switch (question.getType()) {
+                                                case 0: {
+                                        %>
+                                        <img src="../public/media/question/<%out.print(question.getID() + "/" + question.getContent());%>" alt="">
+                                        <%
+                                                    break;
+                                                }
+                                                default: {
+                                                    break;
+                                                }
                                             }
-                                            default: {
-                                                break;
+                                        %>
+
+                                    </div>
+                                    <div class="answer">
+                                        <%
+                                            ArrayList<Answer> answers = AnswerDB.getAllAnswersByQuestionID(question.getID());
+                                            Collections.shuffle(answers);
+                                            for (Answer answer : answers) {
+                                                out.print("<p>" + answer.getContent() + "</p>\n");
                                             }
-                                        }
-                                    %>
-
+                                        %>
+                                    </div>
                                 </div>
-                                <div class="answer">
-                                    <p>a</p>
-                                    <p>u</p>
-                                    <p>ka</p>
+
+                                <%
+                                    }
+                                %>
+
+                                <div class="btns">
+                                    <button>Continue</button>
+                                    <!-- <button>Check</button> -->
                                 </div>
                             </div>
+                            <div class="rightSide">
+                                <div class="time">
+                                    <h5>Time remaining</h5>
+                                    <i class="fa-regular fa-clock"></i>
+                                    <span>15:00</span>
+                                </div>
+                                <div class="listQuestion">
+                                    <h5>Question</h5>
+                                    <ul>
+                                        <%
+                                            //show all questionLabel
+                                            for (int i = 1; i <= questions.size(); i++) {
+                                        %>
+                                        <li class=""><%out.print(i);%></li>
+                                            <%
+                                                }
+                                            %>
+                                    </ul>
+                                </div>
 
-                            <%
-                                }
-                            %>
-
-                            <div class="btns">
-                                <button>Continue</button>
-                                <!-- <button>Check</button> -->
+                                <div class="finishBtn"><input type="submit" value="Finish"></div>
                             </div>
-                        </div>
-                        <div class="rightSide">
-                            <div class="time">
-                                <h5>Time remaining</h5>
-                                <i class="fa-regular fa-clock"></i>
-                                <span>15:00</span>
-                            </div>
-                            <div class="listQuestion">
-                                <h5>Question</h5>
-                                <ul>
-                                    <li class="done">1</li>
-                                    <li class="">2</li>
-                                    <li class="">3</li>
-                                    <li class="">4</li>
-                                    <li class="">5</li>
-                                    <li class="">6</li>
-                                    <li class="">7</li>
-                                    <li class="">8</li>
-                                    <li class="">9</li>
-                                    <li class="">10</li>
-                                    <li class="">11</li>
-                                    <li class="">12</li>
-                                    <li class="">13</li>
-                                    <li class="">14</li>
-                                    <li class="">15</li>
-
-                                </ul>
-                            </div>
-
-                            <div class="finishBtn"><button>Finish</button></div>
-                        </div>
+                        </form>
                     </div>
                     <%                                break;
                             }
