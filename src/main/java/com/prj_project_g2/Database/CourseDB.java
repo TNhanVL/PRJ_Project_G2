@@ -183,6 +183,28 @@ public class CourseDB extends DB {
         return false;
     }
 
+    public static int countOrderCourse(int userID) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select count(*) as number from orderCourse where userID = ?");
+            statement.setInt(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("number");
+            }
+
+            //disconnect to database
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //return result
+        return 0;
+    }
+
     public static boolean checkOrderCourse(int userID, int courseID) {
         try {
             //connect to database
@@ -358,7 +380,7 @@ public class CourseDB extends DB {
 
         return courses;
     }
-    
+
     public static void main(String[] args) {
 //        System.out.println(existCourse(1));
 //

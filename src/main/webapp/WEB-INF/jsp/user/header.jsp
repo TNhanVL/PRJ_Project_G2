@@ -4,6 +4,7 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Database.CourseDB"%>
 <%@page import="com.prj_project_g2.Database.UserDB"%>
 <%@page import="com.prj_project_g2.Model.User"%>
 <%@page import="com.prj_project_g2.Services.CookieServices"%>
@@ -35,7 +36,15 @@
     <div class="right-side">
         <a href="paysite.html" class="cart">
             <i class="fa-solid fa-cart-shopping"></i>
-            <div class="quantity">3</div>
+            <%
+                int numberOfOrderHeader = 0;
+                if (userHeader != null) {
+                    numberOfOrderHeader = CourseDB.countOrderCourse(userHeader.getID());
+                }
+                if (numberOfOrderHeader > 0) {
+            %>
+            <div class="quantity"><%out.print(numberOfOrderHeader);%></div>
+            <%}%>
         </a>
         <div onclick="openMenu()" id="user" class="user">
             <a href="<%
