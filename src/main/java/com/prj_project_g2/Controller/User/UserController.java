@@ -62,6 +62,11 @@ public class UserController {
     public String mainPage(ModelMap model) {
         return "user/main";
     }
+    
+    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    public String cart(ModelMap model) {
+        return "user/cart";
+    }
 
     @RequestMapping(value = "/lesson", method = RequestMethod.GET)
     public String lesson(HttpServletRequest request, HttpServletResponse response, @RequestParam String lessonID) {

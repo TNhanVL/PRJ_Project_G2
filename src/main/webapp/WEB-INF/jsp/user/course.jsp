@@ -41,7 +41,7 @@
 
     <head>
         <jsp:include page="head.jsp">
-            <jsp:param name="title" value="All Courses"/>
+            <jsp:param name="title" value="Course Infomation"/>
         </jsp:include>
         <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/courseInfo.css">
     </head>

@@ -34,7 +34,7 @@
     </div>
 
     <div class="right-side">
-        <a href="paysite.html" class="cart">
+        <a href="<%out.print(request.getContextPath());%>/user/cart" class="cart">
             <i class="fa-solid fa-cart-shopping"></i>
             <%
                 int numberOfOrderHeader = 0;
