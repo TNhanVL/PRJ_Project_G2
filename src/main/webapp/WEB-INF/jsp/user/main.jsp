@@ -15,7 +15,7 @@
         <jsp:include page="head.jsp">
             <jsp:param name="title" value="Yojihan"/>
         </jsp:include>
-        <link rel="stylesheet" href="../public/assets/css/main.css">
+        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/main.css">
     </head>
 
     <body>
@@ -35,7 +35,7 @@
                         ₫199,000. Today only.</p>
                 </div>
                 <div class="teamWorkImg col-md-6">
-                    <img src="../public/assets/imgs/bannerAds.png" alt="">
+                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/bannerAds.png" alt="">
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="AdsImg col-md-6">
-                    <img src="../public/assets/imgs/instructor.png" alt="">
+                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/instructor.png" alt="">
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                         %>
                         <li class="listItem">
                             <a href="#">
-                                <img src="<%out.print(courses.get(i).getImage());%>" alt="" class="courseImg">
+                                <img src="<%out.print(request.getContextPath());%>/public/media/course/<%out.print(courses.get(i).getID() + "/" + courses.get(i).getImage());%>" alt="" class="courseImg">
                                 <h4 class="courseName"><%out.print(courses.get(i).getTitle());%></h4>
                                 <div class="courseDescription">
                                     <span class="type">
@@ -100,14 +100,14 @@
                 </div>
                 <div class="viewCourseBtn">
                     <button class="viewCourseBtn">
-                        <a href="">View All Course</a>
+                        <a href="./allCourses">View All Course</a>
                     </button>
                 </div>
 
             </div>
 
             <div class="advantageAds row">
-                <img src="../public/assets/imgs/side.jpg" alt="" class="ads col-md-4">
+                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/side.jpg" alt="" class="ads col-md-4">
                 <div class="content col-md-8">
                     <h4>Outstanding advantages</h4>
                     <ul>
@@ -135,7 +135,7 @@
                                 Thanks u guys for the website which delivered me an opportunity to enhance my English in a quite short period of time, because of you I succeeded in getting overall band 8, with L-9 and R-8
                             </div>
                             <div class="footerItem">
-                                <img src="../public/assets/imgs/logo.png" alt="" class="userImg">
+                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
                                 <span class="userInfor">Someone Else</span>
                             </div>
                         </li>
@@ -148,7 +148,7 @@
                                 Thanks u guys for the website which delivered me an opportunity to enhance my English in a quite short period of time, because of you I succeeded in getting overall band 8, with L-9 and R-8
                             </div>
                             <div class="footerItem">
-                                <img src="../public/assets/imgs/logo.png" alt="" class="userImg">
+                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
                                 <span class="userInfor">Someone Else</span>
                             </div>
                         </li>
@@ -161,7 +161,7 @@
                                 Thanks u guys for the website which delivered me an opportunity to enhance my English in a quite short period of time, because of you I succeeded in getting overall band 8, with L-9 and R-8
                             </div>
                             <div class="footerItem">
-                                <img src="../public/assets/imgs/logo.png" alt="" class="userImg">
+                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
                                 <span class="userInfor">Someone Else</span>
                             </div>
                         </li>
@@ -174,7 +174,7 @@
                                 Thanks u guys for the website which delivered me an opportunity to enhance my English in a quite short period of time, because of you I succeeded in getting overall band 8, with L-9 and R-8
                             </div>
                             <div class="footerItem">
-                                <img src="../public/assets/imgs/logo.png" alt="" class="userImg">
+                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
                                 <span class="userInfor">Someone Else</span>
                             </div>
                         </li>
@@ -202,17 +202,17 @@
             <div class="collaborate">
                 <p>We collaborate with <span>100+ leading universities and companies</span></p>
                 <div class="collaborateLogos">
-                    <img src="../public/assets/imgs/gg.png" alt="">
-                    <img src="../public/assets/imgs/michigan.png" alt="">
-                    <img src="../public/assets/imgs/fu.png" alt="">
-                    <img src="../public/assets/imgs/standford.png" alt="">
-                    <img src="../public/assets/imgs/hw.jpg" alt="">
+                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/gg.png" alt="">
+                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/michigan.png" alt="">
+                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/fu.png" alt="">
+                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/standford.png" alt="">
+                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/hw.jpg" alt="">
                 </div>
             </div>
 
             <div class="advertisement ads2 row">
                 <div class="teamWorkImg col-md-6">
-                    <img src="../public/assets/imgs/bannerAds.png" alt="">
+                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/bannerAds.png" alt="">
                 </div>
                 <div class="contentBox ads2 col-md-6">
                     <p>

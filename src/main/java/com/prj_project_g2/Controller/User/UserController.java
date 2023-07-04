@@ -67,4 +67,15 @@ public class UserController {
     public String lesson(HttpServletRequest request, HttpServletResponse response, @RequestParam String lessonID) {
         return "user/lesson";
     }
+    
+    @RequestMapping(value = "/course/{courseID}", method = RequestMethod.GET)
+    public String course(HttpServletRequest request, HttpServletResponse response, @PathVariable int courseID) {
+        System.out.println(courseID);
+        return "user/course";
+    }
+    
+    @RequestMapping(value = "/allCourses", method = RequestMethod.GET)
+    public String allCourses(HttpServletRequest request, HttpServletResponse response) {
+        return "user/allCourses";
+    }
 }

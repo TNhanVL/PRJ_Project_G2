@@ -68,7 +68,7 @@
         <jsp:include page="head.jsp">
             <jsp:param name="title" value="Yojihan Study"/>
         </jsp:include>
-        <link rel="stylesheet" href="../public/assets/css/lesson.css">
+        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/lesson.css">
     </head>
 
     <body>
@@ -88,7 +88,7 @@
                                 Post post = PostDB.getPostByLessonID(lesson.getID());
                     %>
 
-                    <video src="../public/media/lesson/<%out.print(lesson.getID() + "/" + post.getContent());%>" controls>
+                    <video src="<%out.print(request.getContextPath());%>/public/media/lesson/<%out.print(lesson.getID() + "/" + post.getContent());%>" controls>
                         Trình duyệt của bạn không hỗ trợ video.
                     </video>
 
@@ -119,7 +119,7 @@
                                             switch (question.getType()) {
                                                 case 0: {
                                         %>
-                                        <img src="../public/media/question/<%out.print(question.getID() + "/" + question.getContent());%>" alt="">
+                                        <img src="<%out.print(request.getContextPath());%>/public/media/question/<%out.print(question.getID() + "/" + question.getContent());%>" alt="">
                                         <%
                                                     break;
                                                 }
@@ -287,7 +287,7 @@
                         <div class="comments">
                             <!-- start a comment -->
                             <div class="comment">
-                                <img src="../public/assets/imgs/D1.jpg" alt="" class="userAvatar">
+                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/D1.jpg" alt="" class="userAvatar">
                                 <div class="commentContent">
                                     <p class="userName">Nguyen Thanh Duong</p>
                                     <p class="content">
@@ -308,7 +308,7 @@
                             </div>
                             <!-- end a comment -->
                             <div class="comment">
-                                <img src="../public/assets/imgs/instructor.png" alt="" class="userAvatar">
+                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/instructor.png" alt="" class="userAvatar">
                                 <div class="commentContent">
                                     <p class="userName">Nguyen Thanh Duong</p>
                                     <p class="content">
@@ -329,7 +329,7 @@
                             </div>
                             <!-- end a comment -->
                             <div class="comment">
-                                <img src="../public/assets/imgs/logo.png" alt="" class="userAvatar">
+                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userAvatar">
                                 <div class="commentContent">
                                     <p class="userName">Nguyen Thanh Duong</p>
                                     <p class="content">
@@ -444,7 +444,7 @@
                     <div class="rating-comments">
                         <!-- start a rating -->
                         <div class="rating-content">
-                            <img src="../public/assets/imgs/gg.png" alt="" class="rateUserImg">
+                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/gg.png" alt="" class="rateUserImg">
                             <div class="content">
                                 <p class="UserRateName">
                                     Google
@@ -465,7 +465,7 @@
                         <!-- end a rating -->
                         <!-- start a rating -->
                         <div class="rating-content">
-                            <img src="../public/assets/imgs/gg.png" alt="" class="rateUserImg">
+                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/gg.png" alt="" class="rateUserImg">
                             <div class="content">
                                 <p class="UserRateName">
                                     Google
@@ -486,7 +486,7 @@
                         <!-- end a rating -->
                         <!-- start a rating -->
                         <div class="rating-content">
-                            <img src="../public/assets/imgs/gg.png" alt="" class="rateUserImg">
+                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/gg.png" alt="" class="rateUserImg">
                             <div class="content">
                                 <p class="UserRateName">
                                     Google
@@ -623,7 +623,7 @@
 
         <%@include file="foot.jsp" %>
 
-        <script src="../public/assets/js/lesson.js"></script>
+        <script src="<%out.print(request.getContextPath());%>/public/assets/js/lesson.js"></script>
 
         <%@include file="popUpMessage.jsp" %>
 

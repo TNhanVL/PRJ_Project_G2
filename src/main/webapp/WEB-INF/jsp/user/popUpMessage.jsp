@@ -8,7 +8,7 @@
 
 <div id="toast"></div>
 
-<script src="../public/assets/js/popUpScript.js"></script>
+<script src="<%out.print(request.getContextPath());%>/public/assets/js/popUpScript.js"></script>
 
 <script>
     <%

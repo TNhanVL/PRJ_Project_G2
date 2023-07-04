@@ -192,9 +192,9 @@ INSERT INTO organization([name], logo, [description]) VALUES
 ('FPT University', 'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png', N'Trường đại học top 1 Việt Nam');
 GO
 INSERT INTO course(title,[image],[description],organizationID,lecturerID,unSalePrice,price,rate) VALUES
-('Java basic', 'https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/1200px-Java_programming_language_logo.svg.png', 'ezsy', 1, 1, 500, 200, 4.2),
-('Java advance', 'https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-course-photos.s3.amazonaws.com/cb/3c4030d65011e682d8b14e2f0915fa/shutterstock_226881610.jpg?auto=format%2Ccompress&dpr=1', 'medium difficult', 1, 1, 0, 500, 4.5),
-('C++', 'https://play-lh.googleusercontent.com/_0YN8gHsg7iJvcfdgMGSIp75U6iWBv6GvDIpXKiySHi4yp8qZSAnLaJ090QCJuWivw', 'hard', 1, 1, 800, 600, 4.7);
+('Java basic', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),
+('Java advance', 'a.png', 'medium difficult', 1, 1, 0, 500, 4.5),
+('C++', 'a.png', 'hard', 1, 1, 800, 600, 4.7);
 GO
 INSERT INTO orderCourse(userID, courseID) VALUES
 (1, 2), (1, 3)

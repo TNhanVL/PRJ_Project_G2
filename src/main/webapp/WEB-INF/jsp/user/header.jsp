@@ -20,8 +20,8 @@
 
 <div id="header">
     <div class="left-side">
-        <a href="./main">
-            <img src="../public/assets/imgs/logo.png" alt="logo" class="logo">
+        <a href="<%out.print(request.getContextPath());%>/user/main">
+            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="logo" class="logo">
         </a>
         <input type="text" class="search-course" name="headerSearch" placeholder="Searching">
         <div class="course-opption">
@@ -39,12 +39,12 @@
         </a>
         <div onclick="openMenu()" id="user" class="user">
             <a href="<%
-                    if (loggedInHeader) {
-                        out.print("#");
-                    } else {
-                        out.print("./login");
-                    }
-                     %>">
+                if (loggedInHeader) {
+                    out.print("#");
+                } else {
+                    out.print(request.getContextPath() + "/user/login");
+                }
+               %>">
                 <img src="<%
                     if (loggedInHeader) {
                         out.print(userHeader.getAvatar());
@@ -67,7 +67,7 @@
                     <i class="fa-solid fa-gear"></i>
                     <span>Setting</span>
                 </a>
-                <a href="./logout">
+                <a href="<%out.print(request.getContextPath());%>/user/logout">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span>Logout</span>
                 </a>
@@ -83,5 +83,5 @@
 </div>
 
 <%if (loggedInHeader) {%>
-<script src="../public/assets/js/option.js"></script>                    
+<script src="<%out.print(request.getContextPath());%>/public/assets/js/option.js"></script>                    
 <%}%>
