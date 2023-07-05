@@ -116,7 +116,7 @@
                             //type 0 -> video
                             case 0: {
                                 Post post = PostDB.getPostByLessonID(lesson.getID());
-                    %>
+                                %>
                     <%@include file="lesson/video.jsp" %>
                     <%
                             break;
@@ -134,7 +134,7 @@
                     <%                                break;
                             }
                         }
-                    %>
+                        %>
 
                 </div>
 
@@ -144,121 +144,7 @@
             </div>
             <!-- Right side -->
 
-            <div class="rightSide">
-                <h4><%out.print(course.getTitle());%></h4>
-
-                <%
-                    ArrayList<Mooc> moocs = MoocDB.getMoocsByCourseID(course.getID());
-                    for (Mooc mooc1 : moocs) {
-                %>
-
-                <!-- part -->
-                <div class="part">
-                    <div class="partHeader">
-                        <div>
-                            <h5>Part 1: Hiragana 。ひらがな</h5>
-                            <p class="progressLesson">3/3 Complete</p>
-                        </div>
-                        <i class="fa-solid fa-chevron-down"></i>
-
-                    </div>
-
-                    <div class="partBody">
-                        <!-- each lesson is a div -->
-                        <!-- Start lesson -->
-                        <a href="#">
-                            <div class="lesson">
-                                <span class="lesson-status">
-                                    <!-- checked -->
-                                    <i class="fa-solid fa-square-check">
-                                        <!-- unchecked -->
-                                        <!-- <i class="fa-regular fa-square"></i> -->
-                                    </i></span>
-                                <div class="lesson-content">
-                                    <p class="title">1. Row A, Ka</p>
-                                    <span class="description">
-                                        <span class="type">
-                                            <!-- type video -->
-                                            <i class="fa-brands fa-youtube"></i>
-                                            <!-- type text -->
-                                            <!-- <i class="fa-solid fa-file-lines"></i> -->
-                                            <!-- Test -->
-                                            <!-- <i class="fa-solid fa-pen"></i> -->
-                                        </span>
-                                        <span class="time">13 minute</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- End lesson -->
-
-                        <!-- Start lesson -->
-                        <a href="#">
-                            <div class="lesson">
-                                <span class="lesson-status">
-                                    <!-- checked -->
-                                    <i class="fa-solid fa-square-check">
-                                        <!-- unchecked -->
-                                        <!-- <i class="fa-regular fa-square"></i> -->
-                                    </i></span>
-                                <div class="lesson-content">
-                                    <p class="title">1. Row A, Ka</p>
-                                    <span class="description">
-                                        <span class="type">
-                                            <!-- type video -->
-                                            <!-- <i class="fa-brands fa-youtube"></i> -->
-                                            <!-- type text -->
-                                            <i class="fa-solid fa-file-lines"></i>
-                                            <!-- Test -->
-                                            <!-- <i class="fa-solid fa-pen"></i> -->
-                                        </span>
-                                        <span class="time">13 minute</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- End lesson -->
-
-                        <!-- Start lesson -->
-                        <a href="#">
-                            <div class="lesson active">
-                                <span class="lesson-status">
-                                    <!-- checked -->
-                                    <i class="fa-solid fa-square-check">
-                                        <!-- unchecked -->
-                                        <!-- <i class="fa-regular fa-square"></i> -->
-                                    </i></span>
-                                <div class="lesson-content">
-                                    <p class="title">1. Row A, Ka</p>
-                                    <span class="description">
-                                        <span class="type">
-                                            <!-- type video -->
-                                            <!-- <i class="fa-brands fa-youtube"></i> -->
-                                            <!-- type text -->
-                                            <!-- <i class="fa-solid fa-file-lines"></i> -->
-                                            <!-- Test -->
-                                            <i class="fa-solid fa-pen"></i>
-                                        </span>
-                                        <span class="time">15 minute</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- End lesson -->
-
-
-
-                    </div>
-
-                </div>
-                <!-- end part -->
-
-                <%
-                    }
-                    %>
-
-
-            </div>
+            <%@include file="lesson/rightMenu.jsp" %>
 
         </div>
 
@@ -267,7 +153,8 @@
         <%@include file="foot.jsp" %>
 
         <script src="<%out.print(request.getContextPath());%>/public/assets/js/lesson.js"></script>
-        <script src="<%out.print(request.getContextPath());%>/public/assets/js/option.js"></script>
+        <script src="<%out.print(request.getContextPath());
+            %>/public/assets/js/option.js"></script>
 
         <%@include file="popUpMessage.jsp" %>
 

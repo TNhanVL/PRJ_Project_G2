@@ -81,7 +81,7 @@ public class MoocDB extends DB {
             statement.setInt(1, courseID);
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Mooc mooc = new Mooc(
                         resultSet.getInt("ID"),
                         resultSet.getInt("courseID"),

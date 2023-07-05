@@ -147,7 +147,7 @@ public class LessonDB extends DB {
             while (resultSet.next()) {
                 Lesson lesson = new Lesson(
                         resultSet.getInt("ID"),
-                        resultSet.getInt("MoocID"),
+                        resultSet.getInt("moocID"),
                         resultSet.getString("title"),
                         resultSet.getInt("index"),
                         resultSet.getInt("type"),
@@ -232,6 +232,6 @@ public class LessonDB extends DB {
     }
 
     public static void main(String[] args) {
-        System.out.println(getLastLessonID(1));
+        System.out.println(getLessonsByMoocID(1));
     }
 }
