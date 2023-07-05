@@ -266,7 +266,14 @@ INSERT INTO lessonCompleted(lessonID, userID) VALUES
 GO
 SELECT * FROM [user];
 
---get first uncompleted lesson
+--get last lessonID
+--select top 1 lessonID from
+--(select ID as moocID, [index] as moocIndex from mooc where courseID = 1) as a
+--join
+--(select moocID, ID as lessonID, [index] as lessonIndex from lesson) as b on a.moocID = b.moocID
+--order by moocIndex desc, lessonIndex desc;
+
+--get first uncompleted lessonID
 --select a.lessonID from
 --(select moocIndex, lessonID, lessonIndex from
 --(select ID as moocID, [index] as moocIndex from mooc where courseID = 1) as a

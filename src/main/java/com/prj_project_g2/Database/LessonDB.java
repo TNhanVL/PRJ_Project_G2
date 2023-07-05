@@ -99,6 +99,37 @@ public class LessonDB extends DB {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        if (lessonID < 0) {
+            lessonID = getLastLessonID(courseID);
+        }
+
+        return lessonID;
+    }
+
+    public static int getLastLessonID(int courseID) {
+        int lessonID = -1;
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select top 1 lessonID from\n"
+                    + "(select ID as moocID, [index] as moocIndex from mooc where courseID = ?) as a\n"
+                    + "join\n"
+                    + "(select moocID, ID as lessonID, [index] as lessonIndex from lesson) as b on a.moocID = b.moocID\n"
+                    + "order by moocIndex desc, lessonIndex desc");
+            statement.setInt(1, courseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                lessonID = resultSet.getInt("lessonID");
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return lessonID;
     }
 
@@ -201,6 +232,6 @@ public class LessonDB extends DB {
     }
 
     public static void main(String[] args) {
-        System.out.println(getFirstUncompleteLessonID(1, 1));
+        System.out.println(getLastLessonID(1));
     }
 }
