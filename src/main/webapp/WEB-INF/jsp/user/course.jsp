@@ -77,7 +77,7 @@
                     <%
                         if (user != null) {
                             if (CourseDB.checkPurchasedCourse(user.getID(), course.getID())) {
-                                out.print("<a href=\"hoc\">Learn now</a>");
+                                out.print("<a href=\"../learn/" + course.getID() + "\">Learn now</a>");
                             } else if (CourseDB.checkOrderCourse(user.getID(), course.getID())) {
                                 out.print("<a href=\"./deleteOrder/" + course.getID() + "\">Delete from cart</a>");
                             } else {

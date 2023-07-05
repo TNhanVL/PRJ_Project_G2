@@ -18,16 +18,17 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-//    @ResponseBody
     public String login(ModelMap model) {
-//        model.addAttribute("title", "Index!");
         return "user/login";
+    }
+    
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String signup(ModelMap model) {
+        return "user/signup";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    @ResponseBody
     public String loginPost(HttpServletRequest request, HttpServletResponse response, @RequestParam String username, @RequestParam String password) {
-//        model.addAttribute("title", "Index!");
         int status = UserDB.checkUser(username, password, false);
         if (status == 1) {
             request.getSession().setAttribute("error", "Username not exist!");
@@ -49,7 +50,6 @@ public class UserController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-//        model.addAttribute("title", "Index!");
         for (Cookie cookie : request.getCookies()) {
             if (cookie.getName().equals("jwtToken")) {
                 cookie.setValue(null);

@@ -1,8 +1,11 @@
-<%-- Document : login Created on : Jun 25, 2023, 12:24:50 AM Author : TTNhan --%>
+<%-- 
+    Document   : signup
+    Created on : Jul 5, 2023, 7:55:04 PM
+    Author     : TTNhan
+--%>
 
 <%@page import="com.prj_project_g2.Services.CookieServices"%>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     if (CookieServices.checkUserLoggedIn(request.getCookies())) {
         response.sendRedirect("./main");
@@ -21,7 +24,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
               integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
               crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/login.css">
+        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/signup.css">
         <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/toast.css">
         <title>Login page</title>
     </head>
@@ -29,12 +32,12 @@
     <body>
         <div id="main">
             <div class="box">
-                <form action="" method="post">
+                <form action="">
 
-                    <h2>Sign in</h2>
+                    <h2>Sign up</h2>
                     <div class="inputBox">
                         <input type="text" required="required" name="username">
-                        <span>Userame</span>
+                        <span>Email or Phone number</span>
                         <i></i>
                     </div>
                     <div class="inputBox">
@@ -42,11 +45,12 @@
                         <span>Password</span>
                         <i></i>
                     </div>
-                    <div class="links">
-                        <a href="#">Forgot Password</a>
-                        <a href="./signup">Signup</a>
+                    <div class="inputBox">
+                        <input type="password" required="required" name="password">
+                        <span>Confirm Password</span>
+                        <i></i>
                     </div>
-                    <input type="submit" value="Login">
+                    <input type="submit" value="Register">
 
                     <p id="message"></p>
 
@@ -63,7 +67,7 @@
                 </div>
 
                 <script>
-                    // Đợi 10 giây trước khi xóa div
+                    // Đợi 10 giây trước khi xóa p
                     setTimeout(function () {
                         var messageDiv = document.getElementById('message');
                         messageDiv.parentNode.removeChild(messageDiv);
