@@ -222,27 +222,26 @@ INSERT INTO orderCourse(userID, courseID) VALUES
 (1, 2), (1, 3)
 GO
 INSERT INTO purchasedCourse(userID, courseID) VALUES
-(1, 1)
+(1, 1),
+(1, 2)
 GO
 INSERT INTO mooc(courseID, [index], title, [description]) VALUES
 (1, 1, N'Part 1: Hiragana 。ひらがな', ''),
 (1, 2, N'Part 2: Katakana 。dgがな', '')
 GO
 INSERT INTO lesson(moocID, title, [index], [type], [time]) VALUES
-(1, 'Nihongo', 1, 0, 1)
+(1, 'Nihongo', 1, 0, 1),
+(1, 'Nihongo', 2, 2, 5),
+(2, 'Nihongo2', 2, 2, 5)
 GO
 INSERT INTO post(content, lessonID) VALUES
 ('baclieu.mp4', 1)
 GO
-INSERT INTO lesson(moocID, title, [index], [type], [time]) VALUES
-(1, 'Nihongo', 2, 2, 5),
-(2, 'Nihongo2', 2, 2, 5)
-GO
 INSERT INTO question(lessonID, [index], content, [type], point) VALUES
 (2, 1, 'a.png', 0, 1),
 (2, 2, 'i.png', 0, 1),
-(2, 3, 'u.png', 0, 1),
-(2, 4, 'e.png', 0, 1)
+(2, 3, 'u.png', 1, 1),
+(2, 4, 'e.png', 1, 1)
 GO
 INSERT INTO answer(questionID, content, correct) VALUES
 (1, 'a', 1),

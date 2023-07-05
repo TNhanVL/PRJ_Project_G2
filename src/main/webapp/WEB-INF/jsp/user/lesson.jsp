@@ -28,26 +28,45 @@
     User user = null;
     if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
         request.getSession().setAttribute("error", "You must be logged in before enter this lesson!");
-        response.sendRedirect("./login");
+        response.sendRedirect(request.getContextPath() + "/user/login");
         return;
     } else {
         user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
     }
 
+    //check courseID
+    Course course = null;
+    try {
+        course = CourseDB.getCourse((int) request.getAttribute("courseID"));
+        if (course == null) {
+            request.getSession().setAttribute("error", "Not exist the course!");
+            throw new Exception("Not exist course!");
+        }
+    } catch (Exception e) {
+        response.sendRedirect(request.getContextPath() + "/user/main");
+        return;
+    }
+
     Lesson lesson = null;
+    Mooc mooc = null;
     //check exist lessonID
     try {
-        lesson = LessonDB.getLesson(Integer.parseInt(request.getParameter("lessonID")));
+        int lessonID = (int) request.getAttribute("lessonID");
+        lesson = LessonDB.getLesson(lessonID);
         if (lesson == null) {
             request.getSession().setAttribute("error", "Not exist the lesson!");
             throw new Exception("Not exist lesson!");
         }
+        mooc = MoocDB.getMooc(lesson.getMoocID());
     } catch (Exception e) {
-        response.sendRedirect("./main");
+    }
+
+    //check match lessonID with courseID
+    if (mooc != null && mooc.getCourseID() != course.getID()) {
+        request.getSession().setAttribute("error", "Not exist the this lesson in the course!");
+        response.sendRedirect(request.getContextPath() + "/user/main");
         return;
     }
-    Mooc mooc = MoocDB.getMooc(lesson.getMoocID());
-    Course course = CourseDB.getCourse(mooc.getCourseID());
 
     //check purchased course
     try {
@@ -56,7 +75,7 @@
             throw new Exception("Not purchased course yet!");
         }
     } catch (Exception e) {
-        response.sendRedirect("./main");
+        response.sendRedirect(request.getContextPath() + "/user/main");
         return;
     }
 %>
@@ -80,6 +99,9 @@
             <!-- Left Side -->
             <div class="leftSide">
 
+                <%
+                    if (lesson != null) {
+                %>
                 <div class="lesson-main">
                     <%
                         switch (lesson.getType()) {
@@ -112,36 +134,18 @@
                                 <%
                                     //show all question
                                     for (Question question : questions) {
+                                        switch (question.getType() / 10) {
+                                            case 0: {
                                 %>
-                                <div class="quizContent" id="question<%out.print(question.getIndex());%>">
-                                    <div class="question">
-                                        <%
-                                            switch (question.getType()) {
-                                                case 0: {
-                                        %>
-                                        <img src="<%out.print(request.getContextPath());%>/public/media/question/<%out.print(question.getID() + "/" + question.getContent());%>" alt="">
-                                        <%
-                                                    break;
-                                                }
-                                                default: {
-                                                    break;
-                                                }
-                                            }
-                                        %>
-
-                                    </div>
-                                    <div class="answer">
-                                        <%
-                                            ArrayList<Answer> answers = AnswerDB.getAnswersByQuestionID(question.getID());
-                                            Collections.shuffle(answers);
-                                            for (Answer answer : answers) {
-                                                out.print("<p>" + answer.getContent() + "</p>\n");
-                                            }
-                                        %>
-                                    </div>
-                                </div>
-
+                                <%@include file="question/image.jsp" %>
                                 <%
+                                                break;
+                                            }
+                                            default: {
+                                                break;
+                                            }
+                                        }
+
                                     }
                                 %>
 
@@ -180,6 +184,7 @@
                     %>
 
                 </div>
+                <%}%>
 
 
                 <div class="tab">

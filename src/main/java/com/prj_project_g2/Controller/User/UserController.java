@@ -119,8 +119,16 @@ public class UserController {
         return "redirect:../../cart";
     }
 
-    @RequestMapping(value = "/lesson", method = RequestMethod.GET)
-    public String lesson(HttpServletRequest request, HttpServletResponse response, @RequestParam String lessonID) {
+    @RequestMapping(value = "/learn/{courseID}", method = RequestMethod.GET)
+    public String lesson(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int courseID) {
+        model.addAttribute("courseID", courseID);
+        return "user/lesson";
+    }
+    
+    @RequestMapping(value = "/learn/{courseID}/{lessonID}", method = RequestMethod.GET)
+    public String lesson(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int courseID, @PathVariable int lessonID) {
+        model.addAttribute("courseID", courseID);
+        model.addAttribute("lessonID", lessonID);
         return "user/lesson";
     }
 
