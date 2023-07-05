@@ -71,6 +71,30 @@ public class LessonDB extends DB {
         return lesson;
     }
 
+    public static boolean checkLessonCompleted(int userID, int lessonID) {
+        boolean ok = false;
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select 1 from lessonCompleted where lessonID = ? and userID = ?");
+            statement.setInt(1, lessonID);
+            statement.setInt(2, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                ok = true;
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return ok;
+    }
+
     public static int getFirstUncompleteLessonID(int userID, int courseID) {
         int lessonID = -1;
 
@@ -232,6 +256,6 @@ public class LessonDB extends DB {
     }
 
     public static void main(String[] args) {
-        System.out.println(getLessonsByMoocID(1));
+        System.out.println(checkLessonCompleted(1, 1));
     }
 }

@@ -4,6 +4,7 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Database.LessonDB"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="rightSide">
     <h4><%out.print(course.getTitle());%></h4>
@@ -35,10 +36,16 @@
 
             <!-- Start lesson -->
             <a href="<%out.print(request.getContextPath() + "/user/learn/" + course.getID() + "/" + lesson1.getID());%>">
-                <div class="lesson">
+                <div class="lesson<%if (lesson1.getID() == lesson.getID()) {
+                        out.print(" active");
+                    }%>">
                     <span class="lesson-status">
                         <!-- checked -->
-                        <i class="fa-solid fa-square-check">
+                        <i class="<%if (LessonDB.checkLessonCompleted(user.getID(), lesson1.getID())) {
+                                out.print("fa-solid fa-square-check");
+                            } else {
+                                out.print("fa-regular fa-square");
+                            }%>">
                             <!-- unchecked -->
                             <!-- <i class="fa-regular fa-square"></i> -->
                         </i></span>
