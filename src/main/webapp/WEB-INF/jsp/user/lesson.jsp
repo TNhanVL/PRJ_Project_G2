@@ -102,7 +102,7 @@
                         }
                         //type 2 -> quiz
                         case 2: {
-                            ArrayList<Question> questions = QuestionDB.getAllQuestionByLessonID(lesson.getID());
+                            ArrayList<Question> questions = QuestionDB.getQuestionByLessonID(lesson.getID());
                     %>
                     <div class="quiz-type1">
                         <form action="" method="post">
@@ -132,7 +132,7 @@
                                     </div>
                                     <div class="answer">
                                         <%
-                                            ArrayList<Answer> answers = AnswerDB.getAllAnswersByQuestionID(question.getID());
+                                            ArrayList<Answer> answers = AnswerDB.getAnswersByQuestionID(question.getID());
                                             Collections.shuffle(answers);
                                             for (Answer answer : answers) {
                                                 out.print("<p>" + answer.getContent() + "</p>\n");

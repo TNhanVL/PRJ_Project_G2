@@ -7,6 +7,7 @@ package com.prj_project_g2.Database;
 import com.prj_project_g2.Model.Lesson;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,7 +58,9 @@ public class LessonDB extends DB {
                         resultSet.getInt("ID"),
                         resultSet.getInt("MoocID"),
                         resultSet.getString("title"),
-                        resultSet.getInt("type"));
+                        resultSet.getInt("index"),
+                        resultSet.getInt("type"),
+                        resultSet.getInt("time"));
             }
 
             disconnect();
@@ -68,15 +71,47 @@ public class LessonDB extends DB {
         return lesson;
     }
 
+    public static ArrayList<Lesson> getLessonsByMoocID(int moocID) {
+        ArrayList<Lesson> lessons = new ArrayList<>();
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select * from lesson where moocID = ? order by [index]");
+            statement.setInt(1, moocID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Lesson lesson = new Lesson(
+                        resultSet.getInt("ID"),
+                        resultSet.getInt("MoocID"),
+                        resultSet.getString("title"),
+                        resultSet.getInt("index"),
+                        resultSet.getInt("type"),
+                        resultSet.getInt("time"));
+                lessons.add(lesson);
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lessons;
+    }
+
     public static boolean insertLesson(Lesson lesson) {
         try {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("insert into lesson(moocID,title,type) values(?,?, ?)");
+            statement = conn.prepareStatement("insert into lesson(moocID,title,[index],[type],[time]) values(?,?,?,?,?)");
             statement.setInt(1, lesson.getMoocID());
             statement.setString(2, lesson.getTitle());
-            statement.setInt(3, lesson.getType());
+            statement.setInt(3, lesson.getIndex());
+            statement.setInt(4, lesson.getType());
+            statement.setInt(5, lesson.getTime());
             statement.executeUpdate();
             //disconnect to database
             disconnect();
@@ -94,11 +129,13 @@ public class LessonDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("update lesson set moocID=?, title=?, type=? where ID=?");
+            statement = conn.prepareStatement("update lesson set moocID=?, title=?, [index]=?, type=?, [time]=? where ID=?");
             statement.setInt(1, lesson.getMoocID());
             statement.setString(2, lesson.getTitle());
-            statement.setInt(3, lesson.getType());
-            statement.setInt(4, lesson.getID());
+            statement.setInt(3, lesson.getIndex());
+            statement.setInt(4, lesson.getType());
+            statement.setInt(5, lesson.getTime());
+            statement.setInt(6, lesson.getID());
             statement.executeUpdate();
 
             //disconnect to database
@@ -131,18 +168,8 @@ public class LessonDB extends DB {
         }
         return false;
     }
-    
-    public static void main(String[] args) {
-//        System.out.println(existLesson(3));
-//        Lesson l = getLesson(4);
-//        System.out.println(l);
-//        l.setTitle("what...");
-//        updateLesson(l);
-//        
-//        insertLesson(getLesson(5));
-//          deleteLesson(5);          deleteLesson(7);
-//          deleteLesson(6);
 
-        
+    public static void main(String[] args) {
+        System.out.println(getLessonsByMoocID(1));
     }
 }

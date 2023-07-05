@@ -24,12 +24,14 @@
         <a href="<%out.print(request.getContextPath());%>/user/main">
             <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="logo" class="logo">
         </a>
-        <input type="text" class="search-course" name="headerSearch" placeholder="Searching">
+        <form action="">
+            <input type="text" class="search-course" name="headerSearch" placeholder="Searching">
+        </form>
         <div class="course-opption">
-            Course
+            <a href="<%out.print(request.getContextPath());%>/user/allCourses">Course</a>
         </div>
         <div class="quesAndAns">
-            Expert Q&A
+            <a href="#">Expert Q&A</a>
         </div>
     </div>
 
@@ -72,6 +74,10 @@
             </a>
 
             <div id="userMenu" class="userMenu close">
+                <a href="profile.html">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
                 <a href="#">
                     <i class="fa-solid fa-gear"></i>
                     <span>Setting</span>

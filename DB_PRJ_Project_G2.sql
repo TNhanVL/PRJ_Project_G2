@@ -1,4 +1,4 @@
-drop table [admin], questionResult, answer, question, quizResult, post, lesson, mooc, orderCourse, purchasedCourse, [certificate], course, lecturer, [user], country, organization
+drop table [admin], questionResult, answer, question, quizResult, post, lessonCompleted, lesson, mooc, orderCourse, purchasedCourse, [certificate], course, lecturer, [user], country, organization
 
 -- Create the tables
 CREATE TABLE [admin] (
@@ -108,6 +108,15 @@ CREATE TABLE lesson (
 );
 GO
 
+CREATE TABLE lessonCompleted (
+	lessonID INT NOT NULL,
+	userID INT NOT NULL,
+	FOREIGN KEY (lessonID) REFERENCES lesson(ID),
+	FOREIGN KEY (userID) REFERENCES [user](ID),
+	UNIQUE (lessonID, userID)
+);
+GO
+
 CREATE TABLE post (
 	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	content NVARCHAR(50) NOT NULL,
@@ -198,7 +207,16 @@ GO
 INSERT INTO course(title,[image],[description],organizationID,lecturerID,unSalePrice,price,rate) VALUES
 ('Java basic', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),
 ('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 500, 4.5),
-('C++', 'a.png', 'hard', 1, 3, 800, 600, 4.7);
+('C++', 'a.png', 'hard', 1, 3, 800, 600, 4.7),
+('Java basic', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),
+('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 500, 4.5),
+('C++', 'a.png', 'hard', 1, 3, 800, 600, 4.7),
+('Java basic', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),
+('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 500, 4.5),
+('C++', 'a.png', 'hard', 1, 3, 800, 600, 4.7),
+('Java basic', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),
+('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 500, 4.5),
+('C++', 'a.png', 'hard', 1, 3, 800, 600, 4.7)
 GO
 INSERT INTO orderCourse(userID, courseID) VALUES
 (1, 2), (1, 3)

@@ -106,6 +106,38 @@ public class CourseDB extends DB {
         return courses;
     }
 
+    public static ArrayList<Course> getPopularCourses(int limit) {
+        ArrayList<Course> courses = new ArrayList<>();
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select top " + limit + " * from course");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Course course = new Course(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("title"),
+                        resultSet.getString("image"),
+                        resultSet.getString("description"),
+                        resultSet.getInt("organizationID"),
+                        resultSet.getInt("lecturerID"),
+                        resultSet.getDouble("unSalePrice"),
+                        resultSet.getDouble("price"),
+                        resultSet.getDouble("rate"));
+                courses.add(course);
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return courses;
+    }
+
     public static boolean insertCourse(Course course) {
         try {
             //connect to database
@@ -390,7 +422,7 @@ public class CourseDB extends DB {
 //        System.out.println(checkOrderCourse(1, 1));
 //
 //        System.out.println(getCourse(11));
-        System.out.println(getAllOrderCourses(1));
+        System.out.println(getPopularCourses(2));
 //
 //        c.setDescription("Normal");
 //

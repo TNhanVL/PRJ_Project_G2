@@ -53,51 +53,74 @@
                 </div>
             </div>
 
+            <!-- Popular Course -->
             <div class="popularCourse">
                 <h2>Some popular courses</h2>
-                <div class="courseSlider">
-                    <div class="previousBtn">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </div>
+                <!-- Bootstrap Carousel -->
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
 
-                    <ul class="courseList">
-                        <%  ArrayList<Course> courses = CourseDB.getAllCourses();
-                            for (int i = 0; i < Math.min(3, courses.size()); i++) {
+                        <%
+                            ArrayList<Course> courses = CourseDB.getPopularCourses(12);
+                            int index = -1;
+                            for (Course course : courses) {
+                                index++;
+                                if (index % 4 == 0) {
                         %>
-                        <li class="listItem">
-                            <a href="#">
-                                <img src="<%out.print(request.getContextPath());%>/public/media/course/<%out.print(courses.get(i).getID() + "/" + courses.get(i).getImage());%>" alt="" class="courseImg">
-                                <h4 class="courseName"><%out.print(courses.get(i).getTitle());%></h4>
-                                <div class="courseDescription">
-                                    <span class="type">
-                                        <span><%out.print(courses.get(i).getDescription());%></span>
-                                        <!--<span>20h</span>-->
-                                    </span>
-                                    <span class="price"><%out.print(courses.get(i).getPrice());%>$</span>
-                                </div>
-                            </a>
-                            <div class="rate">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                        </li>
-                        <%}%>
-                    </ul>
 
-                    <div class="nextBtn">
-                        <i class="fa-solid fa-chevron-right"></i>
+                        <div class="carousel-item<%if (index / 4 == 0) {
+                                out.print(" active");
+                            }%>">
+                            <ul class="courseList">
+
+                                <%}%>
+
+                                <!-- course -->
+                                <li class="listItem">
+                                    <a href="./course/<%out.print(course.getID());%>">
+                                        <img src="<%out.print(request.getContextPath());%>/public/media/course/<%out.print(course.getID() + "/" + course.getImage());%>" alt="" class="courseImg">
+                                        <h4 class="courseName"><%out.print(course.getTitle());%></h4>
+                                        <div class="courseDescription">
+                                            <span class="type">
+                                                <span><%out.print(course.getDescription());%></span>
+                                                <span>20h</span>
+                                            </span>
+                                            <div class="rateAndPrice">
+                                                <div class="rate">
+                                                    <span><%out.print(course.getRate());%></span>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <span>(0 reviewer)</span>
+                                                </div>
+                                                <span class="price"><%out.print(course.getPrice());%>$</span>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                </li>
+                                <!-- end course -->
+
+                                <%if ((index + 1) % 4 == 0) {%>
+                            </ul>
+                        </div>
+
+                        <%
+                                }
+                            }%>
+
                     </div>
-
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-                <div  class="seperatePage">
-                    <i class="fa-solid fa-circle active"></i>
-                    <i class="fa-solid fa-circle"></i>
-                    <i class="fa-solid fa-circle"></i>
-                    <i class="fa-solid fa-circle"></i>
-                </div>
+                <!-- End  Bootstrap Carousel-->
                 <div class="viewCourseBtn">
                     <button class="viewCourseBtn">
                         <a href="./allCourses">View All Course</a>
@@ -122,81 +145,238 @@
             <div class="feedBack">
                 <h2>What our learners say...</h2>
                 <div class="feedBackSlider">
-                    <div class="nextBtn">
-                        <i class="fa-solid fa-chevron-left"></i>
+
+
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <ul class="feedbackListItem">
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="carousel-item">
+                                <ul class="feedbackListItem">
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="carousel-item">
+                                <ul class="feedbackListItem">
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="feedbackItem">
+                                        <div class="headerItem">
+                                            <i class="fa-solid fa-quote-left"></i>
+                                        </div>
+                                        <div class="bodyItem">
+                                            Thanks u guys for the website which delivered me an opportunity to enhance my
+                                            English in a
+                                            quite short period of time, because of you I succeeded in getting overall band
+                                            8, with L-9
+                                            and R-8
+                                        </div>
+                                        <div class="footerItem">
+                                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
+                                            <span class="userInfor">Someone Else</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
-                    <ul class="feedbackListItem">
 
-                        <li class="feedbackItem">
-                            <div class="headerItem">
-                                <i class="fa-solid fa-quote-left"></i>
-                            </div>
-                            <div class="bodyItem">
-                                Thanks u guys for the website which delivered me an opportunity to enhance my English in a quite short period of time, because of you I succeeded in getting overall band 8, with L-9 and R-8
-                            </div>
-                            <div class="footerItem">
-                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
-                                <span class="userInfor">Someone Else</span>
-                            </div>
-                        </li>
-
-                        <li class="feedbackItem">
-                            <div class="headerItem">
-                                <i class="fa-solid fa-quote-left"></i>
-                            </div>
-                            <div class="bodyItem">
-                                Thanks u guys for the website which delivered me an opportunity to enhance my English in a quite short period of time, because of you I succeeded in getting overall band 8, with L-9 and R-8
-                            </div>
-                            <div class="footerItem">
-                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
-                                <span class="userInfor">Someone Else</span>
-                            </div>
-                        </li>
-
-                        <li class="feedbackItem">
-                            <div class="headerItem">
-                                <i class="fa-solid fa-quote-left"></i>
-                            </div>
-                            <div class="bodyItem">
-                                Thanks u guys for the website which delivered me an opportunity to enhance my English in a quite short period of time, because of you I succeeded in getting overall band 8, with L-9 and R-8
-                            </div>
-                            <div class="footerItem">
-                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
-                                <span class="userInfor">Someone Else</span>
-                            </div>
-                        </li>
-
-                        <li class="feedbackItem">
-                            <div class="headerItem">
-                                <i class="fa-solid fa-quote-left"></i>
-                            </div>
-                            <div class="bodyItem">
-                                Thanks u guys for the website which delivered me an opportunity to enhance my English in a quite short period of time, because of you I succeeded in getting overall band 8, with L-9 and R-8
-                            </div>
-                            <div class="footerItem">
-                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logo.png" alt="" class="userImg">
-                                <span class="userInfor">Someone Else</span>
-                            </div>
-                        </li>
-
-
-
-                    </ul>
-                    <div class="nextBtn">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
                 </div>
-                <div  class="seperatePage">
-                    <i class="fa-solid fa-circle active"></i>
-                    <i class="fa-solid fa-circle"></i>
-                    <i class="fa-solid fa-circle"></i>
-                    <i class="fa-solid fa-circle"></i>
-                </div>
-                <div class="viewCourseBtn">
-                    <button class="viewCourseBtn">
-                        <a href="">View All</a>
-                    </button>
-                </div>
+
+
             </div>
 
             <div class="collaborate">

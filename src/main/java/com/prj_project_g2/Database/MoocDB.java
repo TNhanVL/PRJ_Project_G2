@@ -7,6 +7,7 @@ package com.prj_project_g2.Database;
 import com.prj_project_g2.Model.Mooc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,6 +68,35 @@ public class MoocDB extends DB {
         }
 
         return mooc;
+    }
+
+    public static ArrayList<Mooc> getMoocsByCourseID(int courseID) {
+        ArrayList<Mooc> moocs = new ArrayList<>();
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select * from mooc where courseID = ? order by [index]");
+            statement.setInt(1, courseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                Mooc mooc = new Mooc(
+                        resultSet.getInt("ID"),
+                        resultSet.getInt("courseID"),
+                        resultSet.getInt("index"),
+                        resultSet.getString("title"),
+                        resultSet.getString("description"));
+                moocs.add(mooc);
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return moocs;
     }
 
     public static boolean insertMooc(Mooc mooc) {
@@ -137,11 +167,6 @@ public class MoocDB extends DB {
     }
 
     public static void main(String[] args) {
-//        Mooc m = getMooc(2);
-//        m.setTitle("Who...");
-//        insertMooc(m);
-//        m.setDescription("yah");
-//        updateMooc(m);
-//          deleteMooc(3);
+        System.out.println(getMoocsByCourseID(1));
     }
 }

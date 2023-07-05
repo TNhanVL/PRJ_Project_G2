@@ -79,7 +79,7 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question{" + "ID=" + ID + ", lessonID=" + lessonID + ", content=" + content + ", type=" + type + ", point=" + point + '}';
+        return "Question{" + "ID=" + ID + ", lessonID=" + lessonID + ", index=" + index + ", content=" + content + ", type=" + type + ", point=" + point + '}';
     }
 
 }

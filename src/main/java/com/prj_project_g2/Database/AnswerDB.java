@@ -71,7 +71,7 @@ public class AnswerDB extends DB {
         return answer;
     }
     
-    public static ArrayList<Answer> getAllAnswersByQuestionID(int questionID) {
+    public static ArrayList<Answer> getAnswersByQuestionID(int questionID) {
         ArrayList<Answer> answers = new ArrayList<>();
         
         try {
@@ -164,6 +164,6 @@ public class AnswerDB extends DB {
     }
     
     public static void main(String[] args) {
-        System.out.println(getAllAnswersByQuestionID(1));
+        System.out.println(getAnswersByQuestionID(1));
     }
 }

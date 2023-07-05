@@ -9,19 +9,24 @@ package com.prj_project_g2.Model;
  * @author Thanh Duong
  */
 public class Lesson {
+
     private int ID;
     private int moocID;
     private String title;
-    private int type; 
+    private int index;
+    private int type;
+    private int time;
 
     public Lesson() {
     }
 
-    public Lesson(int ID, int moocID, String title, int type) {
+    public Lesson(int ID, int moocID, String title, int index, int type, int time) {
         this.ID = ID;
         this.moocID = moocID;
         this.title = title;
+        this.index = index;
         this.type = type;
+        this.time = time;
     }
 
     public int getID() {
@@ -48,6 +53,14 @@ public class Lesson {
         this.title = title;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public int getType() {
         return type;
     }
@@ -56,11 +69,17 @@ public class Lesson {
         this.type = type;
     }
 
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
-        return "Lesson{" + "ID=" + ID + ", moocID=" + moocID + ", title=" + title + ", type=" + type + '}';
+        return "Lesson{" + "ID=" + ID + ", moocID=" + moocID + ", title=" + title + ", index=" + index + ", type=" + type + ", time=" + time + '}';
     }
-    
-    
-    
+
 }

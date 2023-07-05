@@ -72,14 +72,14 @@ public class QuestionDB extends DB {
         return question;
     }
 
-    public static ArrayList<Question> getAllQuestionByLessonID(int lessonID) {
+    public static ArrayList<Question> getQuestionByLessonID(int lessonID) {
         ArrayList<Question> questions = new ArrayList<>();
 
         try {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("select * from question where lessonID = ?");
+            statement = conn.prepareStatement("select * from question where lessonID = ? order by [index]");
             statement.setInt(1, lessonID);
             ResultSet resultSet = statement.executeQuery();
 
@@ -171,6 +171,6 @@ public class QuestionDB extends DB {
     }
 
     public static void main(String[] args) {
-        System.out.println(getAllQuestionByLessonID(2));
+        System.out.println(getQuestionByLessonID(2));
     }
 }
