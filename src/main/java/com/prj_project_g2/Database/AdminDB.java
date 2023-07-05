@@ -8,15 +8,11 @@ import static com.prj_project_g2.Database.DB.conn;
 import static com.prj_project_g2.Database.DB.connect;
 import static com.prj_project_g2.Database.DB.disconnect;
 import static com.prj_project_g2.Database.DB.statement;
-import com.prj_project_g2.Model.User;
-import com.prj_project_g2.Services.CookieServices;
 import com.prj_project_g2.Services.MD5;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.Cookie;
 
 /**
  *

@@ -5,7 +5,6 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Answer;
-import com.prj_project_g2.Model.Question;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
