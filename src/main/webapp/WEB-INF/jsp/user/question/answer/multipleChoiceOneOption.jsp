@@ -18,8 +18,8 @@
     for (Answer answer : answers) {
         String answerName = "answer" + answer.getID();
 %>
-<span> <input type="radio" id="<%out.print(answerName);%>" name="<%out.print(answerName);%>">
-    <label for="<%out.print(answerName);%>"><%out.print(answer.getContent());%></label><br></span>
+<label for="<%out.print(answerName);%>"><input type="radio" id="<%out.print(answerName);%>" name="<%out.print(question.getID());%>"
+                                               value="<%out.print(answer.getID());%>"><%out.print(answer.getContent());%></label><br>
     <%
         }
     %>
