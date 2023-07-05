@@ -71,6 +71,37 @@ public class LessonDB extends DB {
         return lesson;
     }
 
+    public static int getFirstUncompleteLessonID(int userID, int courseID) {
+        int lessonID = -1;
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select a.lessonID from\n"
+                    + "(select moocIndex, lessonID, lessonIndex from\n"
+                    + "(select ID as moocID, [index] as moocIndex from mooc where courseID = ?) as a\n"
+                    + "join\n"
+                    + "(select moocID, ID as lessonID, [index] as lessonIndex from lesson) as b on a.moocID = b.moocID) a\n"
+                    + "join\n"
+                    + "(select lessonID from lessonCompleted where userID = ?) b on a.lessonID = b.lessonID\n"
+                    + "order by moocIndex, lessonIndex");
+            statement.setInt(1, courseID);
+            statement.setInt(2, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                lessonID = resultSet.getInt("lessonID");
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lessonID;
+    }
+
     public static ArrayList<Lesson> getLessonsByMoocID(int moocID) {
         ArrayList<Lesson> lessons = new ArrayList<>();
 
@@ -170,6 +201,6 @@ public class LessonDB extends DB {
     }
 
     public static void main(String[] args) {
-        System.out.println(getLessonsByMoocID(1));
+        System.out.println(getFirstUncompleteLessonID(1, 1));
     }
 }

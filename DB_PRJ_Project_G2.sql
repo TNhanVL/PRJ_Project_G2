@@ -225,7 +225,8 @@ INSERT INTO purchasedCourse(userID, courseID) VALUES
 (1, 1)
 GO
 INSERT INTO mooc(courseID, [index], title, [description]) VALUES
-(1, 1, N'Part 1: Hiragana 。ひらがな', '')
+(1, 1, N'Part 1: Hiragana 。ひらがな', ''),
+(1, 2, N'Part 2: Katakana 。dgがな', '')
 GO
 INSERT INTO lesson(moocID, title, [index], [type], [time]) VALUES
 (1, 'Nihongo', 1, 0, 1)
@@ -234,7 +235,8 @@ INSERT INTO post(content, lessonID) VALUES
 ('baclieu.mp4', 1)
 GO
 INSERT INTO lesson(moocID, title, [index], [type], [time]) VALUES
-(1, 'Nihongo', 2, 2, 5)
+(1, 'Nihongo', 2, 2, 5),
+(2, 'Nihongo2', 2, 2, 5)
 GO
 INSERT INTO question(lessonID, [index], content, [type], point) VALUES
 (2, 1, 'a.png', 0, 1),
@@ -260,4 +262,17 @@ INSERT INTO answer(questionID, content, correct) VALUES
 (4, 'e', 1),
 (4, 'i', 0)
 GO
+INSERT INTO lessonCompleted(lessonID, userID) VALUES
+(1, 1)
+GO
 SELECT * FROM [user];
+
+--get first uncompleted lesson
+--select a.lessonID from
+--(select moocIndex, lessonID, lessonIndex from
+--(select ID as moocID, [index] as moocIndex from mooc where courseID = 1) as a
+--join
+--(select moocID, ID as lessonID, [index] as lessonIndex from lesson) as b on a.moocID = b.moocID) a
+--join
+--(select lessonID from lessonCompleted where userID = 1) b on a.lessonID = b.lessonID
+--order by moocIndex, lessonIndex;

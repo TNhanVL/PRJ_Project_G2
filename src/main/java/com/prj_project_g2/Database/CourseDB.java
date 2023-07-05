@@ -73,7 +73,7 @@ public class CourseDB extends DB {
 
         return course;
     }
-
+    
     public static ArrayList<Course> getAllCourses() {
         ArrayList<Course> courses = new ArrayList<>();
 
