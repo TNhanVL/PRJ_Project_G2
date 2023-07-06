@@ -3,6 +3,7 @@ package com.prj_project_g2.Controller.User;
 import com.prj_project_g2.Database.CourseDB;
 import com.prj_project_g2.Database.LessonDB;
 import com.prj_project_g2.Database.MoocDB;
+import com.prj_project_g2.Database.QuestionResultDB;
 import com.prj_project_g2.Database.QuizResultDB;
 import com.prj_project_g2.Database.UserDB;
 import com.prj_project_g2.Model.Lesson;
@@ -160,8 +161,40 @@ public class UserController {
         User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
         Lesson lesson = LessonDB.getLesson(lessonID);
         QuizResultDB.insertQuizResult(new QuizResult(0, lessonID, user.getID(), new Date(), new Date((new Date()).getTime() + lesson.getTime() * 60000)));
-        
+
         return "redirect:../learn/" + MoocDB.getMooc(lesson.getMoocID()).getCourseID() + "/" + lessonID;
+    }
+
+    @RequestMapping(value = "/updateQuestionResult/{quizResultID}/{questionID}/{data}", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateQuestionResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int quizResultID, @PathVariable int questionID, @PathVariable String data) {
+        //check logged in
+//        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
+//            request.getSession().setAttribute("error", "You need to log in to continue!");
+//            return "redirect:../../login";
+//        }
+
+        User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+
+        //check owner
+//        QuizResult quizResult = QuizResultDB.getQuizResult(questionID);
+//        if(quizResult.getUserID() != user.getID()){
+//            return "not owned";
+//        }
+        QuestionResultDB.deleteQuestionResultOfQuestion(quizResultID, questionID);
+
+        String[] answerIDs = data.split("_");
+        for (String i : answerIDs) {
+            try {
+                int answerID = Integer.parseInt(i);
+                System.out.println(answerID);
+                QuestionResultDB.insertQuestionResult(quizResultID, questionID, answerID);
+            } catch (NumberFormatException e) {
+
+            }
+        }
+
+        return "ok";
     }
 
     @RequestMapping(value = "/course/{courseID}", method = RequestMethod.GET)

@@ -162,7 +162,8 @@ CREATE TABLE questionResult (
 	selectedAnswer INT NOT NULL,
 	FOREIGN KEY (quizResultID) REFERENCES quizResult(ID),
 	FOREIGN KEY (questionID) REFERENCES question(ID),
-	FOREIGN KEY (selectedAnswer) REFERENCES answer(ID)
+	FOREIGN KEY (selectedAnswer) REFERENCES answer(ID),
+	UNIQUE (quizResultID, questionID, selectedAnswer)
 );
 GO
 

@@ -4,6 +4,7 @@
     Author     : TTNhan
 --%>
 
+<%@page import="java.util.Date"%>
 <%@page import="com.prj_project_g2.Model.QuizResult"%>
 <%@page import="com.prj_project_g2.Database.QuizResultDB"%>
 <%@page import="com.prj_project_g2.Database.QuestionDB"%>
@@ -32,7 +33,7 @@
                 for (Question question : questions) {
                     switch (question.getType() / 10) {
                         case 0: {
-                            %>
+            %>
             <%@include file="../question/image.jsp" %>
             <%                                                break;
                         }
@@ -44,6 +45,8 @@
                 }
             %>
 
+            <%@include file="../question/updateAnswers.jsp" %>
+            
             <div class="btns">
                 <button>Continue</button>
                 <!-- <button>Check</button> -->
@@ -53,13 +56,37 @@
             <div class="time">
                 <h5>Time remaining</h5>
                 <i class="fa-regular fa-clock"></i>
-                <span>15:00</span>
+                <span class="countdown"><%
+                    //calculate remain time then format and print out
+                    long timeSecond = (quizResult.getStartTime().getTime() + lesson.getTime() * 60000 - new Date().getTime()) / 1000;
+                    if (timeSecond < 0) {
+                        timeSecond = 0;
+                    }
+                    long seconds = timeSecond % 60;
+                    timeSecond /= 60;
+                    long minutes = timeSecond % 60;
+                    timeSecond /= 60;
+                    long hours = timeSecond;
+
+                    String timeString = "";
+                    if (hours > 0) {
+                        timeString += hours + ":";
+                    }
+                    if (minutes < 10) {
+                        timeString += "0";
+                    }
+                    timeString += minutes + ":";
+                    if (seconds < 10) {
+                        timeString += "0";
+                    }
+                    timeString += seconds;
+                    out.print(timeString);
+                    %></span>
             </div>
             <div class="listQuestion">
                 <h5>Question</h5>
                 <ul>
-                    <%
-                        //show all questionLabel
+                    <%                        //show all questionLabel
                         for (int i = 1; i <= questions.size(); i++) {
                     %>
                     <li class=""><%out.print(i);%></li>
