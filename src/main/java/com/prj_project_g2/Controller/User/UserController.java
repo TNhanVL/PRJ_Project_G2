@@ -169,25 +169,24 @@ public class UserController {
     @ResponseBody
     public String updateQuestionResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int quizResultID, @PathVariable int questionID, @PathVariable String data) {
         //check logged in
-//        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
-//            request.getSession().setAttribute("error", "You need to log in to continue!");
-//            return "redirect:../../login";
-//        }
+        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
+            request.getSession().setAttribute("error", "You need to log in to continue!");
+            return "redirect:../../login";
+        }
 
         User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
 
         //check owner
-//        QuizResult quizResult = QuizResultDB.getQuizResult(questionID);
-//        if(quizResult.getUserID() != user.getID()){
-//            return "not owned";
-//        }
+        QuizResult quizResult = QuizResultDB.getQuizResult(quizResultID);
+        if (quizResult.getUserID() != user.getID()) {
+            return "not owned";
+        }
         QuestionResultDB.deleteQuestionResultOfQuestion(quizResultID, questionID);
 
         String[] answerIDs = data.split("_");
         for (String i : answerIDs) {
             try {
                 int answerID = Integer.parseInt(i);
-                System.out.println(answerID);
                 QuestionResultDB.insertQuestionResult(quizResultID, questionID, answerID);
             } catch (NumberFormatException e) {
 
