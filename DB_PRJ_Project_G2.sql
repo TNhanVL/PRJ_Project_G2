@@ -232,10 +232,12 @@ GO
 INSERT INTO lesson(moocID, title, [index], [type], [time]) VALUES
 (1, 'Nihongo', 1, 0, 1),
 (1, 'Nihongo', 2, 2, 5),
-(2, 'Nihongo2', 1, 2, 5)
+(2, 'Nihongo2', 1, 2, 5),
+(2, 'Video', 2, 0, 5)
 GO
 INSERT INTO post(content, lessonID) VALUES
-('baclieu.mp4', 1)
+('baclieu.mp4', 1),
+('baclieu.mp4', 4)
 GO
 INSERT INTO question(lessonID, [index], content, [type], point) VALUES
 (2, 1, 'a.png', 0, 1),

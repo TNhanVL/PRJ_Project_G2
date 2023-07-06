@@ -21,7 +21,7 @@ public class UserController {
     public String login(ModelMap model) {
         return "user/login";
     }
-    
+
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(ModelMap model) {
         return "user/signup";
@@ -124,12 +124,19 @@ public class UserController {
         model.addAttribute("courseID", courseID);
         return "user/lesson";
     }
-    
+
     @RequestMapping(value = "/learn/{courseID}/{lessonID}", method = RequestMethod.GET)
     public String lesson(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int courseID, @PathVariable int lessonID) {
         model.addAttribute("courseID", courseID);
         model.addAttribute("lessonID", lessonID);
         return "user/lesson";
+    }
+
+    @RequestMapping(value = "/markLessonComplete/{lessonID}", method = RequestMethod.POST)
+    @ResponseBody
+    public String markLessonComplete(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int lessonID) {
+        System.out.println(lessonID);
+        return "ok";
     }
 
     @RequestMapping(value = "/course/{courseID}", method = RequestMethod.GET)
