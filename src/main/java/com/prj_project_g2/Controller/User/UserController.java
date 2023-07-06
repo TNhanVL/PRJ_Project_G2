@@ -181,6 +181,11 @@ public class UserController {
         if (quizResult.getUserID() != user.getID()) {
             return "not owned";
         }
+        
+        if(quizResult.getEndTime().before(new Date())){
+            return "out of time!";
+        }
+        
         QuestionResultDB.deleteQuestionResultOfQuestion(quizResultID, questionID);
 
         String[] answerIDs = data.split("_");
