@@ -261,9 +261,9 @@ INSERT INTO answer(questionID, content, correct) VALUES
 (4, 'e', 1),
 (4, 'i', 0)
 GO
-INSERT INTO lessonCompleted(lessonID, userID) VALUES
-(1, 1)
-GO
+--INSERT INTO lessonCompleted(lessonID, userID) VALUES
+--(1, 1)
+--GO
 SELECT * FROM [user];
 
 --get last lessonID
@@ -274,11 +274,11 @@ SELECT * FROM [user];
 --order by moocIndex desc, lessonIndex desc;
 
 --get first uncompleted lessonID
---select a.lessonID from
+--select top 1 lessonID from
 --(select moocIndex, lessonID, lessonIndex from
 --(select ID as moocID, [index] as moocIndex from mooc where courseID = 1) as a
 --join
 --(select moocID, ID as lessonID, [index] as lessonIndex from lesson) as b on a.moocID = b.moocID) a
---join
---(select lessonID from lessonCompleted where userID = 1) b on a.lessonID = b.lessonID
+--where lessonID not in
+--(select lessonID from lessonCompleted where userID = 1)
 --order by moocIndex, lessonIndex;

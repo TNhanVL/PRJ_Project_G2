@@ -102,14 +102,14 @@ public class LessonDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("select a.lessonID from\n"
+            statement = conn.prepareStatement("select top 1 lessonID from\n"
                     + "(select moocIndex, lessonID, lessonIndex from\n"
                     + "(select ID as moocID, [index] as moocIndex from mooc where courseID = ?) as a\n"
                     + "join\n"
                     + "(select moocID, ID as lessonID, [index] as lessonIndex from lesson) as b on a.moocID = b.moocID) a\n"
-                    + "join\n"
-                    + "(select lessonID from lessonCompleted where userID = ?) b on a.lessonID = b.lessonID\n"
-                    + "order by moocIndex, lessonIndex");
+                    + "where lessonID not in\n"
+                    + "(select lessonID from lessonCompleted where userID = ?)\n"
+                    + "order by moocIndex, lessonIndex;");
             statement.setInt(1, courseID);
             statement.setInt(2, userID);
             ResultSet resultSet = statement.executeQuery();
