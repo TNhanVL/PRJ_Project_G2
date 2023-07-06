@@ -58,7 +58,7 @@ public class QuizResultDB extends DB {
                         resultSet.getInt("ID"),
                         resultSet.getInt("lessonID"),
                         resultSet.getInt("userID"),
-                        resultSet.getDate("dateSubmit")
+                        resultSet.getDate("startTime")
                 );
             }
 
@@ -70,40 +70,44 @@ public class QuizResultDB extends DB {
         return quizResult;
     }
 
-    public static boolean insertQuizResult(QuizResult quizResult) {
+    public static int insertQuizResult(QuizResult quizResult) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         try {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("insert into quizResult(ID,lessonID,userID,dateSubmit) values(?,?,?,?)");
+            statement = conn.prepareStatement("insert into quizResult(ID,lessonID,userID,startTime) values(?,?,?,?)");
             statement.setInt(1, quizResult.getID());
             statement.setInt(2, quizResult.getLessonID());
             statement.setInt(3, quizResult.getUserID());
             statement.setString(4, dateFormat.format(quizResult.getLessonID()));
             statement.executeUpdate();
+            
+            int newID = lastModifyID(conn);
+            
             //disconnect to database
             disconnect();
-            return true;
+            
+            return newID;
 
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
 
         }
-        return false;
+        return -1;
     }
 
     public static boolean updateQuizResult(QuizResult quizResult) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         try {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("update quizResult set lessonID=?,userID=?, dateSubmit=? where ID=?");
+            statement = conn.prepareStatement("update quizResult set lessonID=?,userID=?, startTime=? where ID=?");
             statement.setInt(4, quizResult.getID());
             statement.setInt(1, quizResult.getLessonID());
             statement.setInt(2, quizResult.getUserID());

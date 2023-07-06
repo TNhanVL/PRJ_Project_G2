@@ -146,19 +146,19 @@ CREATE TABLE answer (
 GO
 
 CREATE TABLE quizResult (
-	ID INT NOT NULL PRIMARY KEY,
-	lessonID INT,
-	userID INT,
-	dateSubmit DATE,
+	ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	lessonID INT NOT NULL,
+	userID INT NOT NULL,
+	startTime DATETIME,
 	FOREIGN KEY (lessonID) REFERENCES lesson(ID),
 	FOREIGN KEY (userID) REFERENCES [user](ID)
 );
 GO
 
 CREATE TABLE questionResult (
-	quizResultID INT,
-	questionID INT,
-	selectedAnswer INT,
+	quizResultID INT NOT NULL,
+	questionID INT NOT NULL,
+	selectedAnswer INT NOT NULL,
 	FOREIGN KEY (quizResultID) REFERENCES quizResult(ID),
 	FOREIGN KEY (questionID) REFERENCES question(ID),
 	FOREIGN KEY (selectedAnswer) REFERENCES answer(ID)
@@ -263,14 +263,19 @@ INSERT INTO answer(questionID, content, correct) VALUES
 (4, 'e', 1),
 (4, 'i', 0)
 GO
+INSERT INTO quizResult(lessonID, userID, startTime) VALUES
+(1, 1, '2023-07-07 18:27:40.456')
+GO
 SELECT * FROM [user];
 
+select * from quizResult;
+
 --get number completed lesson of a mooc
-select count(*) as number from
-(select lessonID as ID from lessonCompleted where userID = 1) as a
-join
-(select ID from lesson where moocID = 1) as b
-on a.ID = b.ID;
+--select count(*) as number from
+--(select lessonID as ID from lessonCompleted where userID = 1) as a
+--join
+--(select ID from lesson where moocID = 1) as b
+--on a.ID = b.ID;
 
 --get last lessonID
 --select top 1 lessonID from

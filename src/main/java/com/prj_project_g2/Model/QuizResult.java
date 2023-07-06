@@ -15,16 +15,16 @@ public class QuizResult {
     private int ID;
     private int lessonID;
     private int userID;
-    private Date dateSubmit;
+    private Date startTime;
 
     public QuizResult() {
     }
 
-    public QuizResult(int ID, int lessonID, int userID, Date dateSubmit) {
+    public QuizResult(int ID, int lessonID, int userID, Date startTime) {
         this.ID = ID;
         this.lessonID = lessonID;
         this.userID = userID;
-        this.dateSubmit = dateSubmit;
+        this.startTime = startTime;
     }
 
     public int getID() {
@@ -52,16 +52,16 @@ public class QuizResult {
     }
 
     public Date getDateSubmit() {
-        return dateSubmit;
+        return startTime;
     }
 
-    public void setDateSubmit(Date dateSubmit) {
-        this.dateSubmit = dateSubmit;
+    public void setDateSubmit(Date startTime) {
+        this.startTime = startTime;
     }
 
     @Override
     public String toString() {
-        return "QuizResult{" + "ID=" + ID + ", lessonID=" + lessonID + ", userID=" + userID + ", dateSubmit=" + dateSubmit + '}';
+        return "QuizResult{" + "ID=" + ID + ", lessonID=" + lessonID + ", userID=" + userID + ", startTime=" + startTime + '}';
     }
     
     
