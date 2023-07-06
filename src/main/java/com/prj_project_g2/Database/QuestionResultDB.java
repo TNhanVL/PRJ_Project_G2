@@ -4,9 +4,10 @@
  */
 package com.prj_project_g2.Database;
 
-import com.prj_project_g2.Model.QuestionResult;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import static com.prj_project_g2.Database.DB.conn;
+import static com.prj_project_g2.Database.DB.connect;
+import static com.prj_project_g2.Database.DB.disconnect;
+import static com.prj_project_g2.Database.DB.statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -17,6 +18,30 @@ import java.util.logging.Logger;
  * @author Thanh Duong
  */
 public class QuestionResultDB extends DB {
+
+    public static boolean CheckQuestionResult(int quizResultID, int questionID, int selectedAnswer) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select 1 from questionResult where quizResultID = ? and questionID = ? and selectedAnswer = ?");
+            statement.setInt(1, quizResultID);
+            statement.setInt(2, questionID);
+            statement.setInt(3, selectedAnswer);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+
+            //disconnect to database
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //return result
+        return false;
+    }
 
     public static boolean insertQuestionResult(int quizResultID, int questionID, int selectedAnswer) {
         try {

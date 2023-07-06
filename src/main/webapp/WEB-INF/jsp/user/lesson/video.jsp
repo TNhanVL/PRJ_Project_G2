@@ -31,6 +31,11 @@
                                 checkLesson.classList = [];
                                 checkLesson.classList.add("fa-solid");
                                 checkLesson.classList.add("fa-square-check");
+
+//Increase progress lesson
+                                let progressLesson = $(".progressLesson")[<%out.print(mooc.getIndex() - 1);%>];
+                                let progressLessonText = progressLesson.innerHTML;
+                                progressLesson.innerHTML = Number(progressLessonText.split("/")[0]) + 1 + "/" + progressLessonText.split("/")[1];
                             }
                         }
                     }

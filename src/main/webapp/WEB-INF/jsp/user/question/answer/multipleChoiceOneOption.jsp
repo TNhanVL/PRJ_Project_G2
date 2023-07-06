@@ -17,9 +17,14 @@
     Collections.shuffle(answers);
     for (Answer answer : answers) {
         String answerName = "answer" + answer.getID();
+        boolean checked = QuestionResultDB.CheckQuestionResult(quizResult.getID(), question.getID(), answer.getID());
 %>
 <label for="<%out.print(answerName);%>"><input type="radio" id="<%out.print(answerName);%>" name="question<%out.print(question.getID());%>"
-                                               value="<%out.print(answer.getID());%>"><%out.print(answer.getContent());%></label><br>
+                                               value="<%out.print(answer.getID());%>"
+                                               <%if (checked) {
+                                                       out.print("checked");
+                                                   }%>
+                                               ><%out.print(answer.getContent());%></label><br>
     <%
         }
     %>
