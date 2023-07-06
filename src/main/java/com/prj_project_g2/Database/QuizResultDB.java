@@ -8,6 +8,7 @@ import com.prj_project_g2.Model.QuizResult;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,7 +59,38 @@ public class QuizResultDB extends DB {
                         resultSet.getInt("ID"),
                         resultSet.getInt("lessonID"),
                         resultSet.getInt("userID"),
-                        resultSet.getDate("startTime")
+                        resultSet.getTimestamp("startTime"),
+                        resultSet.getTimestamp("endTime")
+                );
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return quizResult;
+    }
+
+    public static QuizResult getLastQuizResult(int userID, int lessonID) {
+        QuizResult quizResult = null;
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select top 1 * from quizResult where userID = ? and lessonID = ? order by startTime desc");
+            statement.setInt(1, userID);
+            statement.setInt(2, lessonID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                quizResult = new QuizResult(
+                        resultSet.getInt("ID"),
+                        resultSet.getInt("lessonID"),
+                        resultSet.getInt("userID"),
+                        resultSet.getTimestamp("startTime"),
+                        resultSet.getTimestamp("endTime")
                 );
             }
 
@@ -78,18 +110,19 @@ public class QuizResultDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("insert into quizResult(ID,lessonID,userID,startTime) values(?,?,?,?)");
+            statement = conn.prepareStatement("insert into quizResult(ID,lessonID,userID,startTime,endTime) values(?,?,?,?,?)");
             statement.setInt(1, quizResult.getID());
             statement.setInt(2, quizResult.getLessonID());
             statement.setInt(3, quizResult.getUserID());
-            statement.setString(4, dateFormat.format(quizResult.getLessonID()));
+            statement.setString(4, dateFormat.format(quizResult.getStartTime()));
+            statement.setString(5, dateFormat.format(quizResult.getEndTime()));
             statement.executeUpdate();
-            
+
             int newID = lastModifyID(conn);
-            
+
             //disconnect to database
             disconnect();
-            
+
             return newID;
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -107,11 +140,12 @@ public class QuizResultDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("update quizResult set lessonID=?,userID=?, startTime=? where ID=?");
-            statement.setInt(4, quizResult.getID());
+            statement = conn.prepareStatement("update quizResult set lessonID=?,userID=?, startTime=?, endTime=? where ID=?");
             statement.setInt(1, quizResult.getLessonID());
             statement.setInt(2, quizResult.getUserID());
-            statement.setString(3, dateFormat.format(quizResult.getLessonID()));
+            statement.setString(3, dateFormat.format(quizResult.getStartTime()));
+            statement.setString(4, dateFormat.format(quizResult.getEndTime()));
+            statement.setInt(5, quizResult.getID());
             statement.executeUpdate();
 
             //disconnect to database
@@ -140,13 +174,8 @@ public class QuizResultDB extends DB {
         }
         return false;
     }
-    
+
     public static void main(String[] args) {
-//        QuizResult q = getQuizResult(1);
-//        System.out.println(q);
-//        
-//        q.setID(3);
-//        deleteQuizResult(3);
-        
+
     }
 }
