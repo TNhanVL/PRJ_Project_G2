@@ -95,6 +95,29 @@ public class LessonDB extends DB {
         return ok;
     }
 
+    public static boolean insertLessonCompleted(int userID, int lessonID) {
+        if (checkLessonCompleted(userID, lessonID)) {
+            return false;
+        }
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("insert into lessonCompleted(lessonID, userID) values(?,?)");
+            statement.setInt(1, lessonID);
+            statement.setInt(2, userID);
+            statement.executeUpdate();
+            //disconnect to database
+            disconnect();
+            return true;
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return false;
+    }
+
     public static int getFirstUncompleteLessonID(int userID, int courseID) {
         int lessonID = -1;
 

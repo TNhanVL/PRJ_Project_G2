@@ -24,8 +24,13 @@
         if (video && !sendedCompletedVideo) {
             //check if 90% video
             if (video.currentTime / video.duration >= 0.9) {
-                fetch("<%out.print(request.getContextPath());%>/user/markLessonComplete/<%out.print(lesson.getID());%>", {method: 'POST'}).catch(error => console.error(error));
+                fetch("<%out.print(request.getContextPath());%>/user/markLessonComplete/<%out.print(lesson.getID());%>", {method: 'POST'})
+                                        .catch(error => console.error(error));
                                 sendedCompletedVideo = true;
+                                let checkLesson = $(".lesson.active i")[0];
+                                checkLesson.classList = [];
+                                checkLesson.classList.add("fa-solid");
+                                checkLesson.classList.add("fa-square-check");
                             }
                         }
                     }

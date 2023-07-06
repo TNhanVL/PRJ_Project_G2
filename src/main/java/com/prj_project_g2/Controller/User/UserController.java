@@ -1,6 +1,7 @@
 package com.prj_project_g2.Controller.User;
 
 import com.prj_project_g2.Database.CourseDB;
+import com.prj_project_g2.Database.LessonDB;
 import com.prj_project_g2.Database.UserDB;
 import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.CookieServices;
@@ -135,7 +136,11 @@ public class UserController {
     @RequestMapping(value = "/markLessonComplete/{lessonID}", method = RequestMethod.POST)
     @ResponseBody
     public String markLessonComplete(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int lessonID) {
-        System.out.println(lessonID);
+        //check logged in
+        if (CookieServices.checkUserLoggedIn(request.getCookies())) {
+            User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+            LessonDB.insertLessonCompleted(user.getID(), lessonID);
+        }
         return "ok";
     }
 

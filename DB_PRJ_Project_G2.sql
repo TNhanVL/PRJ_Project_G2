@@ -263,9 +263,6 @@ INSERT INTO answer(questionID, content, correct) VALUES
 (4, 'e', 1),
 (4, 'i', 0)
 GO
---INSERT INTO lessonCompleted(lessonID, userID) VALUES
---(1, 1)
---GO
 SELECT * FROM [user];
 
 --get last lessonID
