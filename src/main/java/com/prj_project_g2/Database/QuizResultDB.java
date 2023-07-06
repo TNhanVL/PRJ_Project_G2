@@ -72,7 +72,7 @@ public class QuizResultDB extends DB {
 
     public static int insertQuizResult(QuizResult quizResult) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
         try {
             //connect to database
@@ -101,7 +101,7 @@ public class QuizResultDB extends DB {
 
     public static boolean updateQuizResult(QuizResult quizResult) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
         try {
             //connect to database
