@@ -18,7 +18,7 @@
     for (Answer answer : answers) {
         String answerName = "answer" + answer.getID();
 %>
-<label for="<%out.print(answerName);%>"><input type="checkbox" id="<%out.print(answerName);%>" name="<%out.print(question.getID());%>"
+<label for="<%out.print(answerName);%>"><input type="checkbox" id="<%out.print(answerName);%>" name="question<%out.print(question.getID());%>"
                                                value="<%out.print(answer.getID());%>"><%out.print(answer.getContent());%></label><br>
     <%
         }

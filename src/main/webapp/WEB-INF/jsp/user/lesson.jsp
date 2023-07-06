@@ -99,6 +99,7 @@
             <jsp:param name="title" value="Yojihan Study"/>
         </jsp:include>
         <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/lesson.css">
+        <script src="https://www.youtube.com/iframe_api"></script>
     </head>
 
     <body>
@@ -116,7 +117,7 @@
                             //type 0 -> video
                             case 0: {
                                 Post post = PostDB.getPostByLessonID(lesson.getID());
-                                %>
+                    %>
                     <%@include file="lesson/video.jsp" %>
                     <%
                             break;
@@ -134,7 +135,7 @@
                     <%                                break;
                             }
                         }
-                        %>
+                    %>
 
                 </div>
 
@@ -154,7 +155,7 @@
 
         <script src="<%out.print(request.getContextPath());%>/public/assets/js/lesson.js"></script>
         <script src="<%out.print(request.getContextPath());
-            %>/public/assets/js/option.js"></script>
+        %>/public/assets/js/option.js"></script>
 
         <%@include file="popUpMessage.jsp" %>
 
