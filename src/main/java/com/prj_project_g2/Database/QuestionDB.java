@@ -103,6 +103,29 @@ public class QuestionDB extends DB {
         return questions;
     }
 
+    public static int getNumberQuestionByLessonID(int lessonID) {
+        int ans = 0;
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select count(*) as number from question where lessonID = ?");
+            statement.setInt(1, lessonID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("number");
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return ans;
+    }
+
     public static boolean insertQuestion(Question question) {
         try {
             //connect to database
@@ -171,6 +194,6 @@ public class QuestionDB extends DB {
     }
 
     public static void main(String[] args) {
-        System.out.println(getQuestionByLessonID(2));
+        System.out.println(getNumberQuestionByLessonID(2));
     }
 }

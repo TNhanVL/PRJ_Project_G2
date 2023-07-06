@@ -2,11 +2,16 @@ package com.prj_project_g2.Controller.User;
 
 import com.prj_project_g2.Database.CourseDB;
 import com.prj_project_g2.Database.LessonDB;
+import com.prj_project_g2.Database.MoocDB;
+import com.prj_project_g2.Database.QuizResultDB;
 import com.prj_project_g2.Database.UserDB;
+import com.prj_project_g2.Model.Lesson;
+import com.prj_project_g2.Model.QuizResult;
 import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.CookieServices;
 import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
+import java.util.Date;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -142,6 +147,21 @@ public class UserController {
             LessonDB.insertLessonCompleted(user.getID(), lessonID);
         }
         return "ok";
+    }
+
+    @RequestMapping(value = "/startAQuiz/{lessonID}", method = RequestMethod.GET)
+    public String startAQuiz(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int lessonID) {
+        //check logged in
+        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
+            request.getSession().setAttribute("error", "You need to log in to continue!");
+            return "redirect:../../login";
+        }
+
+        User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+        Lesson lesson = LessonDB.getLesson(lessonID);
+        QuizResultDB.insertQuizResult(new QuizResult(0, lessonID, user.getID(), new Date(), new Date((new Date()).getTime() + lesson.getTime() * 60000)));
+        
+        return "redirect:../learn/" + MoocDB.getMooc(lesson.getMoocID()).getCourseID() + "/" + lessonID;
     }
 
     @RequestMapping(value = "/course/{courseID}", method = RequestMethod.GET)

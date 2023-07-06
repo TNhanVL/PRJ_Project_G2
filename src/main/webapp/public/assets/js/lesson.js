@@ -45,21 +45,21 @@ paragraphs.forEach(function (paragraph) {
   });
 });
 
-var video = document.getElementById('my-video');
+// var video = document.getElementById('my-video');
 
-if (video) {
-  video.addEventListener('ended', function () {
-    console.log('End');
-  });
-}
+// if (video) {
+//   video.addEventListener('ended', function () {
+//     console.log('End');
+//   });
+// }
 
-function checkVideoProgress() {
-  if (video && video.currentTime === video.duration) {
-    return 1;
-  } else {
-    return 0;
-  }
-}
+// function checkVideoProgress() {
+//   if (video && video.currentTime === video.duration) {
+//     return 1;
+//   } else {
+//     return 0;
+//   }
+// }
 // Gọi hàm kiểm tra video theo một khoảng thời gian nhất định
 // setInterval(checkVideoProgress, 1000); // Kiểm tra sau mỗi giây (1000 milliseconds)
 
@@ -206,9 +206,11 @@ function checkVideoProgress() {
   var duration = player.getDuration(); // Get the duration of the video
   var currentTime = player.getCurrentTime(); // Get the current time of the video
 
-  if (currentTime >= duration) {
-    console.log('User has watched the entire video');
-  } else {
-    console.log('User has not watched the entire video yet');
-  }
-}
+   if (currentTime >= duration) {
+     console.log('User has watched the entire video');
+   } else {
+     console.log('User has not watched the entire video yet');
+   }
+ }
+
+

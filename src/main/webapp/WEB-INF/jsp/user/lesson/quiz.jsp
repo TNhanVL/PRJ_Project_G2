@@ -4,13 +4,24 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Model.QuizResult"%>
+<%@page import="com.prj_project_g2.Database.QuizResultDB"%>
 <%@page import="com.prj_project_g2.Database.QuestionDB"%>
 <%@page import="com.prj_project_g2.Model.Question"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%
+    QuizResult quizResult = QuizResultDB.getLastQuizResult(user.getID(), lesson.getID());
+    if (quizResult == null) {
+%>
+<%@include file="./preTakeQuiz.jsp" %>
+<%
+} else {
     ArrayList<Question> questions = QuestionDB.getQuestionByLessonID(lesson.getID());
 %>
+
+
 <div class="quiz-type1">
     <form action="" method="post">
         <div class="leftSide">
@@ -21,7 +32,7 @@
                 for (Question question : questions) {
                     switch (question.getType() / 10) {
                         case 0: {
-            %>
+                            %>
             <%@include file="../question/image.jsp" %>
             <%                                                break;
                         }
@@ -62,3 +73,7 @@
         </div>
     </form>
 </div>
+
+<%
+    }
+%>

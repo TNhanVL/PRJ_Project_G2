@@ -110,12 +110,11 @@ public class QuizResultDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("insert into quizResult(ID,lessonID,userID,startTime,endTime) values(?,?,?,?,?)");
-            statement.setInt(1, quizResult.getID());
-            statement.setInt(2, quizResult.getLessonID());
-            statement.setInt(3, quizResult.getUserID());
-            statement.setString(4, dateFormat.format(quizResult.getStartTime()));
-            statement.setString(5, dateFormat.format(quizResult.getEndTime()));
+            statement = conn.prepareStatement("insert into quizResult(lessonID,userID,startTime,endTime) values(?,?,?,?)");
+            statement.setInt(1, quizResult.getLessonID());
+            statement.setInt(2, quizResult.getUserID());
+            statement.setString(3, dateFormat.format(quizResult.getStartTime()));
+            statement.setString(4, dateFormat.format(quizResult.getEndTime()));
             statement.executeUpdate();
 
             int newID = lastModifyID(conn);

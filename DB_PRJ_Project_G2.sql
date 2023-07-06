@@ -264,12 +264,14 @@ INSERT INTO answer(questionID, content, correct) VALUES
 (4, 'e', 1),
 (4, 'i', 0)
 GO
-INSERT INTO quizResult(lessonID, userID, startTime, endTime) VALUES
-(1, 1, '2023-07-07 18:27:40.456', 0)
-GO
+--INSERT INTO quizResult(lessonID, userID, startTime, endTime) VALUES
+--(2, 1, '2023-07-07 18:27:40.456', 0)
+--GO
 SELECT * FROM [user];
 
---select top 1 * from quizResult where userID = 1 and lessonID = 1 order by startTime desc;
+--select * from quizResult;
+
+--select top 1 * from quizResult where userID = 1 and lessonID = 2 order by startTime desc;
 
 --get number completed lesson of a mooc
 --select count(*) as number from
