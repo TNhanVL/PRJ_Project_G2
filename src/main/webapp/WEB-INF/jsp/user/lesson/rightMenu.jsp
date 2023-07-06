@@ -21,7 +21,7 @@
         <div class="partHeader">
             <div>
                 <h5>Part <%out.print(mooc1.getIndex() + ": " + mooc1.getTitle());%></h5>
-                <p class="progressLesson">3/<%out.print(lessons.size());%> Complete</p>
+                <p class="progressLesson"><%out.print(LessonDB.getNumberLessonsCompleted(user.getID(), mooc1.getID()) + "/" + lessons.size());%> Complete</p>
             </div>
             <i class="fa-solid fa-chevron-down"></i>
 

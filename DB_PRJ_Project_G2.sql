@@ -265,6 +265,13 @@ INSERT INTO answer(questionID, content, correct) VALUES
 GO
 SELECT * FROM [user];
 
+--get number completed lesson of a mooc
+select count(*) as number from
+(select lessonID as ID from lessonCompleted where userID = 1) as a
+join
+(select ID from lesson where moocID = 1) as b
+on a.ID = b.ID;
+
 --get last lessonID
 --select top 1 lessonID from
 --(select ID as moocID, [index] as moocIndex from mooc where courseID = 1) as a
