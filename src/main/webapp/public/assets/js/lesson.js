@@ -64,6 +64,8 @@ paragraphs.forEach(function (paragraph) {
 // setInterval(checkVideoProgress, 1000); // Kiểm tra sau mỗi giây (1000 milliseconds)
 
 
+// If quiz is finished
+let quizFinished = ($(".quiz-type1")) ? $(".quiz-type1")[0].classList.contains("finished") : false;
 
 // Hide all questions except first question
 let questions = $(".quizContent");
@@ -83,7 +85,7 @@ for (var i = 0; i < questionsLabels.length; i++) {
     let questionIndex = this.innerHTML;
     let question = $("#question" + questionIndex)[0];
     question.hidden = false;
-    
+
     remarkQuestionLabel();
   });
 }
@@ -97,13 +99,24 @@ function remarkQuestionLabel() {
     for (let i = 0; i < answers.length; i++) {
       if (answers[i].checked) {
         anyChecked = true;
-        break;
+        if (!quizFinished) {
+          answers[i].parentElement.classList.add("done");
+          console.log(answers[i].parentElement);
+        } else {
+          break;
+        }
+      } else {
+        if (!quizFinished) {
+          answers[i].parentElement.classList.remove("done");
+        }
       }
     }
-    if (anyChecked) {
-      questionsLabels[questionIndex - 1].classList.add("done");
-    } else {
-      questionsLabels[questionIndex - 1].classList.remove("done");
+    if (!quizFinished) {
+      if (anyChecked) {
+        questionsLabels[questionIndex - 1].classList.add("done");
+      } else {
+        questionsLabels[questionIndex - 1].classList.remove("done");
+      }
     }
     //for each question, check if question are showing, mark select question label
     if (questions[i].hidden) {
@@ -142,7 +155,7 @@ for (let i = 0; i < answers.length; i++) {
 }
 
 //add event next question in quiz
-let continueQuestionBtn = $(".quiz-type1 .btns")[0];
+let continueQuestionBtn = $(".quiz-type1 .btns p")[0];
 continueQuestionBtn.addEventListener('click', function (e) {
   let showIndex = 0;
   for (let i = 0; i < questions.length; i++) {

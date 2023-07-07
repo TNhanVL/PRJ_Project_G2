@@ -7,6 +7,7 @@ import com.prj_project_g2.Database.QuestionResultDB;
 import com.prj_project_g2.Database.QuizResultDB;
 import com.prj_project_g2.Database.UserDB;
 import com.prj_project_g2.Model.Lesson;
+import com.prj_project_g2.Model.Mooc;
 import com.prj_project_g2.Model.QuizResult;
 import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.CookieServices;
@@ -181,11 +182,11 @@ public class UserController {
         if (quizResult.getUserID() != user.getID()) {
             return "not owned";
         }
-        
-        if(quizResult.getEndTime().before(new Date())){
+
+        if (quizResult.getEndTime().before(new Date())) {
             return "out of time!";
         }
-        
+
         QuestionResultDB.deleteQuestionResultOfQuestion(quizResultID, questionID);
 
         String[] answerIDs = data.split("_");
@@ -199,6 +200,44 @@ public class UserController {
         }
 
         return "ok";
+    }
+
+    @RequestMapping(value = "/endAQuiz/{quizResultID}", method = RequestMethod.GET)
+    public String endAQuiz(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int quizResultID) {
+        //check logged in
+        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
+            request.getSession().setAttribute("error", "You need to log in to continue!");
+            return "redirect:../login";
+        }
+
+        User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+
+        //check quizResult exist
+        QuizResult quizResult = QuizResultDB.getQuizResult(quizResultID);
+        if (quizResult == null) {
+            return "redirect:../main";
+        }
+
+        //check owner
+        if (quizResult.getUserID() != user.getID()) {
+            return "redirect:../main";
+        }
+
+        Lesson lesson = LessonDB.getLesson(quizResult.getLessonID());
+        Mooc mooc = MoocDB.getMooc(lesson.getMoocID());
+        
+        //if quiz end yet
+        if (quizResult.getEndTime().before(new Date())) {
+            return "redirect:../learn/" + mooc.getCourseID() + "/" + lesson.getID();
+        }
+
+        System.out.println("1");
+
+        //set endTime to current
+        quizResult.setEndTime(new Date());
+        QuizResultDB.updateQuizResult(quizResult);
+
+        return "redirect:../learn/" + mooc.getCourseID() + "/" + lesson.getID();
     }
 
     @RequestMapping(value = "/course/{courseID}", method = RequestMethod.GET)

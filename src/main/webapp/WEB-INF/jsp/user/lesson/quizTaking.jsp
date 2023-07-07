@@ -1,37 +1,15 @@
 <%-- 
-    Document   : quiz
-    Created on : Jul 5, 2023, 8:55:55 PM
+    Document   : quizResult
+    Created on : Jul 7, 2023, 12:28:51 PM
     Author     : TTNhan
 --%>
 
-<%@page import="java.util.Date"%>
-<%@page import="com.prj_project_g2.Model.QuizResult"%>
-<%@page import="com.prj_project_g2.Database.QuizResultDB"%>
-<%@page import="com.prj_project_g2.Database.QuestionDB"%>
-<%@page import="com.prj_project_g2.Model.Question"%>
-<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%
-    QuizResult quizResult = QuizResultDB.getLastQuizResult(user.getID(), lesson.getID());
-    boolean quizFinished = false;
-    if (quizResult == null) {
-        //If not take quiz yet
-%>
-<%@include file="./preTakeQuiz.jsp" %>
-<%
-} else if (quizResult.getEndTime().after(new Date())) {
-    //if are taking quiz
-%>
-<%@include file="./quizTaking.jsp" %>
-<%
-} else {
-    //if have finished quiz
-    quizFinished = true;
     ArrayList<Question> questions = QuestionDB.getQuestionByLessonID(lesson.getID());
 %>
 
-<div class="quiz-type1 finished">
+<div class="quiz-type1">
     <form action="" method="post">
         <div class="leftSide">
             <p class="quizProgress">Question: <span>1/<%out.print(questions.size());%></span> </p>
@@ -41,7 +19,7 @@
                 for (Question question : questions) {
                     switch (question.getType() / 10) {
                         case 0: {
-                            %>
+            %>
             <%@include file="../question/image.jsp" %>
             <%                                                break;
                         }
@@ -51,7 +29,7 @@
                     }
 
                 }
-                %>
+            %>
 
             <%@include file="../question/updateAnswers.jsp" %>
 
@@ -96,9 +74,8 @@
                 <ul>
                     <%                        //show all questionLabel
                         for (int i = 1; i <= questions.size(); i++) {
-                            String correctClass = QuestionResultDB.CheckQuestionResultCorrect(quizResult.getID(), questions.get(i - 1).getID()) ? "correct" : "incorrect";
                     %>
-                    <li class="<%out.print(correctClass);%>"><%out.print(i);%></li>
+                    <li class=""><%out.print(i);%></li>
                         <%
                             }
                         %>
@@ -113,6 +90,3 @@
         </div>
     </form>
 </div>
-
-<%    }
-%>

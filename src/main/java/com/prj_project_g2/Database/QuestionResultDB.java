@@ -43,6 +43,35 @@ public class QuestionResultDB extends DB {
         return false;
     }
 
+    public static boolean CheckQuestionResultCorrect(int quizResultID, int questionID) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select 1 from\n"
+                    + "(select selectedAnswer as ID from questionResult where quizResultID = ? and questionID = ?) a\n"
+                    + "full join\n"
+                    + "(select ID from answer where questionID = ? and correct = 1) b\n"
+                    + "on a.ID = b.ID\n"
+                    + "where a.ID is null or b.ID is null");
+            statement.setInt(1, quizResultID);
+            statement.setInt(2, questionID);
+            statement.setInt(3, questionID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return false;
+            }
+
+            //disconnect to database
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //return result
+        return true;
+    }
+
     public static boolean insertQuestionResult(int quizResultID, int questionID, int selectedAnswer) {
         try {
             //connect to database

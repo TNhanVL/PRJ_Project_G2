@@ -19,13 +19,23 @@
     for (Answer answer : answers) {
         String answerName = "answer" + answer.getID();
         boolean checked = QuestionResultDB.CheckQuestionResult(quizResult.getID(), question.getID(), answer.getID());
+        String correctClass = "";
+        if (checked) {
+            correctClass = AnswerDB.getAnswer(answer.getID()).isCorrect() ? "correct" : "incorrect";
+        }
 %>
-<label for="<%out.print(answerName);%>"><input type="checkbox" id="<%out.print(answerName);%>" name="question<%out.print(question.getID());%>"
-                                               value="<%out.print(answer.getID());%>"
-                                               <%if (checked) {
-                                                       out.print("checked");
-                                                   }%>
-                                               ><%out.print(answer.getContent());%></label><br>
+<label for="<%out.print(answerName);%>" <%if (correctClass != "") {
+        out.print("class=\"" + correctClass + "\"");
+    }%>><input type="checkbox" id="<%out.print(answerName);%>" name="question<%out.print(question.getID());%>"
+                                                                                                                       value="<%out.print(answer.getID());%>"
+                                                                                                                       <%if (checked) {
+                                                                                                                               out.print(" checked");
+                                                                                                                           }
+                                                                                                                           if (quizFinished) {
+                                                                                                                               out.print(" disabled");
+                                                                                                                           }
+                                                                                                                       %>
+                                                                                                                       ><%out.print(answer.getContent());%></label><br>
     <%
         }
     %>

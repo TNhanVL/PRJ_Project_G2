@@ -267,6 +267,13 @@ INSERT INTO answer(questionID, content, correct) VALUES
 GO
 SELECT * FROM [user];
 
+-- Check if question are correct
+--select 1 from
+--(select selectedAnswer as ID from questionResult where quizResultID = 1 and questionID = 4) a
+--full join
+--(select ID from answer where questionID = 4 and correct = 1) b
+--on a.ID = b.ID
+--where a.ID is null or b.ID is null;
 
 --select top 1 * from quizResult where userID = 1 and lessonID = 2 order by startTime desc;
 
