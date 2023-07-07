@@ -95,18 +95,18 @@ public class LessonDB extends DB {
         }
 
         //if not completed, check if quiz not judge yet
+        Lesson lesson = LessonDB.getLesson(lessonID);
         if (!ok) {
-            Lesson lesson = LessonDB.getLesson(lessonID);
             if (lesson.getType() == 2) {
-                QuizResult quizResult = QuizResultDB.getLastQuizResult(userID, lesson.getID());
+                QuizResult quizResult = QuizResultDB.getLastQuizResult(userID, lessonID);
                 //if not take quiz yet or not finished yet
                 if (quizResult == null || quizResult.getEndTime().after(new Date())) {
                     return false;
                 }
                 int numberOfCorrectQuestion = QuizResultDB.getQuizResultPoint(quizResult.getID());
-                int numberOfQuestion = QuestionDB.getNumberQuestionByLessonID(lesson.getID());
+                int numberOfQuestion = QuestionDB.getNumberQuestionByLessonID(lessonID);
                 if (numberOfCorrectQuestion * 100 >= numberOfQuestion * 80) {
-                    LessonDB.insertLessonCompleted(userID, lesson.getID());
+                    LessonDB.insertLessonCompleted(userID, lessonID);
                     return true;
                 }
             }
