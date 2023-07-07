@@ -67,7 +67,7 @@
                 <div class="instructorInfor">
                     <img src=<%out.print(request.getContextPath() + "/public/media/user/" + lecturer.getID() + "/" + lecturer.getAvatar());%> alt="" class="instructorImg">
                     <p class="instructorName">
-                        Instructor: <a href="#"><%out.print(lecturer.getFirstName() + " " + lecturer.getLastName());%></a></p>
+                        Instructor: <a href="<%out.print(request.getContextPath());%>/user/profile/<%out.print(lecturer.getUsername());%>"><%out.print(lecturer.getFirstName() + " " + lecturer.getLastName());%></a></p>
                 </div>
                 <div class="price">
                     Price: <span><%out.print(course.getPrice());%>$</span>

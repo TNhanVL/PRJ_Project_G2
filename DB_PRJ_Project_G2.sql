@@ -197,14 +197,15 @@ INSERT INTO [admin](username, [password]) VALUES
 GO
 INSERT INTO [user](avatar, username, [password], email, firstName, lastName, [role], birthday,countryID, [status]) VALUES
 ('a.jpg', 'ttnhan', '0cc175b9c0f1b6a831c399e269772661', 'user1@example.com', 'Nhan', 'Tran Thanh', 0, '1990-01-01', 16, 1),
-('a.jpg', 'dylan12', '12345678', 'dylan@example.com', 'Huong', 'Nguyen', 0, '2003-10-12', 16, 1),
+('a.jpg', 'dylan12', '0cc175b9c0f1b6a831c399e269772661', 'dylan@example.com', 'Huong', 'Nguyen', 0, '2003-10-12', 16, 1),
 ('a.jpg', 'diemhuong1210', '12345678', 'dh1210@example.com', 'Duong', 'Thanh', 1, '2003-10-10', 16, 1)
 GO
 INSERT INTO organization([name], logo, [description]) VALUES
 ('FPT University', 'FPT.png', N'Trường đại học top 1 Việt Nam');
 GO
 INSERT INTO lecturer(userID, organizationID) VALUES
-(1, 1)
+(1, 1),
+(2, 1)
 GO
 INSERT INTO course(title,[image],[description],organizationID,lecturerID,unSalePrice,price,rate) VALUES
 ('Java basic', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),

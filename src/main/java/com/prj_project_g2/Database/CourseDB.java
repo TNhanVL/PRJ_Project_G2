@@ -73,7 +73,7 @@ public class CourseDB extends DB {
 
         return course;
     }
-    
+
     public static ArrayList<Course> getAllCourses() {
         ArrayList<Course> courses = new ArrayList<>();
 
@@ -411,6 +411,28 @@ public class CourseDB extends DB {
         }
 
         return courses;
+    }
+
+    public static int getNumberPurchasedCourse(int userID) {
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select count(*) as number from purchasedCourse where userID = ?");
+            statement.setInt(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("number");
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
     }
 
     public static void main(String[] args) {

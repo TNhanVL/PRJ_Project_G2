@@ -69,6 +69,12 @@ public class UserController {
         request.getSession().setAttribute("success", "Logout succeed!");
         return "redirect:./login";
     }
+    
+    @RequestMapping(value = "/profile/{username}", method = RequestMethod.GET)
+    public String profile(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable String username) {
+        model.addAttribute("username", username);
+        return "user/profile";
+    }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String mainPage(ModelMap model) {
