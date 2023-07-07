@@ -231,8 +231,6 @@ public class UserController {
             return "redirect:../learn/" + mooc.getCourseID() + "/" + lesson.getID();
         }
 
-        System.out.println("1");
-
         //set endTime to current
         quizResult.setEndTime(new Date());
         QuizResultDB.updateQuizResult(quizResult);

@@ -4,10 +4,12 @@
  */
 package com.prj_project_g2.Database;
 
+import com.prj_project_g2.Model.Question;
 import com.prj_project_g2.Model.QuizResult;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,6 +71,26 @@ public class QuizResultDB extends DB {
         }
 
         return quizResult;
+    }
+
+    public static int getQuizResultPoint(int ID) {
+        QuizResult quizResult = getQuizResult(ID);
+
+        if (quizResult == null) {
+            return 0;
+        }
+
+        ArrayList<Question> questions = QuestionDB.getQuestionByLessonID(quizResult.getLessonID());
+
+        int point = 0;
+
+        for (Question question : questions) {
+            if (QuestionResultDB.CheckQuestionResultCorrect(quizResult.getID(), question.getID())) {
+                point++;
+            }
+        }
+
+        return point;
     }
 
     public static QuizResult getLastQuizResult(int userID, int lessonID) {

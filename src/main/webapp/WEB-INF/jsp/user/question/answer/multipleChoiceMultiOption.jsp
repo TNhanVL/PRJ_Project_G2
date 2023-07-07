@@ -15,7 +15,9 @@
 <%
 //    Question question = null;
     ArrayList<Answer> answers = AnswerDB.getAnswersByQuestionID(question.getID());
-    Collections.shuffle(answers);
+    if (!quizFinished) {
+        Collections.shuffle(answers);
+    }
     for (Answer answer : answers) {
         String answerName = "answer" + answer.getID();
         boolean checked = QuestionResultDB.CheckQuestionResult(quizResult.getID(), question.getID(), answer.getID());
@@ -27,15 +29,15 @@
 <label for="<%out.print(answerName);%>" <%if (correctClass != "") {
         out.print("class=\"" + correctClass + "\"");
     }%>><input type="checkbox" id="<%out.print(answerName);%>" name="question<%out.print(question.getID());%>"
-                                                                                                                       value="<%out.print(answer.getID());%>"
-                                                                                                                       <%if (checked) {
-                                                                                                                               out.print(" checked");
-                                                                                                                           }
-                                                                                                                           if (quizFinished) {
-                                                                                                                               out.print(" disabled");
-                                                                                                                           }
-                                                                                                                       %>
-                                                                                                                       ><%out.print(answer.getContent());%></label><br>
+        value="<%out.print(answer.getID());%>"
+        <%if (checked) {
+                out.print(" checked");
+            }
+            if (quizFinished) {
+                out.print(" disabled");
+            }
+        %>
+        ><%out.print(answer.getContent());%></label><br>
     <%
         }
     %>

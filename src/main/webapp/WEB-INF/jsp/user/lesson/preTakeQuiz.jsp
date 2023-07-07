@@ -17,7 +17,32 @@
             <div class="time">
                 <h5>Overview</h5>
                 <i class="fa-regular fa-clock"></i>
-                <span><%out.print(lesson.getTime());%>:00</span>
+                <span><%
+                    //calculate remain time then format and print out
+                    long timeSecond = lesson.getTime() * 60;
+                    if (timeSecond < 0) {
+                        timeSecond = 0;
+                    }
+                    long seconds = timeSecond % 60;
+                    timeSecond /= 60;
+                    long minutes = timeSecond % 60;
+                    timeSecond /= 60;
+                    long hours = timeSecond;
+
+                    String timeString = "";
+                    if (hours > 0) {
+                        timeString += hours + ":";
+                    }
+                    if (minutes < 10) {
+                        timeString += "0";
+                    }
+                    timeString += minutes + ":";
+                    if (seconds < 10) {
+                        timeString += "0";
+                    }
+                    timeString += seconds;
+                    out.print(timeString);
+                    %></span>
             </div>
             <div class="listQuestion">
                 <h5><%out.print(QuestionDB.getNumberQuestionByLessonID(lesson.getID()));%> questions</h5>

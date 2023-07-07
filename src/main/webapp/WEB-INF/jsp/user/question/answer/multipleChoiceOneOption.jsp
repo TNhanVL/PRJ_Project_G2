@@ -14,7 +14,9 @@
 <%
 //    Question question = null;
     ArrayList<Answer> answers = AnswerDB.getAnswersByQuestionID(question.getID());
-    Collections.shuffle(answers);
+    if (!quizFinished) {
+        Collections.shuffle(answers);
+    }
     for (Answer answer : answers) {
         String answerName = "answer" + answer.getID();
         boolean checked = QuestionResultDB.CheckQuestionResult(quizResult.getID(), question.getID(), answer.getID());
