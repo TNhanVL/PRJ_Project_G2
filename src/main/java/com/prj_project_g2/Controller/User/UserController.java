@@ -3,6 +3,7 @@ package com.prj_project_g2.Controller.User;
 import com.prj_project_g2.Database.CourseDB;
 import com.prj_project_g2.Database.LessonDB;
 import com.prj_project_g2.Database.MoocDB;
+import com.prj_project_g2.Database.QuestionDB;
 import com.prj_project_g2.Database.QuestionResultDB;
 import com.prj_project_g2.Database.QuizResultDB;
 import com.prj_project_g2.Database.UserDB;
@@ -225,7 +226,7 @@ public class UserController {
 
         Lesson lesson = LessonDB.getLesson(quizResult.getLessonID());
         Mooc mooc = MoocDB.getMooc(lesson.getMoocID());
-        
+
         //if quiz end yet
         if (quizResult.getEndTime().before(new Date())) {
             return "redirect:../learn/" + mooc.getCourseID() + "/" + lesson.getID();
@@ -234,6 +235,12 @@ public class UserController {
         //set endTime to current
         quizResult.setEndTime(new Date());
         QuizResultDB.updateQuizResult(quizResult);
+
+        int numberOfCorrectQuestion = QuizResultDB.getQuizResultPoint(quizResultID);
+        int numberOfQuestion = QuestionDB.getNumberQuestionByLessonID(lesson.getID());
+        if (numberOfCorrectQuestion * 100 >= numberOfQuestion * 80) {
+            LessonDB.insertLessonCompleted(user.getID(), lesson.getID());
+        }
 
         return "redirect:../learn/" + mooc.getCourseID() + "/" + lesson.getID();
     }
