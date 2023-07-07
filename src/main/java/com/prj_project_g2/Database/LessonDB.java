@@ -5,6 +5,7 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Lesson;
+import com.prj_project_g2.Model.QuizResult;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -92,6 +93,21 @@ public class LessonDB extends DB {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        //if not completed, check if quiz not judge yet
+        if (!ok) {
+            Lesson lesson = LessonDB.getLesson(lessonID);
+            if (lesson.getType() == 2) {
+                QuizResult quizResult = QuizResultDB.getLastQuizResult(userID, lesson.getID());
+                if(quizResult == null) return false;
+                int numberOfCorrectQuestion = QuizResultDB.getQuizResultPoint(quizResult.getID());
+                int numberOfQuestion = QuestionDB.getNumberQuestionByLessonID(lesson.getID());
+                if (numberOfCorrectQuestion * 100 >= numberOfQuestion * 80) {
+                    LessonDB.insertLessonCompleted(userID, lesson.getID());
+                    return true;
+                }
+            }
+        }
+
         return ok;
     }
 
@@ -124,9 +140,7 @@ public class LessonDB extends DB {
     }
 
     public static boolean insertLessonCompleted(int userID, int lessonID) {
-        if (checkLessonCompleted(userID, lessonID)) {
-            return false;
-        }
+        deleteLessonCompleted(userID, lessonID);
         try {
             //connect to database
             connect();
@@ -144,6 +158,19 @@ public class LessonDB extends DB {
 
         }
         return false;
+    }
+
+    public static void deleteLessonCompleted(int userID, int lessonID) {
+        try {
+            connect();
+            statement = conn.prepareStatement("delete from lessonCompleted where lessonID = ?, userID = ?");
+            statement.setInt(1, lessonID);
+            statement.setInt(2, userID);
+            statement.execute();
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static int getFirstUncompleteLessonID(int userID, int courseID) {
