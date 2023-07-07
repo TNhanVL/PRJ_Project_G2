@@ -117,7 +117,7 @@
                             //type 0 -> video
                             case 0: {
                                 Post post = PostDB.getPostByLessonID(lesson.getID());
-                    %>
+                                %>
                     <%@include file="lesson/video.jsp" %>
                     <%
                             break;
@@ -135,7 +135,7 @@
                     <%                                break;
                             }
                         }
-                    %>
+                        %>
 
                 </div>
 
@@ -154,8 +154,7 @@
         <%@include file="foot.jsp" %>
 
         <script src="<%out.print(request.getContextPath());%>/public/assets/js/lesson.js"></script>
-        <script src="<%out.print(request.getContextPath());
-        %>/public/assets/js/option.js"></script>
+        <script src="<%out.print(request.getContextPath());%>/public/assets/js/option.js"></script>
 
         <%@include file="popUpMessage.jsp" %>
 

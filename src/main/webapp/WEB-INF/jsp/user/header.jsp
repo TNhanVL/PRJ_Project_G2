@@ -73,6 +73,9 @@
                     %></span>
             </a>
 
+            <%
+                if (loggedInHeader) {
+            %>
             <div id="userMenu" class="userMenu close">
                 <a href="<%out.print(request.getContextPath());%>/user/profile/<%out.print(userHeader.getUsername());%>">
                     <i class="fa-solid fa-user"></i>
@@ -87,6 +90,9 @@
                     <span>Logout</span>
                 </a>
             </div>
+            <%
+                }
+            %>
         </div>
 
         <a href="" class="notification">

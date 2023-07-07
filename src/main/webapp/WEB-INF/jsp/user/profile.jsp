@@ -166,6 +166,8 @@
 
         <%@include file="foot.jsp" %>
 
+        <script src="<%out.print(request.getContextPath());%>/public/assets/js/option.js"></script>
+        
         <%@include file="popUpMessage.jsp" %>
 
     </body>
