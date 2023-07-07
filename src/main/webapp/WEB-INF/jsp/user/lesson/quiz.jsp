@@ -18,16 +18,16 @@
     if (quizResult == null) {
         //If not take quiz yet
 %>
-<%@include file="./preTakeQuiz.jsp" %>
+<%@include file="./quiz/preTakeQuiz.jsp" %>
 <%
 } else if (quizResult.getEndTime().after(new Date())) {
     //if are taking quiz
 %>
-<%@include file="./quizTaking.jsp" %>
+<%@include file="./quiz/quizTaking.jsp" %>
 <%
 } else {
 %>
-<%@include file="./quizResult.jsp" %>
+<%@include file="./quiz/quizResult.jsp" %>
 <%
     }
 %>
