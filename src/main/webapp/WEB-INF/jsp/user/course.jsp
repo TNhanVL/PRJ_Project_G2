@@ -49,6 +49,7 @@
             <jsp:param name="title" value="Course Infomation"/>
         </jsp:include>
         <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/courseInfo.css">
+        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/responsive.css">
     </head>
 
     <body>
@@ -57,71 +58,73 @@
         <!--END HEADER -->
 
         <div id="main">
-            <div class="courseIntroduction">
-                <div class="orgranization">
-                    <img src="<%out.print(request.getContextPath());%>/public/media/organization/<%out.print(organization.getID() + "/" + organization.getLogo());%>" alt="">
-                </div>
-                <div class="courseName">
-                    <h1><%out.print(course.getTitle());%></h1>
-                </div>
-                <div class="instructorInfor">
-                    <img src=<%out.print(request.getContextPath() + "/public/media/user/" + lecturer.getID() + "/" + lecturer.getAvatar());%> alt="" class="instructorImg">
-                    <p class="instructorName">
-                        Instructor: <a href="<%out.print(request.getContextPath());%>/user/profile/<%out.print(lecturer.getUsername());%>"><%out.print(lecturer.getFirstName() + " " + lecturer.getLastName());%></a></p>
-                </div>
-                <div class="price">
-                    Price: <span><%out.print(course.getPrice());%>$</span>
+            <div class="courseMain">
+                <div class="courseIntroduction">
+                    <div class="orgranization">
+                        <img src="<%out.print(request.getContextPath());%>/public/media/organization/<%out.print(organization.getID() + "/" + organization.getLogo());%>" alt="">
+                    </div>
+                    <div class="courseName">
+                        <h1><%out.print(course.getTitle());%></h1>
+                    </div>
+                    <div class="instructorInfor">
+                        <img src=<%out.print(request.getContextPath() + "/public/media/user/" + lecturer.getID() + "/" + lecturer.getAvatar());%> alt="" class="instructorImg">
+                        <p class="instructorName">
+                            Instructor: <a href="<%out.print(request.getContextPath());%>/user/profile/<%out.print(lecturer.getUsername());%>"><%out.print(lecturer.getFirstName() + " " + lecturer.getLastName());%></a></p>
+                    </div>
+                    <div class="price">
+                        Price: <span><%out.print(course.getPrice());%>$</span>
 
-                </div>
-                <div class="addCartBnt">
-                    <%
-                        if (user != null) {
-                            if (CourseDB.checkPurchasedCourse(user.getID(), course.getID())) {
-                                out.print("<a href=\"../learn/" + course.getID() + "\">Learn now</a>");
-                            } else if (CourseDB.checkOrderCourse(user.getID(), course.getID())) {
-                                out.print("<a href=\"./deleteOrder/" + course.getID() + "\">Delete from cart</a>");
+                    </div>
+                    <div class="addCartBnt">
+                        <%
+                            if (user != null) {
+                                if (CourseDB.checkPurchasedCourse(user.getID(), course.getID())) {
+                                    out.print("<a href=\"../learn/" + course.getID() + "\">Learn now</a>");
+                                } else if (CourseDB.checkOrderCourse(user.getID(), course.getID())) {
+                                    out.print("<a href=\"./deleteOrder/" + course.getID() + "\">Delete from cart</a>");
+                                } else {
+                                    out.print("<a href=\"./addOrder/" + course.getID() + "\">Add to cart</a>");
+                                }
                             } else {
-                                out.print("<a href=\"./addOrder/" + course.getID() + "\">Add to cart</a>");
+                                //if not logged in
+                                out.print("<a href=\"" + request.getContextPath() + "/user/login\">Add to cart</a>");
                             }
-                        } else {
-                            //if not logged in
-                            out.print("<a href=\"" + request.getContextPath() + "/user/login\">Add to cart</a>");
-                        }
-                    %>
-                    <!--<a href="#">Add to cart</a>-->
-                </div>
-                <p class="enrollers">
-                    <span>969,263</span> already enrolled
-                </p>
-            </div>
-
-            <div class="popupSumary">
-                <div class="header">
-                    <h3>Course</h3>
-                    <p>Gain insight into a topic and learn the fundamentals</p>
+                        %>
+                        <!--<a href="#">Add to cart</a>-->
+                    </div>
+                    <p class="enrollers">
+                        <span>969,263</span> already enrolled
+                    </p>
                 </div>
 
-                <div class="rateAndLike">
-                    <span><%out.print(course.getRate());%></span>
-                    <i class="fa-solid fa-star"></i>
-                    <span>(4.716 reviewer)</span>
+                <div class="popupSumary">
+                    <div class="header">
+                        <h3>Course</h3>
+                        <p>Gain insight into a topic and learn the fundamentals</p>
+                    </div>
 
-                    <!-- <span class="like-rate">
-                    <i class="fa-solid fa-thumbs-up"></i> 96%</span> -->
+                    <div class="rateAndLike">
+                        <span><%out.print(course.getRate());%></span>
+                        <i class="fa-solid fa-star"></i>
+                        <span>(4.716 reviewer)</span>
+
+                        <!-- <span class="like-rate">
+                        <i class="fa-solid fa-thumbs-up"></i> 96%</span> -->
+
+                    </div>
+
+                    <p class="time">40 hours (approximately)</p>
+
+                    <p class="desciption">
+                        Flexible schedule
+                    <p>Flexible schedule Learn at your own pace</p>
+                    </p>
+
+                    <div class="viewDetal">
+                        <a href="#modules">View course modules</a>
+                    </div>
 
                 </div>
-
-                <p class="time">40 hours (approximately)</p>
-
-                <p class="desciption">
-                    Flexible schedule
-                <p>Flexible schedule Learn at your own pace</p>
-                </p>
-
-                <div class="viewDetal">
-                    <a href="#modules">View course modules</a>
-                </div>
-
             </div>
 
             <div class="navigationBar">

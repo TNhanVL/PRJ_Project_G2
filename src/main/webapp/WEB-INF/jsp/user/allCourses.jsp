@@ -16,6 +16,7 @@
             <jsp:param name="title" value="All Courses"/>
         </jsp:include>
         <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/courseShop.css">
+        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/responsive.css">
     </head>
 
     <body>

@@ -413,6 +413,31 @@ public class CourseDB extends DB {
         return courses;
     }
 
+    public static ArrayList<Course> getAllCreatedCourses(int lectureID) {
+        ArrayList<Course> courses = new ArrayList<>();
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select * from course where lecturerID = ?");
+            statement.setInt(1, lectureID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int courseID = resultSet.getInt("ID");
+                Course course = getCourse(courseID);
+                courses.add(course);
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return courses;
+    }
+
     public static int getNumberPurchasedCourse(int userID) {
 
         try {
@@ -444,7 +469,7 @@ public class CourseDB extends DB {
 //        System.out.println(checkOrderCourse(1, 1));
 //
 //        System.out.println(getCourse(11));
-        System.out.println(getPopularCourses(2));
+        System.out.println(getAllCreatedCourses(1));
 //
 //        c.setDescription("Normal");
 //

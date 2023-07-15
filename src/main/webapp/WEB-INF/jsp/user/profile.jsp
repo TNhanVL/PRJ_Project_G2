@@ -4,6 +4,7 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Model.Lecturer"%>
 <%@page import="com.prj_project_g2.Model.Course"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.prj_project_g2.Model.Organization"%>
@@ -30,6 +31,7 @@
         guest = (userLoggedin == null || user.getID() != userLoggedin.getID());
     }
 
+    Lecturer lecturer = LecturerDB.getLecturer(user.getID());
 %>
 
 <!DOCTYPE html>
@@ -40,6 +42,7 @@
             <jsp:param name="title" value="Yojihan"/>
         </jsp:include>
         <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/profile.css">
+        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/responsive.css">
     </head>
 
     <body>
@@ -66,8 +69,8 @@
                             <div class="orgranization">
                                 <p><%out.print(CountryDB.getCountry(user.getCountryID()).getName());%></p>
                                 <%
-                                    if (user.getRole() == 0) {
-                                        Organization organization = OrganizationDB.getOrganization(LecturerDB.getLecturer(user.getID()).getOrganizationID());
+                                    if (lecturer != null) {
+                                        Organization organization = OrganizationDB.getOrganization(lecturer.getOrganizationID());
                                 %>
                                 <p>Lecturer of <%out.print(organization.getName());%></p>
                                 <img class="org" src="<%out.print(request.getContextPath());%>/public/media/organization/<%out.print(organization.getID() + "/" + organization.getLogo());%>" alt="">
@@ -100,61 +103,98 @@
                         </div>
                     </div>
 
-                    <div class="purchasedCourse">
-                        <h3>All course taken</h3>
+                    <div class="purchasedCourseAndCreatedCourse">
 
-                        <%
-                            ArrayList<Course> courses = CourseDB.getAllPurchasedCourses(user.getID());
-                            for (Course course : courses) {
-                        %>
+                        <div class="purchasedCourse">
+                            <h3>All taken courses</h3>
 
-                        <!-- a course -->
-                        <div class="courseTaken">
-                            <img src="<%out.print(request.getContextPath());%>/public/media/course/<%out.print(course.getID() + "/" + course.getImage());%>" alt="" class="courseImg">
-                            <div class="courseInfor">
-                                <a href="<%out.print(request.getContextPath());%>/user/course/<%out.print(course.getID());%>">
-                                    <p class="courseName"><%out.print(course.getTitle());%></p>
+                            <%
+                                ArrayList<Course> courses = CourseDB.getAllPurchasedCourses(user.getID());
+                                for (Course course : courses) {
+                            %>
+
+                            <!-- a course -->
+                            <div class="courseTaken">
+                                <img src="<%out.print(request.getContextPath());%>/public/media/course/<%out.print(course.getID() + "/" + course.getImage());%>" alt="" class="courseImg">
+                                <div class="courseInfor">
+                                    <a href="<%out.print(request.getContextPath());%>/user/course/<%out.print(course.getID());%>">
+                                        <p class="courseName"><%out.print(course.getTitle());%></p>
+                                        <%
+                                            if (guest) {
+                                        %>
+                                        <div class="rate">
+                                            <span><%out.print(course.getRate());%></span>
+                                            <i class="fa-solid fa-star"></i>
+                                            <span>(2423 reviewer)</span>
+                                        </div>
+                                        <%
+                                            }
+                                        %>
+                                    </a>
                                     <%
-                                        if (guest) {
+                                        if (!guest) {
                                     %>
-                                    <div class="rate">
-                                        <span><%out.print(course.getRate());%></span>
-                                        <i class="fa-solid fa-star"></i>
-                                        <span>(2423 reviewer)</span>
+                                    <div class="ProgressviewMode">
+
+                                        <progress class="courseProgress" value="100" max="100"></progress>
+                                        <div class="notCompleted ">
+                                            <p>In progress <span>80</span>%</p>
+                                        </div>
+
+                                        <div class="completed">
+                                            <p>Completed</p>
+                                            <a href="#">View certificate</a>
+                                        </div>
+
                                     </div>
+
                                     <%
                                         }
                                     %>
-                                </a>
-                                <%
-                                    if (!guest) {
-                                %>
-                                <div class="ProgressviewMode">
-
-                                    <progress class="courseProgress" value="100" max="100"></progress>
-                                    <div class="notCompleted ">
-                                        <p>In progress <span>80</span>%</p>
-                                    </div>
-
-                                    <div class="completed">
-                                        <p>Completed</p>
-                                        <a href="#">View certificate</a>
-                                    </div>
 
                                 </div>
-
-                                <%
-                                    }
-                                %>
-
                             </div>
+                            <!-- end course -->
+
+                            <%
+                                }
+                            %>
+
                         </div>
-                        <!-- end course -->
 
-                        <%
-                            }
-                        %>
+                        <div class="purchasedCourse">
+                            <h3>All created courses</h3>
 
+
+                            <%
+                                if (lecturer != null) {
+                                    courses = CourseDB.getAllCreatedCourses(user.getID());
+                                    for (Course course : courses) {
+                            %>
+
+                            <!-- a course -->
+                            <div class="courseTaken">
+                                <img src="<%out.print(request.getContextPath());%>/public/media/course/<%out.print(course.getID() + "/" + course.getImage());%>" alt="" class="courseImg">
+                                <div class="courseInfor">
+                                    <a href="<%out.print(request.getContextPath());%>/user/course/<%out.print(course.getID());%>">
+                                        <p class="courseName"><%out.print(course.getTitle());%></p>
+                                        <div class="rate">
+                                            <span><%out.print(course.getRate());%></span>
+                                            <i class="fa-solid fa-star"></i>
+                                            <span>(2423 reviewer)</span>
+                                        </div>
+                                    </a>
+
+                                </div>
+                            </div>
+                            <!-- end course -->
+
+                            <%
+                                    }
+                                }
+                            %>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -167,7 +207,7 @@
         <%@include file="foot.jsp" %>
 
         <script src="<%out.print(request.getContextPath());%>/public/assets/js/option.js"></script>
-        
+
         <%@include file="popUpMessage.jsp" %>
 
     </body>

@@ -28,7 +28,7 @@
             <input type="text" class="search-course" name="headerSearch" placeholder="Searching">
         </form>
         <div class="course-opption">
-            <a href="<%out.print(request.getContextPath());%>/user/allCourses">Course</a>
+            <a href="<%out.print(request.getContextPath());%>/user/allCourses">Courses</a>
         </div>
         <div class="quesAndAns">
             <a href="#">Expert Q&A</a>
