@@ -242,6 +242,37 @@ public class CourseDB extends DB {
         return 0;
     }
 
+    public static int getSumTimeCompletedOfCourse(int userID, int courseID) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select sum([time]) as sumTime from\n"
+                    + "(select l.ID, [time] from\n"
+                    + "(select * from lesson) as l\n"
+                    + "join\n"
+                    + "(select * from mooc where courseID = ?) as m\n"
+                    + "on l.moocID = m.ID) l\n"
+                    + "join\n"
+                    + "(select * from lessonCompleted where userID = ?) lc\n"
+                    + "on l.ID = lc.lessonID");
+            statement.setInt(1, courseID);
+            statement.setInt(2, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("sumTime");
+            }
+
+            //disconnect to database
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //return result
+        return 0;
+    }
+
     public static int countOrderCourse(int userID) {
         try {
             //connect to database
@@ -579,7 +610,7 @@ public class CourseDB extends DB {
 //        System.out.println(checkOrderCourse(1, 1));
 //
 //        System.out.println(getCourse(11));
-        System.out.println(getSumTimeOfCourse(1));
+        System.out.println(getSumTimeCompletedOfCourse(1, 1));
 //
 //        c.setDescription("Normal");
 //

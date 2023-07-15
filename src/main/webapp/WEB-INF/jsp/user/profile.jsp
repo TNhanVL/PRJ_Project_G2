@@ -133,18 +133,40 @@
                                     </a>
                                     <%
                                         if (!guest) {
+                                            int sumTimeOfCourse = CourseDB.getSumTimeOfCourse(course.getID());
+                                            int sumOfCompletedTime = CourseDB.getSumTimeCompletedOfCourse(user.getID(), course.getID());
+                                            int percent = 100;
+                                            if (sumTimeOfCourse != 0) {
+                                                percent = (int) 100f * sumOfCompletedTime / sumTimeOfCourse;
+                                            }
                                     %>
                                     <div class="ProgressviewMode">
 
-                                        <progress class="courseProgress" value="100" max="100"></progress>
+                                        <progress class="courseProgress" value="<%out.print(percent);%>" max="100"></progress>
+                                            <%
+                                                if (sumOfCompletedTime < sumTimeOfCourse) {
+                                            %>
                                         <div class="notCompleted ">
-                                            <p>In progress <span>80</span>%</p>
+                                            <p>In progress <span><%out.print(percent);%></span>%</p>
                                         </div>
+                                        <%
+                                        } else {
+                                        %>
 
                                         <div class="completed">
                                             <p>Completed</p>
-                                            <a href="#">View certificate</a>
+                                            <%
+                                                if (CourseDB.checkCertificate(user.getID(), course.getID())) {
+                                                    String certificateName = CourseDB.getCertificateName(user.getID(), course.getID());
+                                            %>
+                                            <a href="<%out.print(request.getContextPath());%>/public/media/certificate/<%out.print(certificateName);%>">View certificate</a>
+                                            <%
+                                                }
+                                            %>
                                         </div>
+                                        <%
+                                            }
+                                        %>
 
                                     </div>
 
@@ -196,6 +218,7 @@
 
                         </div>
                     </div>
+                            
                 </div>
             </div>
         </div>
