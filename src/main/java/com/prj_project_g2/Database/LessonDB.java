@@ -144,7 +144,7 @@ public class LessonDB extends DB {
     }
 
     public static boolean insertLessonCompleted(int userID, int lessonID) {
-        deleteLessonCompleted(userID, lessonID);
+//        deleteLessonCompleted(userID, lessonID);
         try {
             //connect to database
             connect();

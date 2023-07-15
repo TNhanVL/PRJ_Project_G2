@@ -22,7 +22,7 @@
         String answerName = "answer" + answer.getID();
         boolean checked = QuestionResultDB.CheckQuestionResult(quizResult.getID(), question.getID(), answer.getID());
         String correctClass = "";
-        if (checked) {
+        if (quizFinished && checked) {
             correctClass = AnswerDB.getAnswer(answer.getID()).isCorrect() ? "correct" : "incorrect";
         }
 %>
