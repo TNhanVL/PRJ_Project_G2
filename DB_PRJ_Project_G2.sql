@@ -268,6 +268,12 @@ INSERT INTO answer(questionID, content, correct) VALUES
 GO
 SELECT * FROM [user];
 
+select sum([time]) as sumTime from
+(select * from lesson) as l
+join
+(select * from mooc where courseID = 1) as m
+on l.moocID = m.ID
+
 -- Check if question are correct
 --select 1 from
 --(select selectedAnswer as ID from questionResult where quizResultID = 1 and questionID = 4) a

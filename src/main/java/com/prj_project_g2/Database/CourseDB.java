@@ -216,6 +216,32 @@ public class CourseDB extends DB {
         return false;
     }
 
+    public static int getSumTimeOfCourse(int courseID) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select sum([time]) as sumTime from\n"
+                    + "(select * from lesson) as l\n"
+                    + "join\n"
+                    + "(select * from mooc where courseID = ?) as m\n"
+                    + "on l.moocID = m.ID");
+            statement.setInt(1, courseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("sumTime");
+            }
+
+            //disconnect to database
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //return result
+        return 0;
+    }
+
     public static int countOrderCourse(int userID) {
         try {
             //connect to database
@@ -553,8 +579,7 @@ public class CourseDB extends DB {
 //        System.out.println(checkOrderCourse(1, 1));
 //
 //        System.out.println(getCourse(11));
-        System.out.println(insertCertificate(1, 2, "asdf"));
-        System.out.println(getCertificateName(1, 2));
+        System.out.println(getSumTimeOfCourse(1));
 //
 //        c.setDescription("Normal");
 //
