@@ -62,7 +62,7 @@ GO
 CREATE TABLE [certificate] (
 	userID INT NOT NULL,
 	courseID INT NOT NULL,
-	certificateURL text,
+	certificateName text,
 	PRIMARY KEY (userID, courseID),
 	FOREIGN KEY (userID) REFERENCES [user](ID),
 	FOREIGN KEY (courseID) REFERENCES course(ID)
@@ -267,8 +267,6 @@ INSERT INTO answer(questionID, content, correct) VALUES
 (4, 'i', 0)
 GO
 SELECT * FROM [user];
-
---select * from course where lecturerID = 1;
 
 -- Check if question are correct
 --select 1 from

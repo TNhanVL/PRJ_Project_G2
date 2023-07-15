@@ -5,6 +5,7 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Course;
+import com.prj_project_g2.Model.Mooc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -460,6 +461,89 @@ public class CourseDB extends DB {
         return 0;
     }
 
+    public static boolean checkCertificate(int userID, int courseID) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select 1 from [certificate] where userID = ? and courseID = ?");
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+
+            //disconnect to database
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //return result
+        return false;
+    }
+
+    public static String getCertificateName(int userID, int courseID) {
+        String certificateName = null;
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select * from [certificate] where userID = ? and courseID = ?");
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                certificateName = resultSet.getString("certificateName");
+            }
+
+            //disconnect to database
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //return result
+        return certificateName;
+    }
+
+    public static boolean insertCertificate(int userID, int courseID, String certificateName) {
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("insert into [certificate](userID, courseID, certificateName) values (?, ?, ?)");
+            statement.setInt(1, userID);
+            statement.setInt(2, courseID);
+            statement.setString(3, certificateName);
+
+            statement.execute();
+
+            //disconnect to database
+            disconnect();
+            return true;
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return false;
+    }
+
+    public static boolean checkCourseCompleted(int userID, int courseID) {
+        ArrayList<Mooc> moocs = MoocDB.getMoocsByCourseID(courseID);
+        for (Mooc mooc : moocs) {
+            int numberOfCompleted = LessonDB.getNumberLessonsCompleted(userID, mooc.getID());
+            int numberOfLesson = LessonDB.getNumberLessonsByMoocID(mooc.getID());
+            if (numberOfCompleted != numberOfLesson) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static void main(String[] args) {
 //        System.out.println(existCourse(1));
 //
@@ -469,7 +553,8 @@ public class CourseDB extends DB {
 //        System.out.println(checkOrderCourse(1, 1));
 //
 //        System.out.println(getCourse(11));
-        System.out.println(getAllCreatedCourses(1));
+        System.out.println(insertCertificate(1, 2, "asdf"));
+        System.out.println(getCertificateName(1, 2));
 //
 //        c.setDescription("Normal");
 //

@@ -33,11 +33,11 @@ import java.util.logging.Logger;
  */
 public class Certificate {
 
-    private static final String srcPath = "src/main/webapp/public/assets";
+    private static final String srcPath = "src/main/webapp/public";
 
     static void addText(String text, String fontName, BaseColor baseColor, float size, float px, float py, PdfContentByte contentByte, Document document) {
         try {
-            String fontPath = srcPath + "/font/" + fontName;
+            String fontPath = srcPath + "/assets/font/" + fontName;
 
             // Load the custom TTF font
             BaseFont baseFont = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -100,7 +100,7 @@ public class Certificate {
 
         addText(sdf.format(date), fontName, baseColor, size, px, py, contentByte, document);
     }
-    
+
     static void addOrganizationName(String OrganizationName, PdfContentByte contentByte, Document document) {
         String fontName = "Garet-Book.ttf";
         BaseColor baseColor = new BaseColor(182, 140, 39);
@@ -110,10 +110,12 @@ public class Certificate {
         addText(OrganizationName, fontName, baseColor, size, px, py, contentByte, document);
     }
 
-    public static void createCertificate(String outputFilename, int userID, int courseID) {
+    public static void createCertificate(String certificateName, int userID, int courseID) {
         User user = UserDB.getUser(userID);
         Course course = CourseDB.getCourse(courseID);
-        String imagePath = srcPath + "/imgs/certificate/Yojihan_Certificate.png"; // Provide the path to your image file
+        String imagePath = srcPath + "/assets/imgs/certificate/Yojihan_Certificate.png"; // Provide the path to your image file
+
+        String outputFilename = srcPath + "/media/certificate/" + certificateName;
 
         try {
             // Initialize the document and writer
@@ -135,17 +137,16 @@ public class Certificate {
             // Add Info into the certificate
             addUserName(user.getFirstName() + " " + user.getLastName(), contentByte, document);
             addCourseName(course.getTitle(), contentByte, document);
-            
+
             User lecturer = LecturerDB.getLecturer(course.getLecturerID());
             if (lecturer != null) {
                 addLecturerName(lecturer.getFirstName() + " " + lecturer.getLastName(), contentByte, document);
             }
-            
+
             addDate(contentByte, document);
-            
+
             Organization organization = OrganizationDB.getOrganization(course.getOrganizationID());
             addOrganizationName(organization.getName(), contentByte, document);
-            
 
             document.close();
 
@@ -157,6 +158,6 @@ public class Certificate {
     }
 
     public static void main(String[] args) {
-        createCertificate("certificate.pdf", 2, 4);
+        createCertificate("a.pdf", 2, 4);
     }
 }
