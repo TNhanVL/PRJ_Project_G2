@@ -54,7 +54,10 @@
                                     <div class="courseDescription">
                                         <span class="type">
                                             <span><%out.print(course.getDescription());%></span>
-                                            <span>20h</span>
+                                            <span><%
+                                                int sumTimeInMinute = CourseDB.getSumTimeOfCourse(course.getID());
+                                                out.print(Math.round(sumTimeInMinute / 6.0) / 10.0);
+                                                %>h</span>
                                         </span>
                                         <div class="rateAndPrice">
                                             <div class="rate">

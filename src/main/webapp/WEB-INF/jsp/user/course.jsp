@@ -30,11 +30,11 @@
         response.sendRedirect(request.getContextPath() + "/user/main");
         return;
     }
-
+    
     User lecturer = UserDB.getUser(course.getLecturerID());
-
+    
     Organization organization = OrganizationDB.getOrganization(course.getOrganizationID());
-
+    
     User user = null;
     if (CookieServices.checkUserLoggedIn(request.getCookies())) {
         user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
@@ -93,7 +93,7 @@
                         <!--<a href="#">Add to cart</a>-->
                     </div>
                     <p class="enrollers">
-                        <span>969,263</span> already enrolled
+                        <span><%out.print(CourseDB.getNumberPurchasedOfCourse(course.getID()));%></span> already enrolled
                     </p>
                 </div>
 
@@ -113,7 +113,10 @@
 
                     </div>
 
-                    <p class="time">40 hours (approximately)</p>
+                    <p class="time"><%
+                        int sumTimeInMinute = CourseDB.getSumTimeOfCourse(course.getID());
+                        out.print(Math.round(sumTimeInMinute / 6.0) / 10.0);
+                        %> hours (approximately)</p>
 
                     <p class="desciption">
                         Flexible schedule

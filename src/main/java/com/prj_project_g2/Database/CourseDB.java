@@ -548,6 +548,28 @@ public class CourseDB extends DB {
 
         return 0;
     }
+    
+    public static int getNumberPurchasedOfCourse(int courseID) {
+
+        try {
+            //connect to database
+            connect();
+
+            statement = conn.prepareStatement("select count(*) as number from purchasedCourse where courseID = ?");
+            statement.setInt(1, courseID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("number");
+            }
+
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
+    }
 
     public static int getNumberCreatedCourse(int userID) {
 
