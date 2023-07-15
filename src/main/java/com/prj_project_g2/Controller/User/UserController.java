@@ -73,7 +73,7 @@ public class UserController {
     @RequestMapping(value = "/profile/{username}", method = RequestMethod.GET)
     public String profile(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable String username) {
         model.addAttribute("username", username);
-        return "user/profile";
+        return "user/profile/profile";
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
