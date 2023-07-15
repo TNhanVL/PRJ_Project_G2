@@ -91,7 +91,10 @@
                         <div class="expTag">
                             <h4>Experience</h4>
                             <p class="element"><i class="fa-sharp fa-regular fa-clock"></i>Total learning hours
-                                <span>25</span>
+                                <span><%
+                                    int sumTimeCompletedInMinute = CourseDB.getSumTimeCompletedOfAllCourses(user.getID());
+                                    out.print(Math.round(sumTimeCompletedInMinute / 6.0) / 10.0);
+                                    %></span>
                             </p>
                             <p class="element"><i class="fa-solid fa-cart-shopping"></i>Courses purchased<span><%out.print(CourseDB.getNumberPurchasedCourse(user.getID()));%></span></p>
                             <p class="element"><i class="fa-regular fa-circle-check"></i>Courses completed <span><%out.print(CourseDB.getNumberCompletedCourse(user.getID()));%></span>
@@ -104,7 +107,7 @@
                     </div>
 
                     <%@include file="allCourses.jsp" %>
-                            
+
                 </div>
             </div>
         </div>
@@ -115,7 +118,8 @@
 
         <%@include file="../foot.jsp" %>
 
-        <script src="<%out.print(request.getContextPath());%>/public/assets/js/option.js"></script>
+        <script src="<%out.print(request.getContextPath());
+        %>/public/assets/js/option.js"></script>
 
         <%@include file="../popUpMessage.jsp" %>
 

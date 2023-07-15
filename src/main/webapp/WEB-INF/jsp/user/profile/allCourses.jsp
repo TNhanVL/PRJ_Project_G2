@@ -55,7 +55,7 @@
                             if (CourseDB.checkCertificate(user.getID(), course.getID())) {
                                 String certificateName = CourseDB.getCertificateName(user.getID(), course.getID());
                         %>
-                        <a href="<%out.print(request.getContextPath());%>/public/media/certificate/<%out.print(certificateName);%>">View certificate</a>
+                        <a href="<%out.print(request.getContextPath());%>/public/media/certificate/<%out.print(certificateName);%>" target="_blank">View certificate</a>
                         <%
                             }
                         %>
