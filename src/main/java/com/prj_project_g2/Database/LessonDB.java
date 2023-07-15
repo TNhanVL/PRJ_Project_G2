@@ -5,13 +5,17 @@
 package com.prj_project_g2.Database;
 
 import com.prj_project_g2.Model.Lesson;
+import com.prj_project_g2.Model.Mooc;
 import com.prj_project_g2.Model.QuizResult;
+import com.prj_project_g2.Services.Certificate;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -73,7 +77,7 @@ public class LessonDB extends DB {
         return lesson;
     }
 
-    public static boolean checkLessonCompleted(int userID, int lessonID) {
+    public static boolean checkLessonCompleted(int userID, int lessonID, HttpServletRequest request) {
         boolean ok = false;
 
         try {
@@ -106,7 +110,7 @@ public class LessonDB extends DB {
                 int numberOfCorrectQuestion = QuizResultDB.getQuizResultPoint(quizResult.getID());
                 int numberOfQuestion = QuestionDB.getNumberQuestionByLessonID(lessonID);
                 if (numberOfCorrectQuestion * 100 >= numberOfQuestion * 80) {
-                    LessonDB.insertLessonCompleted(userID, lessonID);
+                    LessonDB.insertLessonCompleted(userID, lessonID, request);
                     return true;
                 }
             }
@@ -143,7 +147,7 @@ public class LessonDB extends DB {
         return ans;
     }
 
-    public static boolean insertLessonCompleted(int userID, int lessonID) {
+    public static boolean insertLessonCompleted(int userID, int lessonID, HttpServletRequest request) {
 //        deleteLessonCompleted(userID, lessonID);
         try {
             //connect to database
@@ -155,6 +159,17 @@ public class LessonDB extends DB {
             statement.executeUpdate();
             //disconnect to database
             disconnect();
+
+            Lesson lesson = LessonDB.getLesson(lessonID);
+            Mooc mooc = MoocDB.getMooc(lesson.getMoocID());
+            // Generate new certificate if completed course
+            if (CourseDB.checkCourseCompleted(userID, mooc.getCourseID())) {
+                // if completed course
+                String certificateName = "certificate_" + mooc.getCourseID() + "_" + userID + ".pdf";
+                CourseDB.insertCertificate(userID, mooc.getCourseID(), certificateName);
+                Certificate.createCertificate(certificateName, userID, mooc.getCourseID(), request);
+            }
+
             return true;
 
         } catch (SQLException | ClassNotFoundException ex) {

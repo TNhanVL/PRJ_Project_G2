@@ -41,7 +41,7 @@
                     }%>">
                     <span class="lesson-status">
                         <!-- checked -->
-                        <i class="<%if (LessonDB.checkLessonCompleted(user.getID(), lesson1.getID())) {
+                        <i class="<%if (LessonDB.checkLessonCompleted(user.getID(), lesson1.getID(), request)) {
                                 out.print("fa-solid fa-square-check");
                             } else {
                                 out.print("fa-regular fa-square");

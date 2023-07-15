@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -33,7 +34,7 @@ import java.util.logging.Logger;
  */
 public class Certificate {
 
-    private static final String srcPath = "src/main/webapp/public";
+    private static String srcPath = "src/main/webapp/public";
 
     static void addText(String text, String fontName, BaseColor baseColor, float size, float px, float py, PdfContentByte contentByte, Document document) {
         try {
@@ -110,7 +111,10 @@ public class Certificate {
         addText(OrganizationName, fontName, baseColor, size, px, py, contentByte, document);
     }
 
-    public static void createCertificate(String certificateName, int userID, int courseID) {
+    public static void createCertificate(String certificateName, int userID, int courseID, HttpServletRequest request) {
+        
+        srcPath = request.getSession().getServletContext().getRealPath("/") + "../../src/main/webapp/public";
+        
         User user = UserDB.getUser(userID);
         Course course = CourseDB.getCourse(courseID);
         String imagePath = srcPath + "/assets/imgs/certificate/Yojihan_Certificate.png"; // Provide the path to your image file
@@ -158,6 +162,6 @@ public class Certificate {
     }
 
     public static void main(String[] args) {
-        createCertificate("a.pdf", 2, 4);
+//        createCertificate("a.pdf", 2, 4);
     }
 }

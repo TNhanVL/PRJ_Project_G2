@@ -69,7 +69,7 @@ public class UserController {
         request.getSession().setAttribute("success", "Logout succeed!");
         return "redirect:./login";
     }
-    
+
     @RequestMapping(value = "/profile/{username}", method = RequestMethod.GET)
     public String profile(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable String username) {
         model.addAttribute("username", username);
@@ -153,7 +153,7 @@ public class UserController {
         //check logged in
         if (CookieServices.checkUserLoggedIn(request.getCookies())) {
             User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
-            LessonDB.insertLessonCompleted(user.getID(), lessonID);
+            LessonDB.insertLessonCompleted(user.getID(), lessonID, request);
         }
         return "ok";
     }
@@ -245,7 +245,7 @@ public class UserController {
         int numberOfCorrectQuestion = QuizResultDB.getQuizResultPoint(quizResultID);
         int numberOfQuestion = QuestionDB.getNumberQuestionByLessonID(lesson.getID());
         if (numberOfCorrectQuestion * 100 >= numberOfQuestion * 80) {
-            LessonDB.insertLessonCompleted(user.getID(), lesson.getID());
+            LessonDB.insertLessonCompleted(user.getID(), lesson.getID(), request);
         }
 
         return "redirect:../learn/" + mooc.getCourseID() + "/" + lesson.getID();
