@@ -123,8 +123,9 @@
                             break;
                         }
                         case 1: {
+                            Post post = PostDB.getPostByLessonID(lesson.getID());
                     %>
-
+                    <%@include file="lesson/post.jsp" %>
                     <%
                             break;
                         }
@@ -154,7 +155,8 @@
         <%@include file="foot.jsp" %>
 
         <script src="<%out.print(request.getContextPath());%>/public/assets/js/lesson.js"></script>
-        <script src="<%out.print(request.getContextPath());%>/public/assets/js/option.js"></script>
+        <script src="<%out.print(request.getContextPath());
+        %>/public/assets/js/option.js"></script>
 
         <%@include file="popUpMessage.jsp" %>
 

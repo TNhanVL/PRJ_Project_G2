@@ -61,7 +61,7 @@
                                             break;
                                         }
                                         case 1: {
-                                            out.print("<i class=\"fa-solid fa-file-lines\">");
+                                            out.print("<i class=\"fa-solid fa-file-lines\"></i>");
                                             break;
                                         }
                                         case 2: {

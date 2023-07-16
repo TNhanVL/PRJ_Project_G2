@@ -286,15 +286,31 @@ public class UserController {
         model.addAttribute("lessonID", lessonID);
         return "user/lesson";
     }
-
-    @RequestMapping(value = "/markLessonComplete/{lessonID}", method = RequestMethod.POST)
-    @ResponseBody
+    
+    @RequestMapping(value = "/markLessonComplete/{lessonID}", method = RequestMethod.GET)
+//    @ResponseBody
     public String markLessonComplete(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int lessonID) {
         //check logged in
         if (CookieServices.checkUserLoggedIn(request.getCookies())) {
             User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
             LessonDB.insertLessonCompleted(user.getID(), lessonID, request);
         }
+
+        Lesson lesson = LessonDB.getLesson(lessonID);
+        Mooc mooc = MoocDB.getMooc(lesson.getMoocID());
+        Course course = CourseDB.getCourse(mooc.getCourseID());
+        return "redirect:../learn/" + course.getID() + "/" + lessonID;
+    }
+
+    @RequestMapping(value = "/markLessonComplete/{lessonID}", method = RequestMethod.POST)
+    @ResponseBody
+    public String markLessonCompletePost(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int lessonID) {
+        //check logged in
+        if (CookieServices.checkUserLoggedIn(request.getCookies())) {
+            User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+            LessonDB.insertLessonCompleted(user.getID(), lessonID, request);
+        }
+        
         return "ok";
     }
 
