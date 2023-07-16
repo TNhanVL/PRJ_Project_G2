@@ -1,7 +1,6 @@
 package com.prj_project_g2.Controller.User;
 
 import com.mservice.enums.RequestType;
-import com.mservice.models.Request;
 import com.mservice.momo.MomoPay;
 import com.prj_project_g2.Database.CourseDB;
 import com.prj_project_g2.Database.LessonDB;
@@ -58,7 +57,7 @@ public class UserController {
 
         String TokenBody = JwtUtil.generateJwt(username, MD5.getMd5(password));
         Cookie cookie = new Cookie("jwtToken", TokenBody);
-        cookie.setMaxAge(60 * 60);
+        cookie.setMaxAge(60 * 60 * 6);
         request.getSession().setAttribute("success", "Login succeed!");
         response.addCookie(cookie);
         return "redirect:./main";
@@ -309,7 +308,7 @@ public class UserController {
 
         User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
         Lesson lesson = LessonDB.getLesson(lessonID);
-        QuizResultDB.insertQuizResult(new QuizResult(0, lessonID, user.getID(), new Date(), new Date((new Date()).getTime() + lesson.getTime() * 60000 * 6)));
+        QuizResultDB.insertQuizResult(new QuizResult(0, lessonID, user.getID(), new Date(), new Date((new Date()).getTime() + lesson.getTime() * 60000)));
 
         return "redirect:../learn/" + MoocDB.getMooc(lesson.getMoocID()).getCourseID() + "/" + lessonID;
     }
