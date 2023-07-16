@@ -4,6 +4,7 @@
     Author     : TTNhan
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="com.prj_project_g2.Model.Course"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,7 +19,13 @@
         user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
     }
 
-    ArrayList<Course> courses = CourseDB.getAllOrderCourses(user.getID());
+    ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
+    double priceDouble = 0;
+    for (Course course : courses) {
+        priceDouble += course.getPrice();
+    }
+    priceDouble *= 23600;
+    long price = (long) priceDouble;
 %>
 
 <!DOCTYPE html>
@@ -42,8 +49,14 @@
                 <div class="ticket-header">
                     <div class="paymentInfo">
                         <h1 class="text-center mb-4">Almost complete</h1>
-                        <h4 class="text-center">Pay for <b>2</b> courses</h4>
-                        <h4 class="text-center mb-4">Total payment: <b>200.000đ</b></h4>
+                        <h4 class="text-center">Pay for <b><%out.print(courses.size());%></b> course<%if (courses.size() > 1) {
+                                out.print("s");
+                            }%></h4>
+                        <h4 class="text-center mb-4">Total payment: <b><%
+                            DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+                            decimalFormat.setGroupingUsed(true);
+                            out.print(decimalFormat.format(price));
+                            %>đ</b></h4>
                         <h5 class="text-start me-auto">Choose your payment methods</h5>
                     </div>
 

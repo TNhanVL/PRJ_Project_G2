@@ -7,6 +7,7 @@ import com.prj_project_g2.Database.QuestionDB;
 import com.prj_project_g2.Database.QuestionResultDB;
 import com.prj_project_g2.Database.QuizResultDB;
 import com.prj_project_g2.Database.UserDB;
+import com.prj_project_g2.Model.Course;
 import com.prj_project_g2.Model.Lesson;
 import com.prj_project_g2.Model.Mooc;
 import com.prj_project_g2.Model.QuizResult;
@@ -148,7 +149,7 @@ public class UserController {
 
         //get all courses ID
         String[] courseIDStrs = request.getParameterValues("course");
-        ArrayList<Integer> courseIDs = new ArrayList<>();
+        ArrayList<Course> courses = new ArrayList<>();
 
         if (courseIDStrs != null) {
             for (String courseIDStr : courseIDStrs) {
@@ -160,11 +161,20 @@ public class UserController {
                         continue;
                     }
 
-                    courseIDs.add(courseID);
+                    if (CourseDB.existCourse(courseID)) {
+                        courses.add(CourseDB.getCourse(courseID));
+                    }
                 } catch (NumberFormatException e) {
                     System.out.println(e);
                 }
             }
+        }
+
+        model.addAttribute("courses", courses);
+
+        if (courses.isEmpty()) {
+            request.getSession().setAttribute("error", "No chosing cart to checkout!");
+            return "redirect:./cart";
         }
 
         return "user/checkOut";
