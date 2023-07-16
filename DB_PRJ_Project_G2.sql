@@ -208,25 +208,24 @@ INSERT INTO lecturer(userID, organizationID) VALUES
 (2, 1)
 GO
 INSERT INTO course(title,[image],[description],organizationID,lecturerID,unSalePrice,price,rate) VALUES
-('Java basic', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),
-('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 500, 4.5),
-('C++', 'a.png', 'hard', 1, 3, 800, 600, 4.7),
-('PYTHON FOR BEGINNER', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),
-('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 500, 4.5),
-('C++', 'a.png', 'hard', 1, 3, 800, 600, 4.7),
-('Java basic', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),
-('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 500, 4.5),
+('Java basic', 'a.png', 'ezsy', 1, 1, 500, 1, 4.2),
+('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 2, 4.5),
+('C++', 'a.png', 'hard', 1, 3, 800, 1.2, 4.7),
+('PYTHON FOR BEGINNER', 'a.png', 'ezsy', 1, 1, 500, 1.4, 4.2),
+('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 2.5, 4.5),
 ('C++', 'a.png', 'hard', 1, 3, 800, 600, 4.7),
 ('Java basic', 'a.png', 'ezsy', 1, 1, 500, 200, 4.2),
-('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 500, 4.5),
-('C++', 'a.png', 'hard', 1, 3, 800, 600, 4.7)
+('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 0.4, 4.5),
+('C++', 'a.png', 'hard', 1, 3, 800, 5, 4.7),
+('Java basic', 'a.png', 'ezsy', 1, 1, 500, 3, 4.2),
+('Java advance', 'a.png', 'medium difficult', 1, 2, 0, 2, 4.5),
+('C++', 'a.png', 'hard', 1, 3, 800, 5, 4.7)
 GO
 INSERT INTO orderCourse(userID, courseID) VALUES
 (1, 2), (1, 3)
 GO
 INSERT INTO purchasedCourse(userID, courseID) VALUES
-(1, 1),
-(1, 2)
+(1, 1)
 GO
 INSERT INTO mooc(courseID, [index], title, [description]) VALUES
 (1, 1, N'Hiragana 。ひらがな', ''),

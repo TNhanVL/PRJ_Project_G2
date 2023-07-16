@@ -8,7 +8,13 @@
 <div class="purchasedCourseAndCreatedCourse">
 
     <div class="purchasedCourse">
-        <h3>All taken courses</h3>
+        <h3><%
+            if (guest) {
+                out.print("All taken courses");
+            } else {
+                out.print("All purchased courses");
+            }
+            %></h3>
 
         <%
             ArrayList<Course> courses = CourseDB.getAllPurchasedCourses(user.getID());

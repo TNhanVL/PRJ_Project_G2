@@ -1,5 +1,8 @@
 package com.prj_project_g2.Controller.User;
 
+import com.mservice.enums.RequestType;
+import com.mservice.models.Request;
+import com.mservice.momo.MomoPay;
 import com.prj_project_g2.Database.CourseDB;
 import com.prj_project_g2.Database.LessonDB;
 import com.prj_project_g2.Database.MoocDB;
@@ -72,6 +75,19 @@ public class UserController {
         return "redirect:./login";
     }
 
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String selfProfile(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        //check logged in
+        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
+            return "redirect:./main";
+        }
+
+        User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+
+        model.addAttribute("username", user.getUsername());
+        return "user/profile/profile";
+    }
+
     @RequestMapping(value = "/profile/{username}", method = RequestMethod.GET)
     public String profile(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable String username) {
         model.addAttribute("username", username);
@@ -142,7 +158,7 @@ public class UserController {
         //check logged in
         if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
             request.getSession().setAttribute("error", "You need to log in to continue!");
-            return "redirect:../../login";
+            return "redirect:./login";
         }
 
         User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
@@ -178,6 +194,78 @@ public class UserController {
         }
 
         return "user/checkOut";
+    }
+
+    @RequestMapping(value = "/checkOutWithPayment", method = RequestMethod.POST)
+    public String checkOutWithPayment(ModelMap model, HttpServletRequest request, @RequestParam long price, @RequestParam String paymentMethod) {
+
+        //check logged in
+        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
+            request.getSession().setAttribute("error", "You need to log in to continue!");
+            return "redirect:./login";
+        }
+
+        User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+
+        //get all courses ID
+        String[] courseIDStrs = request.getParameterValues("course");
+
+        //get pay type
+        RequestType requestType;
+        if ("captureWallet".equals(paymentMethod)) {
+            requestType = RequestType.CAPTURE_WALLET;
+        } else {
+            requestType = RequestType.PAY_WITH_ATM;
+        }
+
+        String payLink = MomoPay.getPayLink(request, requestType, user.getID(), courseIDStrs, price);
+
+        if (payLink == null) {
+            request.getSession().setAttribute("error", "There are some error when checkout!");
+            return "redirect:./cart";
+        } else {
+            return "redirect:" + payLink;
+        }
+    }
+
+    @RequestMapping(value = "/finishedPayment", method = RequestMethod.GET)
+    public String finishedPayment(ModelMap model, HttpServletRequest request, @RequestParam String userID) {
+
+        User user = null;
+
+        try {
+            user = UserDB.getUser(Integer.parseInt(userID));
+        } catch (NumberFormatException e) {
+            System.out.println(e);
+            request.getSession().setAttribute("error", "There are some error!");
+            return "redirect:./main";
+        }
+
+        //get all courses ID
+        String[] courseIDStrs = request.getParameterValues("course");
+
+        if (courseIDStrs != null) {
+            for (String courseIDStr : courseIDStrs) {
+                try {
+                    int courseID = Integer.parseInt(courseIDStr);
+
+                    //check in cart
+                    if (!CourseDB.checkOrderCourse(user.getID(), courseID)) {
+                        continue;
+                    }
+
+                    CourseDB.deleteOrderCourse(user.getID(), courseID);
+                    CourseDB.insertPurchasedCourse(user.getID(), courseID);
+
+                } catch (NumberFormatException e) {
+                    System.out.println(e);
+                }
+            }
+        }
+
+        request.getSession().setAttribute("success", "Pay successful!");
+
+        return "redirect:./profile";
     }
 
     @RequestMapping(value = "/learn/{courseID}", method = RequestMethod.GET)

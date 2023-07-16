@@ -49,8 +49,8 @@ public class AllInOne {
 
         orderId = String.valueOf(System.currentTimeMillis());
         requestId = String.valueOf(System.currentTimeMillis());
-//        PaymentResponse captureATMMoMoResponse = CreateOrderMoMo.process(environment, orderId, requestId, Long.toString(amount), orderInfo, returnURL, notifyURL, "", RequestType.PAY_WITH_ATM, null);
-//        System.out.println(captureATMMoMoResponse.getPayUrl());
+        PaymentResponse captureATMMoMoResponse = CreateOrderMoMo.process(environment, orderId, requestId, Long.toString(amount), orderInfo, returnURL, notifyURL, "", RequestType.PAY_WITH_ATM, null);
+        System.out.println(captureATMMoMoResponse.getPayUrl());
     }
 
 }
