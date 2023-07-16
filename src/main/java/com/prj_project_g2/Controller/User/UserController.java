@@ -14,6 +14,7 @@ import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.CookieServices;
 import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -134,6 +135,41 @@ public class UserController {
         return "redirect:../../cart";
     }
 
+    @RequestMapping(value = "/checkOut", method = RequestMethod.POST)
+    public String checkOut(ModelMap model, HttpServletRequest request) {
+
+        //check logged in
+        if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
+            request.getSession().setAttribute("error", "You need to log in to continue!");
+            return "redirect:../../login";
+        }
+
+        User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
+
+        //get all courses ID
+        String[] courseIDStrs = request.getParameterValues("course");
+        ArrayList<Integer> courseIDs = new ArrayList<>();
+
+        for (String courseIDStr : courseIDStrs) {
+            try {
+                int courseID = Integer.parseInt(courseIDStr);
+                
+                //check in cart
+                if (!CourseDB.deleteOrderCourse(user.getID(), courseID)) {
+                    continue;
+                }
+
+                courseIDs.add(courseID);
+            } catch (NumberFormatException e) {
+                System.out.println(e);
+            }
+        }
+        
+        
+
+        return "redirect:cart";
+    }
+
     @RequestMapping(value = "/learn/{courseID}", method = RequestMethod.GET)
     public String lesson(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int courseID) {
         model.addAttribute("courseID", courseID);
@@ -168,7 +204,7 @@ public class UserController {
 
         User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
         Lesson lesson = LessonDB.getLesson(lessonID);
-        QuizResultDB.insertQuizResult(new QuizResult(0, lessonID, user.getID(), new Date(), new Date((new Date()).getTime() + lesson.getTime() * 60000)));
+        QuizResultDB.insertQuizResult(new QuizResult(0, lessonID, user.getID(), new Date(), new Date((new Date()).getTime() + lesson.getTime() * 60000 * 6)));
 
         return "redirect:../learn/" + MoocDB.getMooc(lesson.getMoocID()).getCourseID() + "/" + lessonID;
     }

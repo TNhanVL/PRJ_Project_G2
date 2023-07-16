@@ -16,7 +16,7 @@ public class JwtUtil {
     private static final String SECRET_KEY = "ttnhan";
 
     public static String generateJwt(String username, String password) {
-        long expirationTimeMillis = System.currentTimeMillis() + 3600000; // 1 hour
+        long expirationTimeMillis = System.currentTimeMillis() + 3600000 * 6; // 1 hour
         return Jwts.builder()
                 .claim("username", username)
                 .claim("password", password)

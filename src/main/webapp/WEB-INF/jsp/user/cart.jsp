@@ -53,7 +53,7 @@
                     <div class="keepshopping-btn"><a href="">Keep Shopping</a></div>
                 </div>
                 <!-- Course in cart -->
-                <form class="courseInCart" method="post">
+                <form class="courseInCart" method="post" action="checkOut">
 
                     <div class="items">
 
@@ -65,12 +65,15 @@
 
                         <!-- an item -->
                         <div class="item">
-                            <input type="checkbox" id="course<%out.print(courseIndex);%>" name="course<%out.print(courseIndex);%>" value="<%out.print(course.getID());%>">
-                            <img src="<%out.print(request.getContextPath());%>/public/media/course/<%out.print(course.getID() + "/" + course.getImage());%>" class="itemImg" alt="">
-                            <div class="itemInformation">
-                                <p class="itemName"><%out.print(course.getTitle());%></p>
-                                <div class="itemRating"><%out.print(course.getRate());%><i class="fa-solid fa-star"></i> (2503 reviewer)</div>
-                            </div>
+                            <input type="checkbox" id="course<%out.print(courseIndex);%>" name="course" value="<%out.print(course.getID());%>">
+
+                            <a href="<%out.print(request.getContextPath());%>/user/course/<%out.print(course.getID());%>">
+                                <img src="<%out.print(request.getContextPath());%>/public/media/course/<%out.print(course.getID() + "/" + course.getImage());%>" class="itemImg" alt="">
+                                <div class="itemInformation">
+                                    <p class="itemName"><%out.print(course.getTitle());%></p>
+                                    <div class="itemRating"><%out.print(course.getRate());%><i class="fa-solid fa-star"></i> (2503 reviewer)</div>
+                                </div>
+                            </a>
                             <p class="itemPrice"><%out.print(course.getPrice());%>$</p>
 
                             <div class="itemEdit"><a href="./cart/deleteOrder/<%out.print(course.getID());%>"><i class="fa-solid fa-trash"></i></a></div>
