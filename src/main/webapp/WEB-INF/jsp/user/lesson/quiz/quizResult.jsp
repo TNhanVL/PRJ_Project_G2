@@ -22,9 +22,14 @@
                 for (Question question : questions) {
                     switch (question.getType() / 10) {
                         case 0: {
-            %>
+                            %>
             <%@include file="../question/image.jsp" %>
-            <%                                                break;
+            <%                            break;
+                }
+                case 1: {
+            %>
+            <%@include file="../question/text.jsp" %>
+            <%                            break;
                         }
                         default: {
                             break;

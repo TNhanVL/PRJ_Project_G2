@@ -21,7 +21,12 @@
                         case 0: {
             %>
             <%@include file="../question/image.jsp" %>
-            <%                                                break;
+            <%                            break;
+                }
+                case 1: {
+                    %>
+            <%@include file="../question/text.jsp" %>
+            <%                            break;
                         }
                         default: {
                             break;
@@ -29,7 +34,7 @@
                     }
 
                 }
-            %>
+                %>
 
             <%@include file="../question/updateAnswers.jsp" %>
 

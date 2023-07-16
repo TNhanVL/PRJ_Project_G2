@@ -129,7 +129,7 @@ CREATE TABLE question (
 	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	lessonID INT NOT NULL,
 	[index] INT NOT NULL,
-	content TEXT NOT NULL,
+	content NTEXT NOT NULL,
     [type] INT NOT NULL,
 	point INT,
 	FOREIGN KEY (lessonID) REFERENCES lesson(ID)
@@ -245,7 +245,8 @@ INSERT INTO question(lessonID, [index], content, [type], point) VALUES
 (2, 1, 'a.png', 0, 1),
 (2, 2, 'i.png', 0, 1),
 (2, 3, 'u.png', 1, 1),
-(2, 4, 'e.png', 1, 1)
+(2, 4, 'e.png', 1, 1),
+(2, 5, N'What is the character あ?', 10, 1)
 GO
 INSERT INTO answer(questionID, content, correct) VALUES
 (1, 'a', 1),
@@ -263,7 +264,11 @@ INSERT INTO answer(questionID, content, correct) VALUES
 (4, 'a', 0),
 (4, 'u', 0),
 (4, 'e', 1),
-(4, 'i', 0)
+(4, 'i', 0),
+(5, 'a', 1),
+(5, 'u', 0),
+(5, 'e', 0),
+(5, 'i', 0)
 GO
 SELECT * FROM [user];
 
