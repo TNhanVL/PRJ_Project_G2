@@ -20,6 +20,8 @@ import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -229,16 +231,21 @@ public class UserController {
     }
 
     @RequestMapping(value = "/finishedPayment", method = RequestMethod.GET)
-    public String finishedPayment(ModelMap model, HttpServletRequest request, @RequestParam String userID) {
+    public String finishedPayment(ModelMap model, HttpServletRequest request, @RequestParam String userID, @RequestParam int resultCode) {
 
         User user = null;
 
         try {
             user = UserDB.getUser(Integer.parseInt(userID));
+            if (resultCode != 0) {
+                throw new Exception();
+            }
         } catch (NumberFormatException e) {
             System.out.println(e);
             request.getSession().setAttribute("error", "There are some error!");
             return "redirect:./main";
+        } catch (Exception ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //get all courses ID
