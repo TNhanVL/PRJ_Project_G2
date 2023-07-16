@@ -136,7 +136,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/checkOut", method = RequestMethod.POST)
-    public String checkOut(ModelMap model, HttpServletRequest request) {
+    public String checkOutPost(ModelMap model, HttpServletRequest request) {
 
         //check logged in
         if (!CookieServices.checkUserLoggedIn(request.getCookies())) {
@@ -150,24 +150,24 @@ public class UserController {
         String[] courseIDStrs = request.getParameterValues("course");
         ArrayList<Integer> courseIDs = new ArrayList<>();
 
-        for (String courseIDStr : courseIDStrs) {
-            try {
-                int courseID = Integer.parseInt(courseIDStr);
-                
-                //check in cart
-                if (!CourseDB.deleteOrderCourse(user.getID(), courseID)) {
-                    continue;
-                }
+        if (courseIDStrs != null) {
+            for (String courseIDStr : courseIDStrs) {
+                try {
+                    int courseID = Integer.parseInt(courseIDStr);
 
-                courseIDs.add(courseID);
-            } catch (NumberFormatException e) {
-                System.out.println(e);
+                    //check in cart
+                    if (!CourseDB.checkOrderCourse(user.getID(), courseID)) {
+                        continue;
+                    }
+
+                    courseIDs.add(courseID);
+                } catch (NumberFormatException e) {
+                    System.out.println(e);
+                }
             }
         }
-        
-        
 
-        return "redirect:cart";
+        return "user/checkOut";
     }
 
     @RequestMapping(value = "/learn/{courseID}", method = RequestMethod.GET)
