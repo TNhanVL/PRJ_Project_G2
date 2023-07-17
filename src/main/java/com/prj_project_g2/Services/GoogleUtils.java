@@ -47,7 +47,7 @@ public class GoogleUtils {
     }
 
     public static GooglePojo getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
-        System.out.println(GOOGLE_LINK_GET_USER_INFO + accessToken);
+//        System.out.println(GOOGLE_LINK_GET_USER_INFO + accessToken);
         String link = GOOGLE_LINK_GET_USER_INFO + accessToken;
         String response = Request.Get(link).execute().returnContent().asString();
         ObjectMapper mapper = new ObjectMapper();

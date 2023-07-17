@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/loginWithGG", method = RequestMethod.GET)
-    @ResponseBody
+//    @ResponseBody
     public String loginWithGG(HttpServletRequest request, HttpServletResponse response, @RequestParam String code) {
         if (code == null || code.isEmpty()) {
             request.getSession().setAttribute("error", "Error when login with Google!");
@@ -50,23 +50,25 @@ public class UserController {
             try {
                 String accessToken = GoogleUtils.getToken(code);
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
-                
+
                 User user = new User(googlePojo);
-                
-                System.out.println(user);
-                
+
+                request.setAttribute("userSignUp", user);
+
             } catch (IOException ex) {
                 Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
                 request.getSession().setAttribute("error", "Error when login with Google!");
-            return "redirect:./login";
+                return "redirect:./login";
             }
 
         }
-        return "redirect:./signup";
+        return "user/signup";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signup(ModelMap model) {
+    public String signup(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        User user = (User) request.getAttribute("userSignUp");
+        System.out.println(user);
         return "user/signup";
     }
 
