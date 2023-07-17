@@ -8,7 +8,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="quizContent" id="question<%out.print(question.getIndex());%>">
     <div class="question">
+        <%
+            if ((question.getType() / 10) % 2 == 0) {
+        %>
         <img src="<%out.print(request.getContextPath());%>/public/media/question/<%out.print(question.getID() + "/" + question.getContent());%>" alt="">
+        <%
+        } else {
+        %>
+        <img src="<%out.print(question.getContent());%>" alt="">
+        <%
+            }
+        %>
     </div>
     <div class="answer">
         <%

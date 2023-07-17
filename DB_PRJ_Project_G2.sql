@@ -247,7 +247,8 @@ INSERT INTO question(lessonID, [index], content, [type], point) VALUES
 (2, 2, 'i.png', 0, 1),
 (2, 3, 'u.png', 1, 1),
 (2, 4, 'e.png', 1, 1),
-(2, 5, N'What is the character あ?', 10, 1)
+(2, 5, N'What is the character あ?', 20, 1),
+(2, 6, 'https://statics.gojapan.vn/ufiles/2019/11/5b5bf0532cc51939d51b9798/5dde210b3b77504afb2f9cab.png', 10, 1)
 GO
 INSERT INTO answer(questionID, content, correct) VALUES
 (1, 'a', 1),
@@ -269,7 +270,11 @@ INSERT INTO answer(questionID, content, correct) VALUES
 (5, 'a', 1),
 (5, 'u', 0),
 (5, 'e', 0),
-(5, 'i', 0)
+(5, 'i', 0),
+(6, 'o', 1),
+(6, 'u', 0),
+(6, 'e', 0),
+(6, 'i', 0)
 GO
 --SELECT * FROM [user];
 
