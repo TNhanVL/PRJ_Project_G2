@@ -20,6 +20,7 @@ import com.prj_project_g2.Services.GoogleUtils;
 import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -27,8 +28,10 @@ import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -53,6 +56,15 @@ public class UserController {
 
                 User user = new User(googlePojo);
 
+                if (UserDB.getUserByEmail(user.getEmail()) != null) {
+                    String TokenBody = JwtUtil.generateJwt(user.getUsername(), user.getPassword());
+                    Cookie cookie = new Cookie("jwtToken", TokenBody);
+                    cookie.setMaxAge(60 * 60 * 6);
+                    request.getSession().setAttribute("success", "Login succeed!");
+                    response.addCookie(cookie);
+                    return "redirect:./main";
+                }
+
                 request.setAttribute("userSignUp", user);
 
             } catch (IOException ex) {
@@ -68,6 +80,22 @@ public class UserController {
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         User user = (User) request.getAttribute("userSignUp");
+        System.out.println(user);
+        return "user/signup";
+    }
+    
+    @InitBinder
+    private void dateBinder(WebDataBinder binder) {
+        //The date format to parse or output your dates
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //Create a new CustomDateEditor
+        CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
+        //Register it as custom editor for the Date type
+        binder.registerCustomEditor(Date.class, editor);
+    }
+    
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String signupPost(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("user") User user) {
         System.out.println(user);
         return "user/signup";
     }

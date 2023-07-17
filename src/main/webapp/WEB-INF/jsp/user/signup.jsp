@@ -38,7 +38,7 @@
     <body>
         <div id="main">
             <div class="box">
-                <form action="">
+                <form action="<%out.print(request.getContextPath());%>/user/signup" method="post">
 
                     <h2>Sign up</h2>
                     <div class="inputBox">
