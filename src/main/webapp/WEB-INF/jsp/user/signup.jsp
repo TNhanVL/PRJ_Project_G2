@@ -59,7 +59,8 @@
                 <div class="accountLogin">
                     <h6> or </h6>
                     <div class="loginWithGG">
-                        <a href="">
+                        <a href="https://accounts.google.com/o/oauth2/auth?scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&redirect_uri=http://localhost:8080/PRJ_Project_G2/user/loginWithGG&response_type=code
+                           &client_id=246255507082-vpebidclj199n0sgg035cos2ijabjrmg.apps.googleusercontent.com&approval_prompt=force">
                             <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logogoogle.png" alt="">
                             <p>Login with Google</p>
                         </a>

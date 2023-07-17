@@ -10,13 +10,16 @@ import com.prj_project_g2.Database.QuestionResultDB;
 import com.prj_project_g2.Database.QuizResultDB;
 import com.prj_project_g2.Database.UserDB;
 import com.prj_project_g2.Model.Course;
+import com.prj_project_g2.Model.GooglePojo;
 import com.prj_project_g2.Model.Lesson;
 import com.prj_project_g2.Model.Mooc;
 import com.prj_project_g2.Model.QuizResult;
 import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.CookieServices;
+import com.prj_project_g2.Services.GoogleUtils;
 import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -35,6 +38,31 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(ModelMap model) {
         return "user/login";
+    }
+
+    @RequestMapping(value = "/loginWithGG", method = RequestMethod.GET)
+    @ResponseBody
+    public String loginWithGG(HttpServletRequest request, HttpServletResponse response, @RequestParam String code) {
+        if (code == null || code.isEmpty()) {
+            request.getSession().setAttribute("error", "Error when login with Google!");
+            return "redirect:./login";
+        } else {
+            try {
+                String accessToken = GoogleUtils.getToken(code);
+                GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
+                
+                User user = new User(googlePojo);
+                
+                System.out.println(user);
+                
+            } catch (IOException ex) {
+                Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+                request.getSession().setAttribute("error", "Error when login with Google!");
+            return "redirect:./login";
+            }
+
+        }
+        return "redirect:./signup";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -286,7 +314,7 @@ public class UserController {
         model.addAttribute("lessonID", lessonID);
         return "user/lesson";
     }
-    
+
     @RequestMapping(value = "/markLessonComplete/{lessonID}", method = RequestMethod.GET)
 //    @ResponseBody
     public String markLessonComplete(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable int lessonID) {
@@ -310,7 +338,7 @@ public class UserController {
             User user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
             LessonDB.insertLessonCompleted(user.getID(), lessonID, request);
         }
-        
+
         return "ok";
     }
 

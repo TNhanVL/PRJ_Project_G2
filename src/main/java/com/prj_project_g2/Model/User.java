@@ -2,7 +2,6 @@ package com.prj_project_g2.Model;
 
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  *
@@ -24,6 +23,8 @@ public class User {
     private int status;
 
     public User() {
+        this.role = 1;
+        this.status = 1;
     }
 
     public User(int ID, String avatar, String username, String password, String email, String firstname, String lastname, int role, Date birthday, int countryID, int status) {
@@ -52,6 +53,14 @@ public class User {
         this.birthday = user.birthday;
         this.countryID = user.countryID;
         this.status = user.status;
+    }
+
+    public User(GooglePojo googlePojo) {
+        this.email = googlePojo.getEmail();
+        this.firstname = googlePojo.getGiven_name();
+        this.lastname = googlePojo.getFamily_name();
+        this.role = 1;
+        this.status = 1;
     }
 
     public int getID() {
