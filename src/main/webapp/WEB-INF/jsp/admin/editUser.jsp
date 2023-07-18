@@ -12,6 +12,7 @@
 <%@page import="com.prj_project_g2.Model.User"%>
 <%@page import="com.prj_project_g2.Services.CookieServices" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
     if (!CookieServices.checkAdminLoggedIn(request.getCookies())) {
@@ -57,9 +58,10 @@
 
                     <%
                         User user = UserDB.getUser(ID);
+                        request.setAttribute("userID", user.getID());
                     %>
 
-                    <form action="./editUser?id=<%out.print(user.getID());%>" method="post" id="updateUserForm">
+                    <form modelAttribute="driver" action="./editUser?id=${userID}" method="post" id="updateUserForm">
                         <div class="card-body">
 
                             <div class="form-group">
