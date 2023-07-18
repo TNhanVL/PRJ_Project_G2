@@ -38,7 +38,7 @@
                 <!-- A package -->
                 <div class="package">
                     <div class="packageHeader">
-                        <h1>Programer</h1>
+                        <h1>All courses</h1>
                     </div>
                     <div class="packageBody">
                         <ul class="courseList">
@@ -88,6 +88,6 @@
 
         <%@include file="popUpMessage.jsp" %>
 
-    </body>
+        
 
 </html>

@@ -71,7 +71,6 @@ public class UserDB extends DB {
                 status = 1;
             } else {
                 String pw = resultSet.getString("password");
-                System.out.println("exist " + pw);
                 if (!hashed) {
                     password = MD5.getMd5(password);
                 }

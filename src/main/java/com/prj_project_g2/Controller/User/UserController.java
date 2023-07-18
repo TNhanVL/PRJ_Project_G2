@@ -56,7 +56,7 @@ public class UserController {
 
                 User user = UserDB.getUserByEmail(googlePojo.getEmail());
 
-                System.out.println(googlePojo);
+//                System.out.println(googlePojo);
 
                 if (user != null) {
                     String TokenBody = JwtUtil.generateJwt(user.getUsername(), user.getPassword());
