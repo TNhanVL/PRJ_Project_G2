@@ -113,6 +113,12 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPost(HttpServletRequest request, HttpServletResponse response, @RequestParam String username, @RequestParam String password) {
         int status = UserDB.checkUser(username, password, false);
+        
+        if (status < 0) {
+            request.getSession().setAttribute("error", "Some error with database!");
+            return "redirect:./login";
+        }
+        
         if (status == 1) {
             request.getSession().setAttribute("error", "Username not exist!");
             return "redirect:./login";
