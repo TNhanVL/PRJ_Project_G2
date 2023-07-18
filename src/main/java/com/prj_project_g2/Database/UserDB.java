@@ -62,15 +62,16 @@ public class UserDB extends DB {
             //connect to database
             connect();
 
-            statement = conn.prepareStatement("select password from [user] where username = ?");
+            statement = conn.prepareStatement("select [password] from [user] where username = ?");
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
-
+            
             //not exist
             if (!resultSet.next()) {
                 status = 1;
             } else {
                 String pw = resultSet.getString("password");
+                System.out.println("exist " + pw);
                 if (!hashed) {
                     password = MD5.getMd5(password);
                 }
@@ -238,7 +239,7 @@ public class UserDB extends DB {
         try {
             connect();
 
-            statement = conn.prepareStatement("insert into [user](avatar,username,[password],email,firstName,lastName,[role],birthday,countryID,status) values(?,?,?,?,?,?,?,?,?)");
+            statement = conn.prepareStatement("insert into [user](avatar,username,[password],email,firstName,lastName,[role],birthday,countryID,status) values(?,?,?,?,?,?,?,?,?,?)");
             statement.setString(1, user.getAvatar());
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());

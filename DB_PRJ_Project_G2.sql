@@ -276,7 +276,8 @@ INSERT INTO answer(questionID, content, correct) VALUES
 (6, 'e', 0),
 (6, 'i', 0)
 GO
---SELECT * FROM [user];
+
+SELECT * FROM [user];
 
 --get sum of completed lesson of a course
 --select sum([time]) as sumTime from

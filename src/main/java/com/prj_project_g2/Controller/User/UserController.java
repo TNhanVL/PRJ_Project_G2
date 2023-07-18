@@ -54,16 +54,21 @@ public class UserController {
                 String accessToken = GoogleUtils.getToken(code);
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
 
-                User user = new User(googlePojo);
+                User user = UserDB.getUserByEmail(googlePojo.getEmail());
 
-                if (UserDB.getUserByEmail(user.getEmail()) != null) {
+                System.out.println(googlePojo);
+
+                if (user != null) {
                     String TokenBody = JwtUtil.generateJwt(user.getUsername(), user.getPassword());
+                    System.out.println(user);
                     Cookie cookie = new Cookie("jwtToken", TokenBody);
                     cookie.setMaxAge(60 * 60 * 6);
                     request.getSession().setAttribute("success", "Login succeed!");
                     response.addCookie(cookie);
                     return "redirect:./main";
                 }
+
+                user = new User(googlePojo);
 
                 request.setAttribute("userSignUp", user);
 
@@ -83,7 +88,7 @@ public class UserController {
         System.out.println(user);
         return "user/signup";
     }
-    
+
     @InitBinder
     private void dateBinder(WebDataBinder binder) {
         //The date format to parse or output your dates
@@ -93,11 +98,16 @@ public class UserController {
         //Register it as custom editor for the Date type
         binder.registerCustomEditor(Date.class, editor);
     }
-    
+
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signupPost(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("user") User user) {
-        System.out.println(user);
-        return "user/signup";
+        if (user.getCountryID() == 0) {
+            user.setCountryID(16);
+        }
+        user.setPassword(MD5.getMd5(user.getPassword()));
+        UserDB.insertUser(user);
+        request.getSession().setAttribute("success", "Signup successful!");
+        return "redirect:./login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

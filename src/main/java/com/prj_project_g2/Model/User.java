@@ -59,6 +59,7 @@ public class User {
         this.email = googlePojo.getEmail();
         this.firstname = googlePojo.getGiven_name();
         this.lastname = googlePojo.getFamily_name();
+        this.avatar = googlePojo.getPicture();
         this.role = 1;
         this.status = 1;
     }

@@ -40,6 +40,10 @@
             <div class="box">
                 <form action="<%out.print(request.getContextPath());%>/user/signup" method="post">
 
+                    <input type="text" required="required" name="avatar" value="<%if (user.getEmail() != null) {
+                                out.print(user.getAvatar());
+                            }%>" style="display: none">
+                    
                     <h2>Sign up</h2>
                     <div class="inputBox">
                         <input type="text" placeholder="Enter your username" required="required" name="username">
@@ -74,7 +78,7 @@
 
                     <div class="inputBox date">
                         <label for="">Birthday</label>
-                        <input type="date" value="2023-01-01" required="required" name="birthDay">
+                        <input type="date" value="2023-01-01" required="required" name="birthday">
                         <i></i>
                     </div>
 
