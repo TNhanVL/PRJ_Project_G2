@@ -8,6 +8,8 @@
 <%@page import="com.prj_project_g2.Model.Course"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%
     //check user loggedIn
     User user = null;
@@ -35,7 +37,7 @@
         <jsp:include page="head.jsp">
             <jsp:param name="title" value="Cart"/>
         </jsp:include>
-        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/checkout.css">
+        <link rel="stylesheet" href="${contextPath}/public/assets/css/checkout.css">
     </head>
 
     <body>
@@ -44,7 +46,7 @@
         <!--END HEADER -->
 
         <div id="body-checkout">
-            <form method="post" action="<%out.print(request.getContextPath());%>/user/checkOutWithPayment?price=<%
+            <form method="post" action="${contextPath}/user/checkOutWithPayment?price=<%
                 out.print(price);
                 for (Course course : courses) {
                     out.print("&course=" + course.getID());
@@ -104,7 +106,7 @@
 
         <%@include file="foot.jsp" %>
 
-        <script src="<%out.print(request.getContextPath());%>/public/assets/js/cart.js"></script>
+        <script src="${contextPath}/public/assets/js/cart.js"></script>
 
         <%@include file="popUpMessage.jsp" %>
 

@@ -4,6 +4,7 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Model.Country"%>
 <%@page import="com.prj_project_g2.Model.Lecturer"%>
 <%@page import="com.prj_project_g2.Model.Course"%>
 <%@page import="java.util.ArrayList"%>
@@ -31,6 +32,9 @@
         guest = (userLoggedin == null || user.getID() != userLoggedin.getID());
     }
 
+    request.getSession().setAttribute("guest", guest);
+    request.getSession().setAttribute("user", user);
+
     Lecturer lecturer = LecturerDB.getLecturer(user.getID());
 %>
 
@@ -41,8 +45,8 @@
         <jsp:include page="../head.jsp">
             <jsp:param name="title" value="Yojihan"/>
         </jsp:include>
-        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/profile.css">
-        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/responsive.css">
+        <link rel="stylesheet" href="${contextPath}/public/assets/css/profile.css">
+        <link rel="stylesheet" href="${contextPath}/public/assets/css/responsive.css">
     </head>
 
     <body>
@@ -53,7 +57,15 @@
         <!-- BODY -->
 
         <div id="main">
-            <div id="info" class="tabcontent active">
+
+            <c:if test="${!guest}">
+                <div class="tab">
+                    <button class="tablinks" onclick="openTab(event, 'info')">Profile</button>
+                    <button class="tablinks" onclick="openTab(event, 'personal')">Personal Information</button>
+                </div>
+            </c:if>
+
+            <div id="info" class="tabcontent">
                 <div class="infor">
                     <div class="userTags">
                         <div class="inforTag">
@@ -79,10 +91,8 @@
                                      %>" alt="">
                             </div>
                             <div class="name">
-                                <h4><%out.print(user.getFirstName() + " " + user.getLastName());%></h4>
+                                <h4>${user.firstName} ${user.lastName}</h4>
                             </div>
-
-
 
                             <div class="orgranization">
                                 <p><%out.print(CountryDB.getCountry(user.getCountryID()).getName());%></p>
@@ -91,7 +101,7 @@
                                         Organization organization = OrganizationDB.getOrganization(lecturer.getOrganizationID());
                                 %>
                                 <p>Lecturer of <%out.print(organization.getName());%></p>
-                                <img class="org" src="<%out.print(request.getContextPath());%>/public/media/organization/<%out.print(organization.getID() + "/" + organization.getLogo());%>" alt="">
+                                <img class="org" src="${contextPath}/public/media/organization/<%out.print(organization.getID() + "/" + organization.getLogo());%>" alt="">
                                 <%
                                     }
                                 %>
@@ -128,6 +138,67 @@
 
                 </div>
             </div>
+
+
+            <c:if test="${!guest}">
+                <div id="personal" class="tabcontent active">
+
+                    <div class="personal">
+
+                        <div class="header">
+                            <h3>Edit my profile</h3>
+                            <button onclick="window.location.href = '#changePassword'">Change password</button>
+                        </div>
+
+                        <p>Let the Yojihan community of other learners and instructors know more about you!</p>
+
+                        <form action="${contextPath}/user/updateUser?userID=${user.ID}" method="post">
+                            <div>
+                                <label for="firstName">First name:</label>
+                                <input value="${user.firstName}" type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+                            </div>
+
+                            <div>
+                                <label for="lastName">Last name:</label>
+                                <input value="${user.lastName}" type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+                            </div>
+                            <div>
+                                <label for="birthday">Birthday:</label>
+                                <input value="${user.birthday}" type="date" id="birthday" name="birthday" placeholder="dd/mm/yyyy" required>
+                            </div>
+
+                            <%                                ArrayList<Country> countries = CountryDB.getAllCountry();
+                                request.getSession().setAttribute("countries", countries);
+                                %>
+
+                            <div>
+                                <label for="country">Country:</label>
+                                <select name="countryID" id="country">
+                                    <c:forEach items="${countries}" var="country">
+                                        <option value="${country.ID}" class="form-control" placeholder="Enter your country" required <c:if test="${country.ID == user.countryID}">selected</c:if>>${country.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="email">Email address:</label>
+                                <input value="${user.email}" type="email" id="email" name="email" placeholder="Enter your email address" required>
+                            </div>
+
+                            <hr>
+
+                            <div class="saveInfor">
+                                <button type="submit">Update</button>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div> 
+            </c:if>
+
+
+
         </div>
 
         <!-- END BODY -->
@@ -136,8 +207,8 @@
 
         <%@include file="../foot.jsp" %>
 
-        <script src="<%out.print(request.getContextPath());
-        %>/public/assets/js/option.js"></script>
+        <script src="${contextPath}/public/assets/js/lesson.js"></script>
+        <script src="${contextPath}/public/assets/js/option.js"></script>
 
         <%@include file="../popUpMessage.jsp" %>
 

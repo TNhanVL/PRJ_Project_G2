@@ -4,6 +4,11 @@
     Author     : TTNhan
 --%>
 
+<%@page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.prj_project_g2.Database.CountryDB"%>
+<%@page import="com.prj_project_g2.Model.Country"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.prj_project_g2.Model.User"%>
 <%@page import="com.prj_project_g2.Services.CookieServices"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -17,85 +22,74 @@
     if (user == null) {
         user = new User();
     }
+    
+    request.getSession().setAttribute("user", user);
 %>
 
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-              integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-              integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-              crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/signup.css">
-        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/toast.css">
-        <title>Login page</title>
+        <jsp:include page="head.jsp">
+            <jsp:param name="title" value="Login page"/>
+        </jsp:include>
+        <link rel="stylesheet" href="${contextPath}/public/assets/css/signup.css">
     </head>
-
+    
     <body>
         <div id="main">
             <div class="box">
-                <form action="<%out.print(request.getContextPath());%>/user/signup" method="post">
+                <form action="${contextPath}/user/signup" method="post" id="signUpForm" class="needs-validation">
+                    <input type="text" required="required" name="avatar" value="${user.avatar}" style="display: none">
 
-                    <input type="text" required="required" name="avatar" value="<%if (user.getEmail() != null) {
-                                out.print(user.getAvatar());
-                            }%>" style="display: none">
-                    
                     <h2>Sign up</h2>
                     <div class="inputBox">
-                        <input type="text" placeholder="Enter your username" required="required" name="username">
-                        <span>Username</span>
+                        <label class="form-label">Username</label>
+                        <input class="form-control" id="username" type="text" placeholder="Enter your username" required="required" name="username">
                         <i></i>
                     </div>
                     <div class="inputBox">
-                        <input type="text" placeholder="Enter your email" required="required" name="email" value="<%if (user.getEmail() != null) {
-                                out.print(user.getEmail());
-                            }%>" <%if (user.getEmail() != null) {
-                                    out.print("readonly");
-                                }%>>
-                        <span>Email</span>
-                        <i></i>
-                    </div>
-                    <div class="inputBox-name">
-                        <div class="inputBox">
-                            <input type="text" placeholder="First name" required="required" name="firstName" value="<%if (user.getFirstName() != null) {
-                                    out.print(user.getFirstName());
-                                }%>">
-                            <span>First Name</span>
+                        <label class="form-label">Email</label>
+                        <input class="form-control <c:if test="${user.email != null}">is-valid</c:if>" id="email" type="text" placeholder="Enter your email" required="required" name="email" value="${user.email}" <c:if test="${user.email != null}">readonly</c:if>>
+                            <i></i>
+                        </div>
+                        <div class="inputBox-name">
+                            <div class="inputBox">
+                                <label class="form-label">First Name</label>
+                                <input class="form-control" type="text" placeholder="First name" required="required" name="firstName" value="${user.firstName}">
                             <i></i>
                         </div>
                         <div class="inputBox">
-                            <input type="text" placeholder="Last name" required="required" name="lastName" value="<%if (user.getLastName() != null) {
-                                    out.print(user.getLastName());
-                                }%>">
-                            <span>Last Name</span>
+                            <label class="form-label">Last Name</label>
+                            <input class="form-control" type="text" placeholder="Last name" required="required" name="lastName" value="${user.lastName}">
                             <i></i>
                         </div>
                     </div>
 
                     <div class="inputBox date">
                         <label for="">Birthday</label>
-                        <input type="date" value="2023-01-01" required="required" name="birthday">
+                        <input class="form-control" type="date" value="2023-01-01" required="required" name="birthday">
                         <i></i>
                     </div>
 
+                    <%
+                        ArrayList<Country> countries = CountryDB.getAllCountry();
+                        request.getSession().setAttribute("countries", countries);
+                    %>
+
                     <div class="inputBox country">
-                        <label for="country">Country</label>
-                        <select name="country" id="country">
-                            <option value="1">Vietnam</option>
-                            <option value="2">Japan</option>
-                            <option value="3">China</option>
-                            <option value="4">Korean</option>
+                        <label class="form-label" for="country">Country</label>
+                        <select class="form-control" name="countryID" id="country">
+                            <c:forEach items="${countries}" var="country">
+                                <option value="${country.ID}" <c:if test="${country.ID == 16}">selected</c:if>>${country.name}</option>
+                            </c:forEach>
                         </select>
                         <i></i>
                     </div>
 
                     <div class="inputBox">
-                        <input type="password" placeholder="Enter your password" required="required" name="password">
-                        <span>Password</span>
+                        <label class="form-label">Password</label>
+                        <input class="form-control" type="password" placeholder="Enter your password" required="required" name="password">
                         <i></i>
                     </div>
 
@@ -105,7 +99,10 @@
 
             </div>
         </div>
+
         <%@include file="foot.jsp" %>
+
+        <script src="${contextPath}/public/assets/js/signup.js"></script>
 
         <%@include file="popUpMessage.jsp" %>
     </body>
