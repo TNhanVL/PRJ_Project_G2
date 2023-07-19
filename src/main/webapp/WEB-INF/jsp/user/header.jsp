@@ -4,6 +4,7 @@
     Author     : TTNhan
 --%>
 
+<%@page import="java.net.URL"%>
 <%@page import="com.prj_project_g2.Database.CourseDB"%>
 <%@page import="com.prj_project_g2.Database.UserDB"%>
 <%@page import="com.prj_project_g2.Model.User"%>
@@ -58,7 +59,19 @@
                %>">
                 <img src="<%
                     if (loggedInHeader) {
-                        out.print(request.getContextPath() + "/public/media/user/" + userHeader.getID() + "/" + userHeader.getAvatar());
+
+                        boolean isUrl = false;
+                        try {
+                            new URL(userHeader.getAvatar()).toURI();
+                            isUrl = true;
+                        } catch (Exception e) {
+                        }
+
+                        if (isUrl) {
+                            out.print(userHeader.getAvatar());
+                        } else {
+                            out.print(request.getContextPath() + "/public/media/user/" + userHeader.getID() + "/" + userHeader.getAvatar());
+                        }
                     } else {
                         out.print("https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png");
                     }

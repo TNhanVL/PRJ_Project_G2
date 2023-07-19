@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author TTNhan
+ * @author Gr2
  */
 public class DB {
 
@@ -61,16 +61,15 @@ public class DB {
         try {
             connect();
 
-            statement = conn.prepareStatement("select username from [user]");
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("username"));
-            }
+            statement = conn.prepareStatement("UPDATE [user] SET firstName = ?  WHERE ID = 4");
+            statement.setString(1, "Thanh Nhân");
+            statement.execute();
 
             disconnect();
-        } catch (SQLException ex) {
+
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
 }

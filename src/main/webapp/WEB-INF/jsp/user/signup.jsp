@@ -4,12 +4,18 @@
     Author     : TTNhan
 --%>
 
+<%@page import="com.prj_project_g2.Model.User"%>
 <%@page import="com.prj_project_g2.Services.CookieServices"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     if (CookieServices.checkUserLoggedIn(request.getCookies())) {
         response.sendRedirect("./main");
         return;
+    }
+
+    User user = (User) request.getAttribute("userSignUp");
+    if (user == null) {
+        user = new User();
     }
 %>
 
@@ -32,48 +38,71 @@
     <body>
         <div id="main">
             <div class="box">
-                <form action="">
+                <form action="<%out.print(request.getContextPath());%>/user/signup" method="post">
 
+                    <input type="text" required="required" name="avatar" value="<%if (user.getEmail() != null) {
+                                out.print(user.getAvatar());
+                            }%>" style="display: none">
+                    
                     <h2>Sign up</h2>
                     <div class="inputBox">
-                        <input type="text" required="required" name="username">
-                        <span>Email or Phone number</span>
+                        <input type="text" placeholder="Enter your username" required="required" name="username">
+                        <span>Username</span>
                         <i></i>
                     </div>
                     <div class="inputBox">
-                        <input type="password" required="required" name="password">
+                        <input type="text" placeholder="Enter your email" required="required" name="email" value="<%if (user.getEmail() != null) {
+                                out.print(user.getEmail());
+                            }%>" <%if (user.getEmail() != null) {
+                                    out.print("readonly");
+                                }%>>
+                        <span>Email</span>
+                        <i></i>
+                    </div>
+                    <div class="inputBox-name">
+                        <div class="inputBox">
+                            <input type="text" placeholder="First name" required="required" name="firstName" value="<%if (user.getFirstName() != null) {
+                                    out.print(user.getFirstName());
+                                }%>">
+                            <span>First Name</span>
+                            <i></i>
+                        </div>
+                        <div class="inputBox">
+                            <input type="text" placeholder="Last name" required="required" name="lastName" value="<%if (user.getLastName() != null) {
+                                    out.print(user.getLastName());
+                                }%>">
+                            <span>Last Name</span>
+                            <i></i>
+                        </div>
+                    </div>
+
+                    <div class="inputBox date">
+                        <label for="">Birthday</label>
+                        <input type="date" value="2023-01-01" required="required" name="birthday">
+                        <i></i>
+                    </div>
+
+                    <div class="inputBox country">
+                        <label for="country">Country</label>
+                        <select name="country" id="country">
+                            <option value="1">Vietnam</option>
+                            <option value="2">Japan</option>
+                            <option value="3">China</option>
+                            <option value="4">Korean</option>
+                        </select>
+                        <i></i>
+                    </div>
+
+                    <div class="inputBox">
+                        <input type="password" placeholder="Enter your password" required="required" name="password">
                         <span>Password</span>
                         <i></i>
                     </div>
-                    <div class="inputBox">
-                        <input type="password" required="required" name="password">
-                        <span>Confirm Password</span>
-                        <i></i>
-                    </div>
-                    <input type="submit" value="Register">
 
-                    <p id="message"></p>
+                    <input type="submit" value="Register">
 
                 </form>
 
-                <div class="accountLogin">
-                    <h6> or </h6>
-                    <div class="loginWithGG">
-                        <a href="https://accounts.google.com/o/oauth2/auth?scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&redirect_uri=http://localhost:8080/PRJ_Project_G2/user/loginWithGG&response_type=code
-                           &client_id=246255507082-vpebidclj199n0sgg035cos2ijabjrmg.apps.googleusercontent.com&approval_prompt=force">
-                            <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logogoogle.png" alt="">
-                            <p>Login with Google</p>
-                        </a>
-                    </div>
-                </div>
-
-                <script>
-                    // Đợi 10 giây trước khi xóa p
-                    setTimeout(function () {
-                        var messageDiv = document.getElementById('message');
-                        messageDiv.parentNode.removeChild(messageDiv);
-                    }, 5000);
-                </script>
             </div>
         </div>
         <%@include file="foot.jsp" %>
