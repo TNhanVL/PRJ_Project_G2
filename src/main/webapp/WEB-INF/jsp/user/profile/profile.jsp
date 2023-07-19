@@ -58,7 +58,25 @@
                     <div class="userTags">
                         <div class="inforTag">
                             <div class="avatar">
-                                <img src="<%out.print(request.getContextPath() + "/public/media/user/" + user.getID() + "/" + user.getAvatar());%>" alt="">
+                                <img src="<%
+                                    if (loggedInHeader) {
+
+                                        boolean isUrl = false;
+                                        try {
+                                            new URL(user.getAvatar()).toURI();
+                                            isUrl = true;
+                                        } catch (Exception e) {
+                                        }
+
+                                        if (isUrl) {
+                                            out.print(user.getAvatar());
+                                        } else {
+                                            out.print(request.getContextPath() + "/public/media/user/" + user.getID() + "/" + user.getAvatar());
+                                        }
+                                    } else {
+                                        out.print("https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png");
+                                    }
+                                     %>" alt="">
                             </div>
                             <div class="name">
                                 <h4><%out.print(user.getFirstName() + " " + user.getLastName());%></h4>

@@ -20,6 +20,7 @@ import com.prj_project_g2.Services.GoogleUtils;
 import com.prj_project_g2.Services.JwtUtil;
 import com.prj_project_g2.Services.MD5;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -27,8 +28,10 @@ import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -41,7 +44,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/loginWithGG", method = RequestMethod.GET)
-    @ResponseBody
+//    @ResponseBody
     public String loginWithGG(HttpServletRequest request, HttpServletResponse response, @RequestParam String code) {
         if (code == null || code.isEmpty()) {
             request.getSession().setAttribute("error", "Error when login with Google!");
@@ -50,29 +53,72 @@ public class UserController {
             try {
                 String accessToken = GoogleUtils.getToken(code);
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
-                
-                User user = new User(googlePojo);
-                
-                System.out.println(user);
-                
+
+                User user = UserDB.getUserByEmail(googlePojo.getEmail());
+
+//                System.out.println(googlePojo);
+
+                if (user != null) {
+                    String TokenBody = JwtUtil.generateJwt(user.getUsername(), user.getPassword());
+                    System.out.println(user);
+                    Cookie cookie = new Cookie("jwtToken", TokenBody);
+                    cookie.setMaxAge(60 * 60 * 6);
+                    request.getSession().setAttribute("success", "Login succeed!");
+                    response.addCookie(cookie);
+                    return "redirect:./main";
+                }
+
+                user = new User(googlePojo);
+
+                request.setAttribute("userSignUp", user);
+
             } catch (IOException ex) {
                 Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
                 request.getSession().setAttribute("error", "Error when login with Google!");
-            return "redirect:./login";
+                return "redirect:./login";
             }
 
         }
-        return "redirect:./signup";
+        return "user/signup";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signup(ModelMap model) {
+    public String signup(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        User user = (User) request.getAttribute("userSignUp");
+        System.out.println(user);
         return "user/signup";
+    }
+
+    @InitBinder
+    private void dateBinder(WebDataBinder binder) {
+        //The date format to parse or output your dates
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //Create a new CustomDateEditor
+        CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
+        //Register it as custom editor for the Date type
+        binder.registerCustomEditor(Date.class, editor);
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String signupPost(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("user") User user) {
+        if (user.getCountryID() == 0) {
+            user.setCountryID(16);
+        }
+        user.setPassword(MD5.getMd5(user.getPassword()));
+        UserDB.insertUser(user);
+        request.getSession().setAttribute("success", "Signup successful!");
+        return "redirect:./login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPost(HttpServletRequest request, HttpServletResponse response, @RequestParam String username, @RequestParam String password) {
         int status = UserDB.checkUser(username, password, false);
+        
+        if (status < 0) {
+            request.getSession().setAttribute("error", "Some error with database!");
+            return "redirect:./login";
+        }
+        
         if (status == 1) {
             request.getSession().setAttribute("error", "Username not exist!");
             return "redirect:./login";
