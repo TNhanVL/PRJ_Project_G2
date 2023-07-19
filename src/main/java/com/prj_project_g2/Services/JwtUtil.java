@@ -8,7 +8,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
 import java.util.Date;
 
 public class JwtUtil {
@@ -25,8 +24,14 @@ public class JwtUtil {
                 .compact();
     }
 
-    public static Claims parseJwt(String jwt) throws SignatureException {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).getBody();
+    public static Claims parseJwt(String jwt) {
+        try {
+            return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).getBody();
+        } catch (Exception e) {
+
+        }
+        return null;
+
     }
 
     public static boolean isJwtExpired(Claims claims) {

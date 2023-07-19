@@ -22,7 +22,7 @@
     if (user == null) {
         user = new User();
     }
-
+    
     request.getSession().setAttribute("user", user);
 %>
 
@@ -35,29 +35,28 @@
         </jsp:include>
         <link rel="stylesheet" href="${contextPath}/public/assets/css/signup.css">
     </head>
-
+    
     <body>
         <div id="main">
             <div class="box">
                 <form action="${contextPath}/user/signup" method="post" id="signUpForm" class="needs-validation">
-
                     <input type="text" required="required" name="avatar" value="${user.avatar}" style="display: none">
 
                     <h2>Sign up</h2>
                     <div class="inputBox">
-                        <input type="text" placeholder="Enter your username" required="required" name="username">
-                        <span>Username</span>
+                        <label class="form-label">Username</label>
+                        <input class="form-control" id="username" type="text" placeholder="Enter your username" required="required" name="username">
                         <i></i>
                     </div>
                     <div class="inputBox">
                         <label class="form-label">Email</label>
                         <input class="form-control" id="email" type="text" placeholder="Enter your email" required="required" name="email" value="${user.email}" <c:if test="${user.email != null}">readonly</c:if>>
-                        <i></i>
-                    </div>
-                    <div class="inputBox-name">
-                        <div class="inputBox">
-                            <label class="form-label">First Name</label>
-                            <input class="form-control" type="text" placeholder="First name" required="required" name="firstName" value="${user.firstName}">
+                            <i></i>
+                        </div>
+                        <div class="inputBox-name">
+                            <div class="inputBox">
+                                <label class="form-label">First Name</label>
+                                <input class="form-control" type="text" placeholder="First name" required="required" name="firstName" value="${user.firstName}">
                             <i></i>
                         </div>
                         <div class="inputBox">
@@ -69,7 +68,7 @@
 
                     <div class="inputBox date">
                         <label for="">Birthday</label>
-                        <input type="date" value="2023-01-01" required="required" name="birthday">
+                        <input class="form-control" type="date" value="2023-01-01" required="required" name="birthday">
                         <i></i>
                     </div>
 
@@ -79,8 +78,8 @@
                     %>
 
                     <div class="inputBox country">
-                        <label for="country">Country</label>
-                        <select name="country" id="country">
+                        <label class="form-label" for="country">Country</label>
+                        <select class="form-control" name="country" id="country">
                             <c:forEach items="${countries}" var="country">
                                 <option value="${country.ID}" <c:if test="${country.ID == 16}">selected</c:if>>${country.name}</option>
                             </c:forEach>
@@ -92,8 +91,8 @@
                     </div>
 
                     <div class="inputBox">
-                        <input type="password" placeholder="Enter your password" required="required" name="password">
-                        <span>Password</span>
+                        <label class="form-label">Password</label>
+                        <input class="form-control" type="password" placeholder="Enter your password" required="required" name="password">
                         <i></i>
                     </div>
 
@@ -103,7 +102,10 @@
 
             </div>
         </div>
+
         <%@include file="foot.jsp" %>
+
+        <script src="${contextPath}/public/assets/js/signup.js"></script>
 
         <%@include file="popUpMessage.jsp" %>
     </body>
