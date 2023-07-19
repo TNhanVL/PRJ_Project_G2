@@ -312,7 +312,7 @@ public class UserDB extends DB {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //        User user = null;
 //
 //        try {
@@ -356,10 +356,10 @@ public class UserDB extends DB {
 //            System.out.println(u);
 //        }
 
-    User s = getUser(1);
-        System.out.println(s.toString());
-=======
-        System.out.println(getUserByEmail("user1@example.com"));
->>>>>>> b1683b36740c8f06ec9e65a7e66ebac662c6a69b
+//    User s = getUser(1);
+//        System.out.println(s.toString());
+//=======
+//        System.out.println(getUserByEmail("user1@example.com"));
+//>>>>>>> b1683b36740c8f06ec9e65a7e66ebac662c6a69b
     }
 }
