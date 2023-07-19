@@ -5,10 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%
     if (lesson.getType() == 0) {
 %>
-<video id="my-video" src="<%out.print(request.getContextPath());%>/public/media/lesson/<%out.print(lesson.getID() + "/" + post.getContent());%>" controls>
+<video id="my-video" src="${contextPath}/public/media/lesson/<%out.print(lesson.getID() + "/" + post.getContent());%>" controls>
     Trình duyệt của bạn không hỗ trợ video.
 </video>
 <%
@@ -53,7 +55,7 @@
 
             //check if 90% video
             if (currentTime >= duration * 0.9) {
-                fetch("<%out.print(request.getContextPath());%>/user/markLessonComplete/<%out.print(lesson.getID());%>", {method: 'POST'})
+                fetch("${contextPath}/user/markLessonComplete/<%out.print(lesson.getID());%>", {method: 'POST'})
                                         .catch(error => console.error(error));
                                 sendedCompletedVideo = true;
                                 let checkLesson = $(".lesson.active i")[0];

@@ -57,7 +57,6 @@ public class UserController {
                 User user = UserDB.getUserByEmail(googlePojo.getEmail());
 
 //                System.out.println(googlePojo);
-
                 if (user != null) {
                     String TokenBody = JwtUtil.generateJwt(user.getUsername(), user.getPassword());
                     System.out.println(user);
@@ -89,6 +88,32 @@ public class UserController {
         return "user/signup";
     }
 
+    @RequestMapping(value = "/checkUsername", method = RequestMethod.GET)
+    @ResponseBody
+    public String checkUsername(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        String username = (String) request.getParameter("username");
+        User user = UserDB.getUserByUsername(username);
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        if (user != null) {
+            return "exist";
+        } else {
+            return "not exist";
+        }
+    }
+
+    @RequestMapping(value = "/checkEmail", method = RequestMethod.GET)
+    @ResponseBody
+    public String checkEmail(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        String email = (String) request.getParameter("email");
+        User user = UserDB.getUserByEmail(email);
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        if (user != null) {
+            return "exist";
+        } else {
+            return "not exist";
+        }
+    }
+
     @InitBinder
     private void dateBinder(WebDataBinder binder) {
         //The date format to parse or output your dates
@@ -105,6 +130,17 @@ public class UserController {
             user.setCountryID(16);
         }
         user.setPassword(MD5.getMd5(user.getPassword()));
+
+        if (UserDB.getUserByUsername(user.getUsername()) != null) {
+            request.getSession().setAttribute("error", "User already exist!");
+            return "redirect:./signup";
+        }
+
+        if (UserDB.getUserByEmail(user.getEmail()) != null) {
+            request.getSession().setAttribute("error", "Email already exist!");
+            return "redirect:./signup";
+        }
+
         UserDB.insertUser(user);
         request.getSession().setAttribute("success", "Signup successful!");
         return "redirect:./login";
@@ -113,12 +149,12 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPost(HttpServletRequest request, HttpServletResponse response, @RequestParam String username, @RequestParam String password) {
         int status = UserDB.checkUser(username, password, false);
-        
+
         if (status < 0) {
             request.getSession().setAttribute("error", "Some error with database!");
             return "redirect:./login";
         }
-        
+
         if (status == 1) {
             request.getSession().setAttribute("error", "Username not exist!");
             return "redirect:./login";

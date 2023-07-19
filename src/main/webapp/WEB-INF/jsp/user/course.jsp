@@ -16,6 +16,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
     //check course exist
@@ -48,8 +49,8 @@
         <jsp:include page="head.jsp">
             <jsp:param name="title" value="Course Infomation"/>
         </jsp:include>
-        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/courseInfo.css">
-        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/responsive.css">
+        <link rel="stylesheet" href="${contextPath}/public/assets/css/courseInfo.css">
+        <link rel="stylesheet" href="${contextPath}/public/assets/css/responsive.css">
     </head>
 
     <body>
@@ -61,7 +62,7 @@
             <div class="courseMain">
                 <div class="courseIntroduction">
                     <div class="orgranization">
-                        <img src="<%out.print(request.getContextPath());%>/public/media/organization/<%out.print(organization.getID() + "/" + organization.getLogo());%>" alt="">
+                        <img src="${contextPath}/public/media/organization/<%out.print(organization.getID() + "/" + organization.getLogo());%>" alt="">
                     </div>
                     <div class="courseName">
                         <h1><%out.print(course.getTitle());%></h1>
@@ -69,7 +70,7 @@
                     <div class="instructorInfor">
                         <img src=<%out.print(request.getContextPath() + "/public/media/user/" + lecturer.getID() + "/" + lecturer.getAvatar());%> alt="" class="instructorImg">
                         <p class="instructorName">
-                            Instructor: <a href="<%out.print(request.getContextPath());%>/user/profile/<%out.print(lecturer.getUsername());%>"><%out.print(lecturer.getFirstName() + " " + lecturer.getLastName());%></a></p>
+                            Instructor: <a href="${contextPath}/user/profile/<%out.print(lecturer.getUsername());%>"><%out.print(lecturer.getFirstName() + " " + lecturer.getLastName());%></a></p>
                     </div>
                     <div class="price">
                         Price: <span><%out.print(course.getPrice());%>$</span>
@@ -241,7 +242,7 @@
                         <div class="rating-comments">
                             <!-- start a rating -->
                             <div class="rating-content">
-                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/gg.png" alt="" class="rateUserImg">
+                                <img src="${contextPath}/public/assets/imgs/gg.png" alt="" class="rateUserImg">
                                 <div class="content">
                                     <p class="UserRateName">
                                         Google
@@ -262,7 +263,7 @@
                             <!-- end a rating -->
                             <!-- start a rating -->
                             <div class="rating-content">
-                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/gg.png" alt="" class="rateUserImg">
+                                <img src="${contextPath}/public/assets/imgs/gg.png" alt="" class="rateUserImg">
                                 <div class="content">
                                     <p class="UserRateName">
                                         Google
@@ -283,7 +284,7 @@
                             <!-- end a rating -->
                             <!-- start a rating -->
                             <div class="rating-content">
-                                <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/gg.png" alt="" class="rateUserImg">
+                                <img src="${contextPath}/public/assets/imgs/gg.png" alt="" class="rateUserImg">
                                 <div class="content">
                                     <p class="UserRateName">
                                         Google

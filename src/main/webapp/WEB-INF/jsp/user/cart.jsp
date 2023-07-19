@@ -7,6 +7,8 @@
 <%@page import="com.prj_project_g2.Model.Course"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%
     //check user loggedIn
     User user = null;
@@ -28,7 +30,7 @@
         <jsp:include page="head.jsp">
             <jsp:param name="title" value="Cart"/>
         </jsp:include>
-        <link rel="stylesheet" href="<%out.print(request.getContextPath());%>/public/assets/css/paysite.css">
+        <link rel="stylesheet" href="${contextPath}/public/assets/css/paysite.css">
     </head>
 
     <body>
@@ -47,8 +49,8 @@
                 </h4>
                 <!-- When cart is empty display this -->
                 <div class="keepShopping ">
-                    <!-- <video src="<%out.print(request.getContextPath());%>/public/assets/videos/DoggieCorgi-4.mp4"></video> -->
-                    <img src="<%out.print(request.getContextPath());%>/public/assets/imgs/logoooooo.png" alt="" class="description-img">
+                    <!-- <video src="${contextPath}/public/assets/videos/DoggieCorgi-4.mp4"></video> -->
+                    <img src="${contextPath}/public/assets/imgs/logoooooo.png" alt="" class="description-img">
                     <h5>Your cart is empty, keeping shopping to find a course!</h5>
                     <div class="keepshopping-btn"><a href="">Keep Shopping</a></div>
                 </div>
@@ -67,8 +69,8 @@
                         <div class="item">
                             <input type="checkbox" id="course<%out.print(courseIndex);%>" name="course" value="<%out.print(course.getID());%>">
 
-                            <a href="<%out.print(request.getContextPath());%>/user/course/<%out.print(course.getID());%>">
-                                <img src="<%out.print(request.getContextPath());%>/public/media/course/<%out.print(course.getID() + "/" + course.getImage());%>" class="itemImg" alt="">
+                            <a href="${contextPath}/user/course/<%out.print(course.getID());%>">
+                                <img src="${contextPath}/public/media/course/<%out.print(course.getID() + "/" + course.getImage());%>" class="itemImg" alt="">
                                 <div class="itemInformation">
                                     <p class="itemName"><%out.print(course.getTitle());%></p>
                                     <div class="itemRating"><%out.print(course.getRate());%><i class="fa-solid fa-star"></i> (2503 reviewer)</div>
@@ -114,7 +116,7 @@
 
         <%@include file="foot.jsp" %>
 
-        <script src="<%out.print(request.getContextPath());%>/public/assets/js/cart.js"></script>
+        <script src="${contextPath}/public/assets/js/cart.js"></script>
 
         <%@include file="popUpMessage.jsp" %>
 
