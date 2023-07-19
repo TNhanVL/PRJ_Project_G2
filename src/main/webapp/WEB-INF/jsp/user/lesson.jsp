@@ -115,7 +115,9 @@
                     <%
                         switch (lesson.getType()) {
                             //type 0 -> video
-                            case 0: {
+                            //type 3 -> Youtube ID
+                            case 0:
+                            case 3: {
                                 Post post = PostDB.getPostByLessonID(lesson.getID());
                                 %>
                     <%@include file="lesson/video.jsp" %>

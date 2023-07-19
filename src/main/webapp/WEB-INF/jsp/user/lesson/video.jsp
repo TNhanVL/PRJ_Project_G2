@@ -5,9 +5,20 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    if (lesson.getType() == 0) {
+%>
 <video id="my-video" src="<%out.print(request.getContextPath());%>/public/media/lesson/<%out.print(lesson.getID() + "/" + post.getContent());%>" controls>
     Trình duyệt của bạn không hỗ trợ video.
 </video>
+<%
+} else {
+%>
+<div id="player"></div>
+<%
+    }
+%>
+
 
 <script>
     var video = document.getElementById('my-video');
@@ -18,12 +29,30 @@
 //        });
 //    }
 
+    function onYouTubeIframeAPIReady() {
+        // Create a new instance of the player
+        player = new YT.Player('player', {
+            videoId: '<%out.print(post.getContent());%>'
+        });
+    }
+
     let sendedCompletedVideo = false;
 
     function checkVideoProgress() {
+        var duration; // Get the duration of the video
+        var currentTime; // Get the current time of the video
         if (video && !sendedCompletedVideo) {
+            duration = video.duration;
+            currentTime = video.currentTime;
+        }
+        if (player && !sendedCompletedVideo) {
+            var duration = player.getDuration(); // Get the duration of the video
+            var currentTime = player.getCurrentTime(); // Get the current time of the video
+        }
+        if (video || player) {
+
             //check if 90% video
-            if (video.currentTime / video.duration >= 0.9) {
+            if (currentTime >= duration * 0.9) {
                 fetch("<%out.print(request.getContextPath());%>/user/markLessonComplete/<%out.print(lesson.getID());%>", {method: 'POST'})
                                         .catch(error => console.error(error));
                                 sendedCompletedVideo = true;
