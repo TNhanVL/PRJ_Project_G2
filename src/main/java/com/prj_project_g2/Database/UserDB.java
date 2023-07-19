@@ -312,6 +312,54 @@ public class UserDB extends DB {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
+<<<<<<< HEAD
+//        User user = null;
+//
+//        try {
+//            //connect to database
+//            connect();
+//
+//            statement = conn.prepareStatement("select * from [user] where ID = ?");
+//            statement.setString(1, "3");
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                user = new User(
+//                        resultSet.getInt("ID"),
+//                        resultSet.getString("avatar"),
+//                        resultSet.getString("username"),
+//                        resultSet.getString("password"),
+//                        resultSet.getString("email"),
+//                        resultSet.getString("firstName"),
+//                        resultSet.getString("lastName"),
+//                        resultSet.getDate("birthday"),
+//                        resultSet.getInt("countryID"),
+//                        resultSet.getInt("status")
+//                );
+//            }
+//
+//            disconnect();
+//        } catch (SQLException | ClassNotFoundException ex) {
+//            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+////        System.out.println(user);
+//        user.setAvatar("https://ex.png");
+//        user.setUsername("duongthanh");
+//
+////        System.out.println(insertUser(user));
+////        updateUser(user);
+////          deleteUser(5);
+//        ArrayList<User> users = getUser();
+//
+//        for (User u : users) {
+//            System.out.println(u);
+//        }
+
+    User s = getUser(1);
+        System.out.println(s.toString());
+=======
         System.out.println(getUserByEmail("user1@example.com"));
+>>>>>>> b1683b36740c8f06ec9e65a7e66ebac662c6a69b
     }
 }
