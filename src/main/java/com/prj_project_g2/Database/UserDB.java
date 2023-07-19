@@ -319,5 +319,8 @@ public class UserDB extends DB {
 //        for (User u : users) {
 //            System.out.println(u);
 //        }
+
+    User s = getUser(1);
+        System.out.println(s.toString());
     }
 }
