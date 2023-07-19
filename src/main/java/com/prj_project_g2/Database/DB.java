@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author TTNhan
+ * @author Gr2
  */
 public class DB {
 
