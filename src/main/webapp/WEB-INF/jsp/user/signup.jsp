@@ -50,7 +50,7 @@
                     </div>
                     <div class="inputBox">
                         <label class="form-label">Email</label>
-                        <input class="form-control" id="email" type="text" placeholder="Enter your email" required="required" name="email" value="${user.email}" <c:if test="${user.email != null}">readonly</c:if>>
+                        <input class="form-control <c:if test="${user.email != null}">is-valid</c:if>" id="email" type="text" placeholder="Enter your email" required="required" name="email" value="${user.email}" <c:if test="${user.email != null}">readonly</c:if>>
                             <i></i>
                         </div>
                         <div class="inputBox-name">
@@ -79,13 +79,10 @@
 
                     <div class="inputBox country">
                         <label class="form-label" for="country">Country</label>
-                        <select class="form-control" name="country" id="country">
+                        <select class="form-control" name="countryID" id="country">
                             <c:forEach items="${countries}" var="country">
                                 <option value="${country.ID}" <c:if test="${country.ID == 16}">selected</c:if>>${country.name}</option>
                             </c:forEach>
-                            <option value="2">Japan</option>
-                            <option value="3">China</option>
-                            <option value="4">Korean</option>
                         </select>
                         <i></i>
                     </div>

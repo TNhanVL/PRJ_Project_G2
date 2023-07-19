@@ -146,6 +146,27 @@ public class UserController {
         return "redirect:./login";
     }
 
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    public String updateUser(ModelMap model, HttpServletRequest request, HttpServletResponse response, @RequestParam int userID, @ModelAttribute("user") User user) {
+        
+        User user1 = UserDB.getUser(userID);
+
+        if (user1 == null) {
+            request.getSession().setAttribute("error", "User not exist!");
+            return "redirect:./main";
+        }
+        
+        user1.setFirstName(user.getFirstName());
+        user1.setLastName(user.getLastName());
+        user1.setBirthday(user.getBirthday());
+        user1.setCountryID(user.getCountryID());
+        user1.setEmail(user.getEmail());
+
+        UserDB.updateUser(user1);
+        request.getSession().setAttribute("success", "Update user success!");
+        return "redirect:./profile";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPost(HttpServletRequest request, HttpServletResponse response, @RequestParam String username, @RequestParam String password) {
         int status = UserDB.checkUser(username, password, false);
