@@ -65,7 +65,7 @@
                 </div>
             </c:if>
 
-            <div id="info" class="tabcontent">
+            <div id="info" class="tabcontent active">
                 <div class="infor">
                     <div class="userTags">
                         <div class="inforTag">
@@ -141,7 +141,7 @@
 
 
             <c:if test="${!guest}">
-                <div id="personal" class="tabcontent active">
+                <div id="personal" class="tabcontent">
 
                     <div class="personal">
 

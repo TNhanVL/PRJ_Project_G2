@@ -28,13 +28,11 @@ public class Email {
 //    thanhduongjnguyen@gmail.com
 //    cpqrdilisnasjxoe
 
-    
-    
-    public static void main(String[] args) {
-        final String from = "yojihangroup@gmail.com";
-        final String password = "drmoubkcmogfmrlu";
+    final static String from = "yojihangroup@gmail.com";
+    final static String password = "drmoubkcmogfmrlu";
 
-        final String to = "nhan12341184@gmail.com";
+    public static int mailTo(String obj, String title, String type, String content) {
+        final String to = obj;
 
         Properties props = new Properties();
 
@@ -68,27 +66,13 @@ public class Email {
             //To
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parseHeader(to, false));
             //Title
-            msg.setSubject("Chúc mừng tạo tài khoản thành công!");
+            msg.setSubject(title, "UTF-8");
             //Time
             msg.setSentDate(new Date());
 
             //Set reply
             //msg.setReplyto(InternetAddress.parseHeader(from, false))
-            msg.setText("Chào bạn,\n"
-                    + "\n"
-                    + "Tôi xin gửi lời chúc mừng đặc biệt! Tài khoản Yojihan của bạn đã được đăng ký thành công. Bạn đã trở thành thành viên của tổ chức bán khóa học trực tuyến hàng đầu - Yojihan.\n"
-                    + "\n"
-                    + "Từ giờ, bạn đã có quyền truy cập vào tất cả các khóa học trực tuyến đa dạng và chất lượng cao mà Yojihan cung cấp. Bạn có thể tiếp cận kiến thức và kỹ năng mới trong lĩnh vực mà bạn quan tâm. Chúng tôi cam kết mang đến cho bạn trải nghiệm học tập tuyệt vời và hỗ trợ chuyên nghiệp trong suốt quá trình học.\n"
-                    + "\n"
-                    + "Để bắt đầu, hãy đăng nhập vào tài khoản của bạn trên trang web Yojihan. Tại đây, bạn sẽ tìm thấy danh sách các khóa học, tài liệu, bài giảng và các tài nguyên học tập khác. Hãy khám phá và tận hưởng những kiến thức mới mà chúng tôi cung cấp.\n"
-                    + "\n"
-                    + "Nếu bạn gặp bất kỳ vấn đề hoặc có câu hỏi nào liên quan đến tài khoản hoặc các khóa học của bạn, xin vui lòng liên hệ với chúng tôi. Đội ngũ hỗ trợ khách hàng của Yojihan sẽ sẵn sàng hỗ trợ bạn.\n"
-                    + "\n"
-                    + "Một lần nữa, chúc mừng bạn đã gia nhập cộng đồng học viên của Yojihan. Hy vọng bạn sẽ có một hành trình học tập thú vị và thành công cùng chúng tôi!\n"
-                    + "\n"
-                    + "Trân trọng,\n"
-                    + "Yojihan\n"
-                    + "Bộ phận Hỗ trợ Khách hàng Yojihan", "UTF-8");
+            msg.setText(content, "UTF-8", type);
 
             Transport.send(msg);
 
@@ -96,6 +80,11 @@ public class Email {
             Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        mailTo("thanhduongjnguyen@gmail.com", "You have ...", "html", "<a href=\"https://www.facebook.com\">View </a>)");
     }
 
 }

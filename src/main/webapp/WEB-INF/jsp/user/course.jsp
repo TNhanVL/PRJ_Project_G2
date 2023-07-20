@@ -31,11 +31,11 @@
         response.sendRedirect(request.getContextPath() + "/user/main");
         return;
     }
-    
+
     User lecturer = UserDB.getUser(course.getLecturerID());
-    
+
     Organization organization = OrganizationDB.getOrganization(course.getOrganizationID());
-    
+
     User user = null;
     if (CookieServices.checkUserLoggedIn(request.getCookies())) {
         user = UserDB.getUserByUsername(CookieServices.getUserName(request.getCookies()));
@@ -89,6 +89,12 @@
                             } else {
                                 //if not logged in
                                 out.print("<a href=\"" + request.getContextPath() + "/user/login\">Add to cart</a>");
+                            }
+                            if (CourseDB.checkCertificate(user.getID(), course.getID())) {
+                                String certificateName = CourseDB.getCertificateName(user.getID(), course.getID());
+                        %>
+                        <a href="<%out.print(request.getContextPath());%>/public/media/certificate/<%out.print(certificateName);%>" class="viewCer">View Certificate</a>
+                        <%
                             }
                         %>
                         <!--<a href="#">Add to cart</a>-->
