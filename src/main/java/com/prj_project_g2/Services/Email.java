@@ -31,7 +31,7 @@ public class Email {
     final static String from = "yojihangroup@gmail.com";
     final static String password = "drmoubkcmogfmrlu";
 
-    public static int mailTo(String obj,String title, String type, String content) {
+    public static int mailTo(String obj, String title, String type, String content) {
         final String to = obj;
 
         Properties props = new Properties();
@@ -66,13 +66,13 @@ public class Email {
             //To
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parseHeader(to, false));
             //Title
-            msg.setSubject(title,"UTF-8");
+            msg.setSubject(title, "UTF-8");
             //Time
             msg.setSentDate(new Date());
 
             //Set reply
             //msg.setReplyto(InternetAddress.parseHeader(from, false))
-            msg.setText(content,"UTF-8",type);
+            msg.setText(content, "UTF-8", type);
 
             Transport.send(msg);
 
@@ -83,8 +83,61 @@ public class Email {
         return -1;
     }
 
+    public static void sendWelcomMail(String obj, String courseURL) {
+        String welcome = "<div>\n"
+                + "        <p><b>Dear Dylanruan1210,</b></p>\n"
+                + "        <p>I would like to express my gratitude for your participation in the course. Thank you for enrolling and\n"
+                + "            showing interest in furthering your studies.</p>\n"
+                + "        <p>I am eagerly anticipating the opportunity to collaborate with you and assist you in preparing for your\n"
+                + "            academic pursuits. Together, we will strive towards achieving your goals.</p>\n"
+                + "        <p>If you happen to know anyone who shares an interest in the subject matter of this course, I kindly request\n"
+                + "            that you forward this email to them. It would be greatly appreciated if you could help spread the word and\n"
+                + "            extend this valuable learning opportunity to others.</p>\n"
+                + "        <p>Once again, I extend a warm welcome to you as your lecturer in the course. I am confident that our\n"
+                + "            collaboration will be productive and mutually beneficial. I eagerly anticipate working harmoniously with you\n"
+                + "            in the near future.</p>\n"
+                + "        <p>Thank you once again for your commitment and dedication.</p>\n"
+                + "        <p><b>Best regards,</b></p>\n"
+                + "    </div>\n"
+                + "\n"
+                + "    <div>\n"
+                + "        <p><b>Dear Dylanruan1210,</b></p>\n"
+                + "        <p>Congratulations! You’ve successfully completed <b>Java Basic</b>.</p>\n"
+                + "        <p><b>Best regards,</b></p>\n"
+                + "    </div>\n"
+                + "    <p><button style=\"padding: 10px;color:#fff;background-color: #048eff;\"><a style=\"color:#fff;\" href=\"" + courseURL + "\">View course</a></button></p>";
+
+        mailTo(obj, "[Yojihan] Welcome to Java Basic!", "html", welcome);
+
+    }
+
+    public static void sendChangePassword(String obj, String url) {
+        String changePassContent = "<p>Dear <b>Dylann11233</b></p><br><p>We noticed that you are trying to update your password. If that's really you, please <a href=\"" + url + "\">click here</a> to change your password.</p><p><b>Best regards,</b> </p>";
+
+        mailTo(obj, "[Yojihan] Change your password!", "html", changePassContent);
+
+    }
+
+    public static void sendCompletecourse(String obj, String cerURL) {
+        String complete = "<div>\n"
+                + "        <p><b>Dear Dylanruan1210,</b></p>\n"
+                + "        <p>Congratulations! You’ve successfully completed <b>Java Basic</b>.</p>\n"
+                + "        <p><b>Best regards,</b></p>\n"
+                + "    </div>"
+                + "    <p><button style=\"padding: 10px;color:#fff;background-color: #048eff;\"><a style=\"color:#fff;\" href=\"" + cerURL + "\">View Certificate</a></button></p>";
+
+        mailTo(obj, "[Yojihan] Congratulations, Your Certificate is Ready!", "html", complete);
+
+    }
+
     public static void main(String[] args) {
-        mailTo("thanhduongjnguyen@gmail.com","You have ...", "html", "<a href=\"https://www.facebook.com\">View </a>)");
+
+//        mailTo("thanhduongjnguyen@gmail.com", "You have ...", "html", welcome);
+//        mailTo("thanhduongjnguyen@gmail.com", "You have ...", "html", complete);
+//        mailTo("thanhduongjnguyen@gmail.com", "You have ...", "html", changePassContent);
+//        sendWelcomMail("thanhduongjnguyen@gmail.com", "http://127.0.0.1:5500/courseInfo.html");
+//            sendChangePassword("thanhduongjnguyen@gmail.com", "http://127.0.0.1:5500/changPassword.html");
+        sendCompletecourse("thanhduongjnguyen@gmail.com", "http://127.0.0.1:5500/courseInfo.html");
     }
 
 }
