@@ -90,15 +90,20 @@
                                 //if not logged in
                                 out.print("<a href=\"" + request.getContextPath() + "/user/login\">Add to cart</a>");
                             }
-                            if (CourseDB.checkCertificate(user.getID(), course.getID())) {
-                                String certificateName = CourseDB.getCertificateName(user.getID(), course.getID());
+
                         %>
-                        <a href="<%out.print(request.getContextPath());%>/public/media/certificate/<%out.print(certificateName);%>" class="viewCer">View Certificate</a>
-                        <%
-                            }
-                        %>
+
                         <!--<a href="#">Add to cart</a>-->
                     </div>
+                    <%                        if (user != null) {
+                            if (CourseDB.checkCertificate(user.getID(), course.getID())) {
+                                String certificateName = CourseDB.getCertificateName(user.getID(), course.getID());
+                    %>
+                    <a href="<%out.print(request.getContextPath());%>/public/media/certificate/<%out.print(certificateName);%>" class="viewCer">View Certificate</a>
+                    <%
+                            }
+                        }
+                    %>
                     <p class="enrollers">
                         <span><%out.print(CourseDB.getNumberPurchasedOfCourse(course.getID()));%></span> already enrolled
                     </p>

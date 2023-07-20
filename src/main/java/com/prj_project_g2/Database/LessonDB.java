@@ -7,8 +7,9 @@ package com.prj_project_g2.Database;
 import com.prj_project_g2.Model.Lesson;
 import com.prj_project_g2.Model.Mooc;
 import com.prj_project_g2.Model.QuizResult;
+import com.prj_project_g2.Model.User;
 import com.prj_project_g2.Services.Certificate;
-import java.io.IOException;
+import com.prj_project_g2.Services.EmailService;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -168,6 +169,9 @@ public class LessonDB extends DB {
                 String certificateName = "certificate_" + mooc.getCourseID() + "_" + userID + ".pdf";
                 CourseDB.insertCertificate(userID, mooc.getCourseID(), certificateName);
                 Certificate.createCertificate(certificateName, userID, mooc.getCourseID(), request);
+                
+//                User user = UserDB.getUser(userID);
+//                EmailService.sendCompletecourse(user.getEmail(), "http://localhost:8080/PRJ_Project_G2/public/media/certificate/" + certificateName);
             }
 
             return true;

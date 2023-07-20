@@ -24,7 +24,7 @@ import javax.mail.internet.MimeMessage;
  *
  * @author Thanh Duong
  */
-public class Email {
+public class EmailService {
 //    thanhduongjnguyen@gmail.com
 //    cpqrdilisnasjxoe
 
@@ -32,33 +32,33 @@ public class Email {
     final static String password = "drmoubkcmogfmrlu";
 
     public static int mailTo(String obj, String title, String type, String content) {
-        final String to = obj;
+        try {
+            final String to = obj;
 
-        Properties props = new Properties();
+            Properties props = new Properties();
 
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
 
 //        props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP HOST
 //        props.put("mail.smtp.port", "587"); // TLS 587 SSL 465
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
 
 //             Create Authentcator
-        Authenticator auth = new Authenticator() {
-            @Override
-            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-                return new javax.mail.PasswordAuthentication(from, password); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-            }
+            Authenticator auth = new Authenticator() {
+                @Override
+                protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                    return new javax.mail.PasswordAuthentication(from, password); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+                }
 
-        };
+            };
 
-        // Phien lam viec
-        Session session = Session.getInstance(props, auth);
+            // Phien lam viec
+            Session session = Session.getInstance(props, auth);
 
-        MimeMessage msg = new MimeMessage(session);
+            MimeMessage msg = new MimeMessage(session);
 
-        try {
             //Type 
             msg.addHeader("Content-type", "text;charset=UTF-8");
             //From
@@ -76,8 +76,8 @@ public class Email {
 
             Transport.send(msg);
 
-        } catch (MessagingException ex) {
-            Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(EmailService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return -1;
@@ -119,6 +119,7 @@ public class Email {
     }
 
     public static void sendCompletecourse(String obj, String cerURL) {
+        System.out.println(cerURL);
         String complete = "<div>\n"
                 + "        <p><b>Dear Dylanruan1210,</b></p>\n"
                 + "        <p>Congratulations! You’ve successfully completed <b>Java Basic</b>.</p>\n"
@@ -131,14 +132,14 @@ public class Email {
     }
 
     public static void main(String[] args) {
-        mailTo("thanhduongjnguyen@gmail.com", "You have ...", "html", "<a href=\"https://www.facebook.com\">View </a>)");
+//        mailTo("thanhduongjnguyen@gmail.com", "You have ...", "html", "<a href=\"https://www.facebook.com\">View </a>)");
 
 //        mailTo("thanhduongjnguyen@gmail.com", "You have ...", "html", welcome);
 //        mailTo("thanhduongjnguyen@gmail.com", "You have ...", "html", complete);
 //        mailTo("thanhduongjnguyen@gmail.com", "You have ...", "html", changePassContent);
 //        sendWelcomMail("thanhduongjnguyen@gmail.com", "http://127.0.0.1:5500/courseInfo.html");
 //            sendChangePassword("thanhduongjnguyen@gmail.com", "http://127.0.0.1:5500/changPassword.html");
-        sendCompletecourse("thanhduongjnguyen@gmail.com", "http://127.0.0.1:5500/courseInfo.html");
+        sendCompletecourse("nhan12341184@gmail.com", "http://127.0.0.1:5500/courseInfo.html");
     }
 
 }

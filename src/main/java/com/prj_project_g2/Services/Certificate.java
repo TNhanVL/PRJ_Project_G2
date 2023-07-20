@@ -118,7 +118,7 @@ public class Certificate {
         User user = UserDB.getUser(userID);
         Course course = CourseDB.getCourse(courseID);
         String imagePath = srcPath + "/assets/imgs/certificate/Yojihan_Certificate.png"; // Provide the path to your image file
-
+        
         String outputFilename = srcPath + "/media/certificate/" + certificateName;
 
         try {

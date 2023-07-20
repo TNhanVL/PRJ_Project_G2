@@ -11,7 +11,7 @@ if (usernameInp) {
             this.classList.add("is-invalid");
         } else {
 
-            let res = (await fetch(`http://192.168.1.4:8080/PRJ_Project_G2/user/checkUsername?username=${username}`));
+            let res = (await fetch(`http://localhost:8080/PRJ_Project_G2/user/checkUsername?username=${username}`));
             if (res.status == 200) {
                 res = await res.text();
                 if (res == "not exist") {
@@ -43,7 +43,7 @@ if (emailInput) {
             this.classList.add("is-invalid");
         } else {
 
-            let res = (await fetch(`http://192.168.1.4:8080/PRJ_Project_G2/user/checkEmail?email=${email}`));
+            let res = (await fetch(`http://localhost:8080/PRJ_Project_G2/user/checkEmail?email=${email}`));
             if (res.status == 200) {
                 res = await res.text();
                 if (res == "not exist") {
